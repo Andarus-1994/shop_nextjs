@@ -1,0 +1,35 @@
+@import "../variables";
+.fullLoading {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg {
+    color: white;
+    font-size: 44px;
+    animation: rotateLoading 1s linear infinite;
+  }
+}
+.simpleLoading {
+  padding: 30px 0;
+  text-align: center;
+  svg {
+    color: rgb(0, 0, 0);
+    font-size: 44px;
+    animation: rotateLoading 1s linear infinite;
+  }
+}
+
+@keyframes rotateLoading {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}

@@ -1,0 +1,146 @@
+@import "variables";
+@import "./mixins/mobile";
+.special {
+  color: $red !important;
+  &::before {
+    background: $red;
+  }
+}
+.active {
+  &::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    border-radius: 50%;
+    bottom: 0px;
+    left: 0;
+    height: 2px;
+    width: 120%;
+    background: rgb(74, 98, 134);
+    animation: menu-line-fade-in 0.4s;
+  }
+}
+.navigation.top {
+  background: rgba(0, 0, 0, 0.333);
+  padding-top: 10px;
+  box-shadow: none;
+  a:not(:hover) {
+    color: white !important;
+  }
+  span {
+    color: white !important;
+  }
+}
+.navigation {
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  position: fixed;
+  display: flex;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.301);
+  justify-content: space-around;
+  padding: 0 10%;
+  z-index: 100;
+  transition: 0.4s;
+  @include mobile() {
+    flex-direction: column;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    flex-grow: 0.5;
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
+      color: rgb(224, 222, 222);
+      text-transform: lowercase;
+      background-color: black;
+      border-radius: 50%;
+      padding: 20px 8px;
+      transition: 0.5s;
+      &:hover {
+        rotate: -40deg;
+        letter-spacing: 0.4px;
+      }
+    }
+  }
+  nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    gap: 10px;
+    width: 60%;
+    margin: 0 auto;
+    .navItem {
+      flex-grow: 1;
+      a {
+        position: relative;
+        font-family: "Poppins", sans-serif;
+        font-size: 17px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        color: $link-color;
+        padding: 20px 0;
+        text-decoration: none;
+        width: fit-content;
+        transition: 0.4s;
+        &:hover:not(.active) {
+          color: rgb(74, 98, 134);
+          &::before {
+            content: "";
+            pointer-events: none;
+            position: absolute;
+            border-radius: 30%;
+            bottom: 0px;
+            height: 2px;
+            width: 100%;
+            background: rgb(74, 98, 134);
+            animation: menu-line-fade-in 0.4s;
+          }
+        }
+
+        span {
+          padding-bottom: 4px;
+        }
+        &:not(.special) {
+          span {
+            color: $icon-color;
+          }
+        }
+      }
+      &:nth-last-of-type(1) {
+        a {
+          margin-left: auto;
+          flex-grow: 0.5;
+          &::after {
+            content: "";
+            pointer-events: none;
+            position: absolute;
+            left: -45px;
+            width: 2px;
+            height: 70%;
+            background: $link-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes menu-line-fade-in {
+  0% {
+    opacity: 0;
+    width: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,218 @@
+@import "variables";
+.fullSpace {
+  min-height: 80vh;
+  width: 100vw;
+}
+.container {
+  padding: 200px 10%;
+  min-height: 80vh;
+  background: rgb(236, 239, 240);
+
+  .flexProfile {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    h3 {
+      text-align: center;
+      font-size: 30px;
+      font-family: "Roboto", sans-serif;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fade-in 0.8s forwards;
+      animation-delay: 0.5s;
+    }
+  }
+  .profileItemsList {
+    position: relative;
+    background: linear-gradient(60deg, #f7f7f7, white, #f7f7f7);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    flex-basis: 30%;
+    padding: 20px 20px;
+    opacity: 0;
+    animation: fade-in 0.8s forwards;
+    animation-delay: 0.2s;
+    transition: 0.8s;
+    &:hover {
+      backdrop-filter: blur(0x);
+    }
+    h3 {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 400px;
+      overflow-y: scroll;
+      scrollbar-color: #747373 #e2e2e2;
+      scrollbar-width: thin;
+      .item {
+        padding: 0 20px;
+        text-align: center;
+        img {
+          width: 100%;
+          height: 250px;
+          object-fit: cover;
+          cursor: pointer;
+          border-radius: 15px;
+        }
+      }
+    }
+  }
+  .profileBox {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex-basis: 70%;
+    background: linear-gradient(60deg, #f7f7f7, white, #f7f7f7);
+    border-radius: 5px;
+    padding: 40px 100px;
+    margin: 0 auto;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    animation: fade-in 0.8s forwards;
+    animation-delay: 0.2s;
+    .role {
+      position: absolute;
+      top: -24px;
+      left: auto;
+      right: 5px;
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      h4 {
+        text-transform: uppercase;
+        font-family: "Poppins";
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        color: rgb(0, 0, 0);
+      }
+      .guest {
+        color: #b6b6af;
+      }
+      .admin {
+        color: red;
+      }
+    }
+
+    .error {
+      color: red;
+      font-family: "Roboto", sans-serif;
+      letter-spacing: 0.5px;
+      font-size: 14px;
+      opacity: 0;
+      animation: fade-in 0.8s forwards;
+      animation-delay: 1.4s;
+    }
+    .profileImage {
+      position: absolute;
+      top: -50px;
+      left: 50px;
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+      }
+      .profileImageCover {
+        background: rgba(0, 0, 0, 0.3);
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 30px;
+        opacity: 0;
+        transition: 0.8s;
+      }
+      &:hover .profileImageCover {
+        opacity: 1;
+      }
+    }
+    .profileInputFlex {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 15px;
+      min-height: 45vh;
+      @for $i from 1 through 3 {
+        .flexProfile:nth-of-type(#{$i}) {
+          opacity: 0;
+          animation: fade-in 0.8s forwards;
+          animation-delay: $i * 0.3s;
+        }
+      }
+      button {
+        background: $green-color;
+        justify-self: flex-end;
+        align-self: flex-end;
+        color: white;
+        z-index: 15;
+        border: 0;
+        border-radius: 10px;
+        padding: 10px 50px;
+        letter-spacing: 1px;
+        font-weight: 400;
+        font-size: 15px;
+        font-family: "Inter", sans-serif;
+        margin-top: auto;
+        box-shadow: 0px 0px 3px 0px rgba(255, 255, 255, 0.3);
+        transition: 0.5s;
+        opacity: 0;
+        animation: fade-in 0.8s forwards;
+        animation-delay: 1.5s;
+        &:hover {
+          background: $dark-green;
+        }
+        &.disabled {
+          background: gray;
+          pointer-events: none;
+        }
+      }
+    }
+    .profileInputGroup {
+      display: flex;
+      flex-direction: column;
+      font-family: "Inter", sans-serif;
+      width: 100%;
+      label {
+        font-family: "Roboto", sans-serif;
+        font-weight: 600;
+        color: $link-color;
+      }
+      input {
+        font-family: "Roboto", sans-serif;
+        padding: 10px 5px;
+        border-radius: 3px;
+        border: none;
+        box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+      }
+      input[disabled] {
+        outline: 1px solid rgb(226, 226, 226);
+        background: rgba(196, 196, 196, 0.3);
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

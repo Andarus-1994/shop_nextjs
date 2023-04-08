@@ -1,0 +1,205 @@
+@import "variables";
+@mixin animateWithDelay($time) {
+  opacity: 0;
+  animation: fade-in 0.8s forwards;
+  animation-delay: $time;
+}
+.container {
+  padding: 0;
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  section.signup {
+    width: 30%;
+    min-width: 200px;
+  }
+  .verified {
+    color: green;
+    font-size: 40px;
+  }
+  .alreadyVerified {
+    color: red;
+    font-size: 40px;
+  }
+  .signup {
+    h3 {
+      color: $dark-green;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      font-size: 25px;
+      span {
+        font-size: 36px;
+        margin-bottom: 10px;
+        color: $green-color;
+        font-family: "Roboto";
+        font-weight: 900;
+      }
+    }
+  }
+  section {
+    display: flex;
+    flex-direction: row;
+    background: rgb(231, 231, 231);
+    width: 60%;
+    min-width: 800px;
+    min-height: 450px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    animation: fade-in-login 0.8s;
+    & > div.signup {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    & > div {
+      width: 50%;
+      color: white;
+    }
+    .leftSide {
+      position: relative;
+      background-image: url("../public/loginBG.jpg");
+      background-size: cover;
+      background-position: center;
+      @include animateWithDelay(0.4s);
+      .overlay {
+        position: absolute;
+        background: linear-gradient(30deg, rgba(248, 248, 248, 0.3), rgba(86, 122, 199, 0.3));
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .rightSide {
+      h3 {
+        position: relative;
+        color: $link-color;
+        text-transform: uppercase;
+        font-size: 20px;
+        letter-spacing: 0.8px;
+        font-weight: 900;
+        width: fit-content;
+        margin-bottom: 25px;
+        @include animateWithDelay(0.6s);
+        &::after {
+          position: absolute;
+          bottom: -5px;
+          left: 0;
+          content: "";
+          width: 100%;
+          height: 4px;
+          background: $icon-color;
+          @include animateWithDelay(0.6s);
+        }
+      }
+      .loginForm {
+        font-family: "Roboto", sans-serif;
+        margin: 15% auto;
+        max-width: 350px;
+        display: flex;
+        flex-direction: column;
+      }
+      .formInput {
+        display: flex;
+        flex-direction: column;
+        label {
+          color: $link-color;
+          opacity: 0;
+          animation: fade-in 0.8s forwards;
+          @include animateWithDelay(0.8s);
+        }
+        input {
+          background: white;
+          border: 1px solid rgb(150, 150, 150);
+          border-radius: 25px;
+          padding: 7px 10px;
+          @include animateWithDelay(0.8s);
+        }
+      }
+      button {
+        background: $green-color;
+        font-size: 17px;
+        letter-spacing: 0.5px;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        padding: 7px 30px;
+        width: 100%;
+        margin-top: 30px;
+        transition: 0.4s;
+        @include animateWithDelay(1s);
+        &:hover {
+          background: $dark-green;
+        }
+      }
+      .disabled {
+        background: gray;
+        pointer-events: none;
+      }
+      p {
+        color: $link-color;
+        font-size: 13px;
+        text-align: right;
+        margin: 15px 0 0;
+        opacity: 0;
+        animation: fade-in 0.8s forwards;
+        animation-delay: 1.2s;
+      }
+      .error {
+        color: red;
+        letter-spacing: 0.5px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.containerSignUp {
+  padding: 0;
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  section {
+    display: flex;
+    flex-direction: row;
+    background: rgb(231, 231, 231);
+    width: 60%;
+    min-width: 800px;
+    height: 450px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    animation: fade-in-login 0.8s;
+  }
+}
+
+@keyframes fade-in-login {
+  0% {
+    opacity: 0;
+    translate: 0 150px;
+  }
+
+  100% {
+    opacity: 1;
+    translate: 0;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

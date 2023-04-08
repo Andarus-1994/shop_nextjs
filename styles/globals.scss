@@ -1,0 +1,22 @@
+@import "fonts";
+@import "variables";
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Roboto;
+  overflow-x: hidden;
+}
+
+main {
+  background-color: white;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
