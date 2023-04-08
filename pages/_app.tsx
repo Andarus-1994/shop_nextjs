@@ -18,7 +18,7 @@ export default function App({ Component, pageProps }: ComponentWithPageLayout) {
       <Layout>
         <Nav />
         {Component.PageLayout ? (
-          <Component.PageLayout>
+          <Component.PageLayout {...pageProps}>
             <Component {...pageProps} />
           </Component.PageLayout>
         ) : (

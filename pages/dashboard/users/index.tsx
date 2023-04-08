@@ -101,45 +101,6 @@ export default function Users() {
         </Table.Body>
       </Table>
       <br />
-      {/* <div className={styles.grid}>
-        <div className={styles.gridHeader}>
-          <h5>Profile Image</h5>
-          <h5 className={styles.gridHeaderSmall}>ID</h5>
-          <h5>User</h5>
-          <h5 className={styles.gridHeaderLarge}>Email</h5>
-          <h5>First Name</h5>
-          <h5>Last Name</h5>
-          <h5 className={styles.gridHeaderLarge}>Address</h5>
-          <h5>Roles</h5>
-          <h5>Action</h5>
-        </div>
-        {loading
-          ? "Loading"
-          : users.map((user: User, index) => {
-              return (
-                <div className={styles.gridRow} key={index}>
-                  <h5>
-                    <Image
-                      src={user.profile_image ? user.profile_image : CostumeImage}
-                      alt="UserImage"
-                      width={100}
-                      height={100}
-                    />
-                  </h5>
-                  <h5 className={styles.gridHeaderSmall}>{user.id}</h5>
-                  <h5>{user.user}</h5>
-                  <h5 className={styles.gridHeaderLarge}>{user.email}</h5>
-                  <h5>{user.first_name}</h5>
-                  <h5>{user.last_name}</h5>
-                  <h5 className={styles.gridHeaderLarge}>{user.address}</h5>
-                  <h5>{user.roles}</h5>
-                  <h5>
-                    <button>Delete</button>
-                  </h5>
-                </div>
-              );
-            })}
-      </div> */}
       <div className={styles.bottomMenu}>
         {loading ? <Loading color={"secondary"} /> : ""}
         <Pagination
