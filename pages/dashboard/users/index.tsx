@@ -2,7 +2,7 @@ import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "../../../styles/Dashboard/Users.module.scss";
-import { IndexLayout } from "../layout";
+import { IndexLayout } from "../../../Components/LayoutDashboard";
 import CostumeImage from "../../../public/costume.jpg";
 import { Table, Tooltip, Pagination, Loading } from "@nextui-org/react";
 import { RiDeleteBin4Line } from "react-icons/ri";
