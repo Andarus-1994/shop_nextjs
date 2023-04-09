@@ -47,6 +47,7 @@ export default function Users() {
 
   useEffect(() => {
     fetchUsersList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   return (
