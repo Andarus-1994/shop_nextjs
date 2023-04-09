@@ -116,7 +116,7 @@ export default function Nav() {
       dispatch(userTrigger(profile));
     } catch (e: any) {
       console.log(e.message);
-      if (e.response.data.message === "Unauthenticated.") {
+      if (e.response && e.response.data.message === "Unauthenticated.") {
         localStorage.removeItem("token");
         dispatch(loginTrigger(false));
       }

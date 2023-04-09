@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  exclude: [/pages\/dashboard\/layout\.tsx$/],
+  pageExtensions: ["page.tsx", "page.ts", "page.jsx", "page.js", "index.tsx", "index.js"],
 };
 
 module.exports = nextConfig;
