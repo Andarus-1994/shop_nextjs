@@ -3,8 +3,19 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "./../styles/Dashboard/Sidebar.module.scss";
 import stylesContent from "./../styles/Dashboard/Dashboard.module.scss";
+import { useDispatch } from "react-redux";
+import { navTrigger } from "../store/reducers/navReducer";
 export function IndexLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    if (event.currentTarget.scrollTop > 0) {
+      dispatch(navTrigger(true));
+    } else {
+      dispatch(navTrigger(false));
+    }
+  };
 
   return (
     <>
@@ -15,9 +26,7 @@ export function IndexLayout({ children }: { children: React.ReactNode }) {
       <div className={styles.main}>
         <div className={styles.sidebar}>
           <nav>
-            <div className={styles.topSide1}></div>
-            <div className={styles.topSide2}></div>
-            <div className={styles.topSide3}></div>
+            <div className={styles.cover}></div>
             <Link
               className={router.pathname == "/dashboard" ? styles.active : ""}
               href={"/dashboard"}
@@ -42,12 +51,11 @@ export function IndexLayout({ children }: { children: React.ReactNode }) {
             >
               Analytics
             </Link>
-            <div className={styles.bottomSide1}></div>
-            <div className={styles.bottomSide2}></div>
-            <div className={styles.bottomSide3}></div>
           </nav>
         </div>
-        <div className={stylesContent.content}>{children}</div>
+        <div className={stylesContent.content} onScroll={handleScroll}>
+          {children}
+        </div>
       </div>
     </>
   );

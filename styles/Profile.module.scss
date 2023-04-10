@@ -178,6 +178,7 @@
         &.disabled {
           background: gray;
           pointer-events: none;
+          cursor: not-allowed;
         }
       }
     }

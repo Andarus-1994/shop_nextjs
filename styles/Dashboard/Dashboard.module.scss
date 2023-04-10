@@ -6,13 +6,13 @@
   background: rgb(247, 247, 247);
   overflow: auto;
   h3 {
-    text-align: center;
+    text-align: left;
     font-size: 30px;
     font-family: "Roboto", sans-serif;
     margin-bottom: 40px;
     opacity: 0;
     animation: fade-in 0.8s forwards;
-    animation-delay: 0.5s;
+    animation-delay: 0.2s;
   }
 }
 

@@ -34,6 +34,7 @@ export default function Nav() {
   ]);
   const login = useSelector((state: any) => state.login.value);
   const user = useSelector((state: any) => state.user.value);
+  const navigation = useSelector((state: any) => state.nav.value);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -94,12 +95,19 @@ export default function Nav() {
     }
     let routes = getRoutesWithLogged();
     setNavigationRoutes(routes);
-    console.log("test");
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [login, user, dispatch]);
+
+  useEffect(() => {
+    if (navigation) {
+      setScrollPosition(10);
+    } else {
+      setScrollPosition(0);
+    }
+  }, [navigation]);
 
   const getProfile = useCallback(async () => {
     const token = localStorage.getItem("token");

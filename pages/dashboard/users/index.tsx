@@ -50,9 +50,35 @@ export default function Users() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
+  const placeHolderLoading = () => {
+    let rows = [];
+    for (let i = 0; i < 10; i++) {
+      rows.push(
+        <Table.Row key={i}>
+          <Table.Cell css={{ width: "90px" }}>
+            <Loading color={"secondary"} />
+          </Table.Cell>
+          <Table.Cell>Loading</Table.Cell>
+          <Table.Cell>{}</Table.Cell>
+          <Table.Cell>{}</Table.Cell>
+          <Table.Cell>{}</Table.Cell>
+          <Table.Cell>{}</Table.Cell>
+          <Table.Cell>{}</Table.Cell>
+          <Table.Cell>{}</Table.Cell>
+          <Table.Cell>
+            <Tooltip content={"DELETE User: "} color="error">
+              <RiDeleteBin4Line style={{ color: "red" }} />
+            </Tooltip>
+          </Table.Cell>
+        </Table.Row>
+      );
+    }
+    return rows;
+  };
+
   return (
     <div className={styles.users}>
-      <h3>Users List</h3>
+      <h3>Users Management</h3>
       <Table id="24" lined headerLined shadow={true} className={styles.grid}>
         <Table.Header>
           <Table.Column>Profile Image</Table.Column>
@@ -66,39 +92,51 @@ export default function Users() {
           <Table.Column>Action</Table.Column>
         </Table.Header>
         <Table.Body>
-          {users.map((user: User, index) => {
-            return (
-              <Table.Row key={index}>
-                <Table.Cell>
-                  <Image
-                    src={user.profile_image ? user.profile_image : CostumeImage}
-                    alt="UserImage"
-                    width={100}
-                    height={100}
-                  />
-                </Table.Cell>
-                <Table.Cell>{user.id}</Table.Cell>
-                <Table.Cell>{user.user}</Table.Cell>
-                <Table.Cell>{user.email}</Table.Cell>
-                <Table.Cell>{user.first_name}</Table.Cell>
-                <Table.Cell>{user.last_name}</Table.Cell>
-                <Table.Cell>
-                  <Tooltip content={user.address} color="primary" placement="topStart">
-                    {user.address}
-                  </Tooltip>
-                </Table.Cell>
-                <Table.Cell>{user.roles} test</Table.Cell>
-                <Table.Cell>
-                  <Tooltip content={"DELETE User: " + user.user} color="error">
-                    <RiDeleteBin4Line
-                      style={{ color: "red" }}
-                      onClick={() => console.log(user.id)}
-                    />
-                  </Tooltip>
-                </Table.Cell>
-              </Table.Row>
-            );
-          })}
+          {loading
+            ? placeHolderLoading()
+            : users.map((user: User, index) => {
+                return (
+                  <Table.Row key={index}>
+                    <Table.Cell css={{ width: "90px" }}>
+                      <Image
+                        src={user.profile_image ? user.profile_image : CostumeImage}
+                        alt="UserImage"
+                        width={50}
+                        height={50}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>{user.id}</Table.Cell>
+                    <Table.Cell css={{ maxWidth: "fit-content" }}>{user.user}</Table.Cell>
+                    <Table.Cell css={{ maxWidth: "fit-content" }}>{user.email}</Table.Cell>
+                    <Table.Cell css={{ maxWidth: "fit-content" }}>{user.first_name}</Table.Cell>
+                    <Table.Cell css={{ maxWidth: "fit-content" }}>{user.last_name}</Table.Cell>
+                    <Table.Cell css={{ maxWidth: "100px" }}>
+                      <Tooltip
+                        content={"Click to copy the address: " + user.address}
+                        color="secondary"
+                        placement="bottomStart"
+                        onClick={() => {
+                          navigator.clipboard.writeText(user.address);
+                        }}
+                        css={{ maxWidth: "200px" }}
+                      >
+                        {user.address}
+                      </Tooltip>
+                    </Table.Cell>
+                    <Table.Cell css={{ paddingLeft: "20px" }}>
+                      {user.roles} test, admin, user, casual
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Tooltip content={"DELETE User: " + user.user} color="error">
+                        <RiDeleteBin4Line
+                          style={{ color: "red" }}
+                          onClick={() => console.log(user.id)}
+                        />
+                      </Tooltip>
+                    </Table.Cell>
+                  </Table.Row>
+                );
+              })}
         </Table.Body>
       </Table>
       <br />
