@@ -1,11 +1,12 @@
 import axios from "axios";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import styles from "../../../styles/Dashboard/Users.module.scss";
 import { IndexLayout } from "../../../Components/LayoutDashboard";
 import CostumeImage from "../../../public/costume.jpg";
 import { Table, Tooltip, Pagination, Loading } from "@nextui-org/react";
 import { RiDeleteBin4Line } from "react-icons/ri";
+import useDebounce from "../../../Components/Debounce";
 interface User {
   id: number;
   user: string;
@@ -21,7 +22,10 @@ export default function Users() {
   const [page, setPageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
-  const fetchUsersList = async () => {
+  const [searchUser, setSearchUser] = useState("");
+  const debouncedSearch = useDebounce(searchUser, 500);
+
+  const fetchUsersList = useCallback(async (currentPage: number, search: string) => {
     setLoading(true);
     const token = localStorage.getItem("token");
     const config = {
@@ -29,7 +33,7 @@ export default function Users() {
     };
     try {
       const users = await axios.get(
-        process.env.NEXT_PUBLIC_API_URL + "api/getUsersList/" + page,
+        process.env.NEXT_PUBLIC_API_URL + "api/getUsersList/" + currentPage + "/" + search,
         config
       );
       const usersData = users.data.data;
@@ -43,12 +47,17 @@ export default function Users() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    fetchUsersList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+    fetchUsersList(page, debouncedSearch);
+  }, [page, fetchUsersList]);
+
+  useEffect(() => {
+    console.log(debouncedSearch);
+    setPageNumber(1);
+    fetchUsersList(1, debouncedSearch);
+  }, [debouncedSearch, fetchUsersList]);
 
   const placeHolderLoading = () => {
     let rows = [];
@@ -79,6 +88,14 @@ export default function Users() {
   return (
     <div className={styles.users}>
       <h3>Users Management</h3>
+      <h4>Administrate users roles</h4>
+      <div className={styles.rowMenu}>
+        <input
+          placeholder="Search user..."
+          value={searchUser}
+          onChange={(e) => setSearchUser(e.target.value)}
+        />
+      </div>
       <Table id="24" lined headerLined shadow={true} className={styles.grid}>
         <Table.Header>
           <Table.Column>Profile Image</Table.Column>
@@ -88,7 +105,7 @@ export default function Users() {
           <Table.Column>First Name</Table.Column>
           <Table.Column>Last Name</Table.Column>
           <Table.Column>Address</Table.Column>
-          <Table.Column width={120}>Roles</Table.Column>
+          <Table.Column css={{ paddingLeft: "20px" }}>Roles</Table.Column>
           <Table.Column>Action</Table.Column>
         </Table.Header>
         <Table.Body>
@@ -140,8 +157,7 @@ export default function Users() {
         </Table.Body>
       </Table>
       <br />
-      <div className={styles.bottomMenu}>
-        {loading ? <Loading color={"secondary"} /> : ""}
+      <div className={styles.rowMenu}>
         <Pagination
           color="secondary"
           bordered
@@ -150,6 +166,7 @@ export default function Users() {
           onChange={(e) => {
             setPageNumber(e);
           }}
+          page={page}
           initialPage={page}
         />
       </div>

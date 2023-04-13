@@ -1,0 +1,54 @@
+@import "../variables";
+@import "../mixins/mobile";
+.main {
+  height: 100vh;
+  width: 100%;
+  .flexUpdates {
+    display: flex;
+    justify-content: space-between;
+  }
+  .updates {
+    width: 49.5%;
+    background: rgb(255, 255, 255);
+    box-shadow: 0px 0px 4px #0000002c;
+    border-radius: 10px;
+    margin-top: 60px;
+    min-width: 350px;
+    padding: 20px 30px;
+    h5 {
+      color: $dark;
+      text-align: left;
+      font-family: "Figtree";
+      font-size: 25px;
+    }
+    h4 {
+      margin-bottom: 50px;
+      font-size: 15px;
+    }
+  }
+  .listSoldItems {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .soldItem {
+    flex: 0 0 30.333333%;
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 0px 20px 0;
+    box-shadow: 0px 0px 4px #0000002c;
+    img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+    }
+    p {
+      font-size: 15px;
+      font-family: "Inter";
+      margin: 0;
+    }
+  }
+}
