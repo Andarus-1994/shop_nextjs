@@ -15,7 +15,7 @@ interface User {
   last_name: string;
   address: string;
   profile_image: string;
-  roles: Array<string>;
+  roles: Array<string> | string;
 }
 export default function Users() {
   const [users, setUsers] = useState([]);
@@ -39,7 +39,6 @@ export default function Users() {
       const usersData = users.data.data;
       setTotalPages(users.data.pages);
       setUsers(usersData);
-      console.log(users);
     } catch (e: unknown) {
       if (e instanceof Error) {
         console.log(e.message);
@@ -54,7 +53,6 @@ export default function Users() {
   }, [page, fetchUsersList]);
 
   useEffect(() => {
-    console.log(debouncedSearch);
     setPageNumber(1);
     fetchUsersList(1, debouncedSearch);
   }, [debouncedSearch, fetchUsersList]);
@@ -87,8 +85,10 @@ export default function Users() {
 
   return (
     <div className={styles.users}>
-      <h3>Users Management</h3>
-      <h4>Administrate users roles</h4>
+      <section>
+        <h3>Users Management</h3>
+        <h4>Administrate users roles</h4>
+      </section>
       <div className={styles.rowMenu}>
         <input
           placeholder="Search user..."
@@ -115,12 +115,23 @@ export default function Users() {
                 return (
                   <Table.Row key={index}>
                     <Table.Cell css={{ width: "90px" }}>
-                      <Image
-                        src={user.profile_image ? user.profile_image : CostumeImage}
-                        alt="UserImage"
-                        width={50}
-                        height={50}
-                      />
+                      {typeof user.profile_image === "string" ? (
+                        <Image
+                          src={user.profile_image ? user.profile_image : CostumeImage}
+                          alt="Profile Image"
+                          width={100}
+                          height={100}
+                        />
+                      ) : typeof user.profile_image === "object" ? (
+                        <Image
+                          src={URL.createObjectURL(user.profile_image)}
+                          alt="Profile Image"
+                          width={100}
+                          height={100}
+                        />
+                      ) : (
+                        <p>No Image</p>
+                      )}
                     </Table.Cell>
                     <Table.Cell>{user.id}</Table.Cell>
                     <Table.Cell css={{ maxWidth: "fit-content" }}>{user.user}</Table.Cell>
@@ -141,7 +152,7 @@ export default function Users() {
                       </Tooltip>
                     </Table.Cell>
                     <Table.Cell css={{ paddingLeft: "20px" }}>
-                      {user.roles} test, admin, user, casual
+                      {user.roles === "" ? "-" : user.roles}
                     </Table.Cell>
                     <Table.Cell>
                       <Tooltip content={"DELETE User: " + user.user} color="error">

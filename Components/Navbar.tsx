@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { IoIosHome, IoMdGift } from "react-icons/io";
 import { MdDashboard } from "react-icons/md";
 import { GiPayMoney } from "react-icons/gi";
-import { FaUserShield } from "react-icons/fa";
+import { FaUserShield, FaUserEdit } from "react-icons/fa";
 import { BsShieldCheck } from "react-icons/bs";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -60,7 +60,7 @@ export default function Nav() {
       });
       if (!routes.find((route) => route.route === "Profile")) {
         routes[routes.length] = routes[routes.length - 1];
-        routes[routes.length - 2] = { route: "Profile", icon: "", special: false };
+        routes[routes.length - 2] = { route: "Profile", icon: <FaUserEdit />, special: false };
       }
 
       if (
@@ -132,8 +132,11 @@ export default function Nav() {
   }, [dispatch]);
 
   useEffect(() => {
-    getProfile();
-  }, [getProfile]);
+    const token = localStorage.getItem("token");
+    if (token) {
+      getProfile();
+    }
+  }, [getProfile, login]);
 
   return (
     <div className={[styles.navigation, scrollPosition === 0 ? styles.top : ""].join(" ")}>
@@ -160,9 +163,11 @@ export default function Nav() {
                       ? router.pathname == "/"
                         ? styles.active
                         : ""
-                      : router.pathname == "/" + singleRoute.route.toLocaleLowerCase()
+                      : router.pathname.includes("/" + singleRoute.route.toLocaleLowerCase())
                       ? styles.active
-                      : "") + (singleRoute.special ? styles.special : "")
+                      : "") +
+                    " " +
+                    (singleRoute.special ? styles.special : "")
                   }
                 >
                   <span>{singleRoute.icon}</span> {singleRoute.route}

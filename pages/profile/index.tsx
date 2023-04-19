@@ -17,7 +17,7 @@ export default function Profile() {
     first_name: string;
     last_name: string;
     address: string;
-    profile_image: string;
+    profile_image: string | File;
     role: Array<string>;
   }
 
@@ -43,13 +43,16 @@ export default function Profile() {
   const updateProfile = async () => {
     const token = localStorage.getItem("token");
     const config = {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
     };
     try {
       setLoadingButton(true);
+      const formData = new FormData();
+      formData.append("user", JSON.stringify(profile));
+      formData.append("profile_image", profile.profile_image);
       const updateProfile = await axios.post(
         process.env.NEXT_PUBLIC_API_URL + "api/updateProfile",
-        { user: profile },
+        formData,
         config
       );
       const updatedProfile = updateProfile.data;
@@ -82,25 +85,18 @@ export default function Profile() {
     });
   };
 
-  const convertToBase64 = (file: Blob) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = (e) => {
-        if (e.target) resolve(e.target.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
-  const uploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
-    let profileImage = "";
-    if (e.target.files) profileImage = (await convertToBase64(e.target.files[0])) as string;
-    if (profileImage.includes("image")) {
-      setProfile({ ...profile, ["profile_image"]: profileImage });
-      setDisableButton(false);
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDisableButton(false);
+    const selectedFile = event.target.files && event.target.files[0];
+    if (selectedFile) {
+      if (!selectedFile.type.startsWith("image/")) {
+        return;
+      }
+      // changing the image profile (File)
+      setProfile((prevProfile) => ({
+        ...prevProfile,
+        profile_image: selectedFile,
+      }));
     }
   };
 
@@ -134,17 +130,29 @@ export default function Profile() {
             </div>
             <div className={styles.profileBox}>
               <div className={styles.profileImage}>
-                <Image
-                  src={profile.profile_image ? profile.profile_image : CostumeImage}
-                  alt="Costume"
-                  width={100}
-                  height={100}
-                />
+                {typeof profile.profile_image === "string" ? (
+                  <Image
+                    src={profile.profile_image ? profile.profile_image : CostumeImage}
+                    alt="Profile Image"
+                    width={100}
+                    height={100}
+                  />
+                ) : typeof profile.profile_image === "object" ? (
+                  <Image
+                    src={URL.createObjectURL(profile.profile_image)}
+                    alt="Profile Image"
+                    width={100}
+                    height={100}
+                  />
+                ) : (
+                  <p>No Image</p>
+                )}
+
                 <input
                   accept="image/*"
                   type="file"
                   ref={imageInput}
-                  onChange={uploadImage}
+                  onChange={handleFileUpload}
                   style={{ display: "none" }}
                 />
                 <label htmlFor="select-image">
