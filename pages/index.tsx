@@ -51,13 +51,9 @@ export default function Home() {
   return (
     <div>
       <div className={styles.containerHome}>
-        <div
-          className={styles.overlay + " " + animationValue}
-          style={homeStyles}
-        ></div>
+        <div className={styles.overlay + " " + animationValue} style={homeStyles}></div>
         <h1>
           <span>Absolutely. Positively. Perfect</span>
-          <br />
           Shopius
         </h1>
         <Link href={"/items"}>
