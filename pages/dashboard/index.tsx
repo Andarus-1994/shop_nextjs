@@ -12,14 +12,96 @@ import {
   LinearScale,
   PointElement,
   LineElement,
-  TooltipItem,
-  TooltipModel,
+  ChartData,
+  BarElement,
+  Tooltip,
+  Legend,
 } from "chart.js";
+import { Bar } from "react-chartjs-2";
 
 export default function Dashboard() {
   const canvasEl = useRef<HTMLCanvasElement>(null);
 
-  Chart.register(LineController, CategoryScale, LinearScale, PointElement, LineElement);
+  Chart.register(
+    LineController,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    BarElement,
+    Tooltip,
+    Legend
+  );
+
+  const data2: ChartData<"bar"> = {
+    labels: [
+      "Blue Jeans",
+      "Red Shirt",
+      "Green Belt",
+      "Yellow Sac",
+      "Black Nothing",
+      "Test",
+      "Test44",
+    ],
+    datasets: [
+      {
+        label: "Products",
+        data: [165, 159, 80, 41, 26, 15, 10],
+        backgroundColor: [
+          "#3DD020", // Green
+          "#A3E768", // blue
+          "#E4F553", // yellow
+          "#DDE788", // green
+          "#F38B30", // purple
+          "#D9281B", // purple
+          "#FF1100", // extreme red
+        ],
+      },
+    ],
+  };
+
+  const options: ChartOptions<"bar"> = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {},
+    },
+    scales: {
+      x: {
+        display: true,
+        beginAtZero: true,
+        ticks: {
+          font: {
+            family: "Poppins",
+            size: 14,
+            weight: "normal",
+          },
+        },
+      },
+      y: {
+        display: true,
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: "Quantity",
+          font: {
+            family: "Poppins",
+            size: 13,
+            weight: "normal",
+          },
+        },
+        ticks: {
+          font: {
+            family: "Poppins",
+            size: 13,
+            weight: "normal",
+          },
+        },
+      },
+    },
+  };
 
   const colors = {
     purple: {
@@ -40,9 +122,6 @@ export default function Dashboard() {
       // const ctx = document.getElementById("myChart");
 
       const gradient = ctx?.createLinearGradient(0, 16, 0, 600);
-      gradient?.addColorStop(0, colors.purple.half);
-      gradient?.addColorStop(0.65, colors.purple.quarter);
-      gradient?.addColorStop(1, colors.purple.zero);
 
       const weight = [4, 8, 3, 21, 3, 15, 1];
       const options: ChartOptions<"line"> = {
@@ -66,9 +145,9 @@ export default function Dashboard() {
             label: "Customers",
             data: weight,
             borderWidth: 2,
-            borderColor: colors.purple.default,
+            borderColor: "#E4F553",
             lineTension: 0.2,
-            pointBackgroundColor: colors.purple.default,
+            pointBackgroundColor: "#3DD020",
             pointRadius: 3,
           },
         ],
@@ -148,11 +227,19 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div className={styles.updates}>
-          <h5>New customers</h5>
-          <h4>Last 7 weeks</h4>
-          <div style={{ width: "100%", height: "100%" }}>
-            <canvas id="myChart" ref={canvasEl} width={"230px"}></canvas>
+        <div
+          className={styles.updates}
+          style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}
+        >
+          <div>
+            <h5>New customers</h5>
+            <h4>Last 7 weeks</h4>
+            <canvas id="myChart" ref={canvasEl}></canvas>
+          </div>
+          <div>
+            <h5>Most sold products</h5>
+            <h4>Last month</h4>
+            <Bar data={data2} options={options} />
           </div>
         </div>
       </div>

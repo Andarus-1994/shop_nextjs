@@ -1,0 +1,33 @@
+.errorPage {
+  background: rgb(240, 240, 240);
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  svg {
+    position: relative;
+    font-size: 70px;
+    color: rgb(182, 17, 17);
+    margin: 0;
+    transform: rotateZ(-10deg);
+    top: 20px;
+  }
+  p {
+    font-size: 135px;
+    font-family: "Archivo";
+    margin: 0;
+    padding: 0;
+    &::first-letter {
+      color: rgb(182, 17, 17);
+    }
+  }
+  h1 {
+    font-size: 35px;
+    font-family: "Inter";
+    font-weight: 900;
+    margin: 0;
+    transform: rotateZ(15deg);
+  }
+}
