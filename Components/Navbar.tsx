@@ -163,7 +163,10 @@ export default function Nav() {
                       ? router.pathname == "/"
                         ? styles.active
                         : ""
-                      : router.pathname.includes("/" + singleRoute.route.toLocaleLowerCase())
+                      : router.pathname === "/" + singleRoute.route.toLocaleLowerCase()
+                      ? styles.active
+                      : router.pathname.includes("/" + singleRoute.route.toLocaleLowerCase()) &&
+                        singleRoute.route.toLocaleLowerCase() === "dashboard"
                       ? styles.active
                       : "") +
                     " " +
