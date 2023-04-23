@@ -1,5 +1,6 @@
 import "../styles/globals.scss";
 import type { AppProps } from "next/app";
+import { Analytics } from "@vercel/analytics/react";
 import Layout from "../Components/Layout";
 import { store } from "../store/store";
 import { Provider } from "react-redux";
@@ -28,6 +29,7 @@ export default function App({ Component, pageProps }: ComponentWithPageLayout) {
           </>
         )}
       </Layout>
+      <Analytics />
     </Provider>
   );
 }
