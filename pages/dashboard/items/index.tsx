@@ -1,15 +1,75 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IndexLayout } from "../../../Components/LayoutDashboard";
 import styles from "../../../styles/Dashboard/Items.module.scss";
+import Item from "./item";
 
 export default function Items() {
   const [categories, setCategories] = useState([
-    { id: "1", name: "Pants" },
     { id: "2", name: "Shirts" },
     { id: "3", name: "Backpacks" },
   ]);
+  const editItem = (i: number) => {
+    console.log(i);
+  };
+  const [items, setItems] = useState([
+    { id: 1, name: "BackPack", image: "", price: 23, stock: 3, sold: 10, action: editItem },
+    {
+      id: 22,
+      name: "Double BackPack",
+      image: "",
+      price: 43,
+      stock: 6,
+      sold: 5,
+      action: editItem,
+    },
+    { id: 41, name: "Small BackPack", image: "", price: 33, stock: 2, sold: 1, action: editItem },
+    ,
+  ]);
   const [category, setCategory] = useState(categories[0].name);
   const [filterItem, setFilterItem] = useState("");
+
+  useEffect(() => {
+    if (category === "Backpacks") {
+      setItems([
+        { id: 1, name: "BackPack", image: "", price: 23, stock: 3, sold: 10, action: editItem },
+        {
+          id: 22,
+          name: "Double BackPack",
+          image: "",
+          price: 43,
+          stock: 6,
+          sold: 5,
+          action: editItem,
+        },
+        {
+          id: 41,
+          name: "Small BackPack",
+          image: "",
+          price: 33,
+          stock: 2,
+          sold: 1,
+          action: editItem,
+        },
+        ,
+      ]);
+    } else {
+      setItems([
+        { id: 38, name: "Shirt", image: "", price: 23, stock: 5, sold: 4, action: editItem },
+        {
+          id: 4,
+          name: "Tag Shirt",
+          image: "",
+          price: 5,
+          stock: 2,
+          sold: 5,
+          action: editItem,
+        },
+        { id: 15, name: "T Shirt 22", image: "", price: 13, stock: 6, sold: 19, action: editItem },
+        ,
+      ]);
+    }
+  }, [category]);
+
   return (
     <div className={styles.items}>
       <section>
@@ -41,7 +101,37 @@ export default function Items() {
         </div>
       </div>
       <div>
-        <h4>Test 2 {category}</h4>
+        <h4>Products for {category}</h4>
+        <table className={styles.itemList}>
+          <thead>
+            <tr className={styles.itemListRow}>
+              <th className={styles.itemId}>Id</th>
+              <th className={styles.itemName}>Name</th>
+              <th className={styles.itemImage}>Image</th>
+              <th className={styles.itemPrice}>Price</th>
+              <th className={styles.itemStock}>Stock</th>
+              <th className={styles.itemSold}>Sold</th>
+              <th className={styles.itemAction}>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.length &&
+              items.map((item) => {
+                return (
+                  <Item
+                    key={item?.id}
+                    id={item?.id ?? 0}
+                    name={item?.name ?? ""}
+                    image={item?.image ?? ""}
+                    price={item?.price ?? 0}
+                    stock={item?.stock ?? 0}
+                    sold={item?.sold ?? 0}
+                    action={editItem}
+                  />
+                );
+              })}
+          </tbody>
+        </table>
       </div>
     </div>
   );
