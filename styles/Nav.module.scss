@@ -39,7 +39,7 @@
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.301);
   justify-content: space-around;
   padding: 0 10%;
-  z-index: 100;
+  z-index: 30;
   transition: 0.4s;
   @include mobile() {
     flex-direction: column;

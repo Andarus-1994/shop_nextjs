@@ -6,7 +6,9 @@ import { IndexLayout } from "../../../Components/LayoutDashboard";
 import CostumeImage from "../../../public/costume.jpg";
 import { Table, Tooltip, Pagination, Loading } from "@nextui-org/react";
 import { RiDeleteBin4Line } from "react-icons/ri";
+import { MdEditNote } from "react-icons/md";
 import useDebounce from "../../../Components/Debounce";
+import UserModal from "./userModal";
 interface User {
   id: number;
   user: string;
@@ -50,7 +52,7 @@ export default function Users() {
 
   useEffect(() => {
     fetchUsersList(page, debouncedSearch);
-  }, [page, fetchUsersList]);
+  }, [page, fetchUsersList, debouncedSearch]);
 
   useEffect(() => {
     setPageNumber(1);
@@ -155,9 +157,12 @@ export default function Users() {
                       {user.roles === "" ? "-" : user.roles}
                     </Table.Cell>
                     <Table.Cell>
+                      <Tooltip content={"Edit user: " + user.user}>
+                        <MdEditNote style={{ fontSize: "25px" }} />
+                      </Tooltip>
                       <Tooltip content={"DELETE User: " + user.user} color="error">
                         <RiDeleteBin4Line
-                          style={{ color: "red" }}
+                          style={{ marginLeft: "20px", color: "red", fontSize: "20px" }}
                           onClick={() => console.log(user.id)}
                         />
                       </Tooltip>
@@ -181,6 +186,7 @@ export default function Users() {
           initialPage={page}
         />
       </div>
+      <UserModal />
     </div>
   );
 }
