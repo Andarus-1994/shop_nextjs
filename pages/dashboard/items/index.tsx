@@ -11,8 +11,20 @@ export default function Items() {
   const editItem = (i: number) => {
     console.log(i);
   };
+  const deleteItem = (i: number) => {
+    console.log(i);
+  };
   const [items, setItems] = useState([
-    { id: 1, name: "BackPack", image: "", price: 23, stock: 3, sold: 10, action: editItem },
+    {
+      id: 1,
+      name: "BackPack",
+      image: "",
+      price: 23,
+      stock: 3,
+      sold: 10,
+      action1: editItem,
+      action2: deleteItem,
+    },
     {
       id: 22,
       name: "Double BackPack",
@@ -20,9 +32,19 @@ export default function Items() {
       price: 43,
       stock: 6,
       sold: 5,
-      action: editItem,
+      action1: editItem,
+      action2: deleteItem,
     },
-    { id: 41, name: "Small BackPack", image: "", price: 33, stock: 2, sold: 1, action: editItem },
+    {
+      id: 41,
+      name: "Small BackPack",
+      image: "",
+      price: 33,
+      stock: 2,
+      sold: 1,
+      action1: editItem,
+      action2: deleteItem,
+    },
     ,
   ]);
   const [category, setCategory] = useState(categories[0].name);
@@ -31,7 +53,16 @@ export default function Items() {
   useEffect(() => {
     if (category === "Backpacks") {
       setItems([
-        { id: 1, name: "BackPack", image: "", price: 23, stock: 3, sold: 10, action: editItem },
+        {
+          id: 1,
+          name: "BackPack",
+          image: "",
+          price: 23,
+          stock: 3,
+          sold: 10,
+          action1: editItem,
+          action2: deleteItem,
+        },
         {
           id: 22,
           name: "Double BackPack",
@@ -39,7 +70,8 @@ export default function Items() {
           price: 43,
           stock: 6,
           sold: 5,
-          action: editItem,
+          action1: editItem,
+          action2: deleteItem,
         },
         {
           id: 41,
@@ -48,13 +80,43 @@ export default function Items() {
           price: 33,
           stock: 2,
           sold: 1,
-          action: editItem,
+          action1: editItem,
+          action2: deleteItem,
+        },
+        {
+          id: 46,
+          name: "Small BackPack TWO",
+          image: "",
+          price: 33,
+          stock: 2,
+          sold: 3,
+          action1: editItem,
+          action2: deleteItem,
+        },
+        {
+          id: 49,
+          name: "One Pack",
+          image: "",
+          price: 50,
+          stock: 2,
+          sold: 1,
+          action1: editItem,
+          action2: deleteItem,
         },
         ,
       ]);
     } else {
       setItems([
-        { id: 38, name: "Shirt", image: "", price: 23, stock: 5, sold: 4, action: editItem },
+        {
+          id: 38,
+          name: "Shirt",
+          image: "",
+          price: 23,
+          stock: 5,
+          sold: 4,
+          action1: editItem,
+          action2: deleteItem,
+        },
         {
           id: 4,
           name: "Tag Shirt",
@@ -62,9 +124,19 @@ export default function Items() {
           price: 5,
           stock: 2,
           sold: 5,
-          action: editItem,
+          action1: editItem,
+          action2: deleteItem,
         },
-        { id: 15, name: "T Shirt 22", image: "", price: 13, stock: 6, sold: 19, action: editItem },
+        {
+          id: 15,
+          name: "T Shirt 22",
+          image: "",
+          price: 13,
+          stock: 6,
+          sold: 19,
+          action1: editItem,
+          action2: deleteItem,
+        },
         ,
       ]);
     }
@@ -116,7 +188,7 @@ export default function Items() {
           </thead>
           <tbody>
             {items.length &&
-              items.map((item) => {
+              items.map((item, index) => {
                 return (
                   <Item
                     key={item?.id}
@@ -126,7 +198,9 @@ export default function Items() {
                     price={item?.price ?? 0}
                     stock={item?.stock ?? 0}
                     sold={item?.sold ?? 0}
-                    action={editItem}
+                    action1={editItem}
+                    action2={deleteItem}
+                    index={index}
                   />
                 );
               })}

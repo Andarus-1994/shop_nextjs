@@ -65,7 +65,6 @@
     font-family: "Figtree", sans-serif;
     box-shadow: 0px 0px 3px 0px rgba(255, 255, 255, 0.3);
     transition: 0.8s;
-    animation: fade-in-up 1s;
     &:hover {
       background: $dark-green;
       transition: 0.4s;
@@ -91,6 +90,11 @@
   & > td {
     background: rgb(255, 255, 255);
     font-family: "Poppins";
+    animation-name: fade-in;
+    animation-duration: 1s;
+    &:nth-last-of-type(1) {
+      max-width: 140px;
+    }
   }
   & td:first-child {
     border-top-left-radius: 20px;
@@ -126,9 +130,8 @@
   }
   button {
     position: relative;
-    display: flex;
-    background: $dark-yellow;
-    color: $dark-green;
+    display: inline-flex;
+    width: fit-content;
     z-index: 15;
     border: 0;
     border-radius: 20px;
@@ -148,5 +151,29 @@
     svg {
       font-size: 20px;
     }
+    &:nth-of-type(1) {
+      background: $dark-yellow;
+      color: $dark-green;
+      margin-right: 20px;
+    }
+    &:nth-of-type(2) {
+      background: $red;
+      color: white;
+      margin-right: 20px;
+      svg {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
