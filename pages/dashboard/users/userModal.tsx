@@ -1,9 +1,35 @@
 import styles from "../../../styles/Dashboard/Users.module.scss";
 
-export default function UserModal() {
-  console.log("works");
+type User = {
+  id: number;
+  user: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  address: string;
+  profile_image: string;
+  roles: Array<string> | string;
+};
+
+interface UserProps {
+  user: User | {};
+  closeModal: Function;
+}
+
+export default function UserModal({ user, closeModal }: UserProps) {
+  console.log("works", user);
+  const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
+  };
   return (
-    <div className={styles.userModalContainer}>
+    <div
+      className={styles.userModalContainer}
+      onClick={(e) => {
+        handleClose(e);
+      }}
+    >
       <div className={styles.userModal}>
         <h4>Edit User Profile</h4>
         <div className={styles.inputBox}>

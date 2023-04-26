@@ -26,6 +26,8 @@ export default function Users() {
   const [loading, setLoading] = useState(true);
   const [searchUser, setSearchUser] = useState("");
   const debouncedSearch = useDebounce(searchUser, 500);
+  const [showModalUser, setShowModalUser] = useState(true);
+  const [chosenUser, setChosenUser] = useState({});
 
   const fetchUsersList = useCallback(async (currentPage: number, search: string) => {
     setLoading(true);
@@ -49,6 +51,11 @@ export default function Users() {
       setLoading(false);
     }
   }, []);
+
+  const closeModal = () => {
+    setChosenUser({});
+    setShowModalUser(false);
+  };
 
   useEffect(() => {
     fetchUsersList(page, debouncedSearch);
@@ -158,7 +165,12 @@ export default function Users() {
                     </Table.Cell>
                     <Table.Cell>
                       <Tooltip content={"Edit user: " + user.user}>
-                        <MdEditNote style={{ fontSize: "25px" }} />
+                        <MdEditNote
+                          onClick={() => {
+                            setShowModalUser(true), setChosenUser(user);
+                          }}
+                          style={{ fontSize: "25px" }}
+                        />
                       </Tooltip>
                       <Tooltip content={"DELETE User: " + user.user} color="error">
                         <RiDeleteBin4Line
@@ -186,7 +198,7 @@ export default function Users() {
           initialPage={page}
         />
       </div>
-      <UserModal />
+      {showModalUser === true && <UserModal user={chosenUser} closeModal={closeModal} />}
     </div>
   );
 }
