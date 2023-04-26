@@ -9,6 +9,7 @@ import { RiDeleteBin4Line } from "react-icons/ri";
 import { MdEditNote } from "react-icons/md";
 import useDebounce from "../../../Components/Debounce";
 import UserModal from "./userModal";
+import Notification from "../../../Components/Notification/Message";
 interface User {
   id: number;
   user: string;
@@ -19,6 +20,14 @@ interface User {
   profile_image: string;
   roles: Array<string> | string;
 }
+
+interface MyError extends Error {
+  response?: {
+    data?: {
+      data?: string;
+    };
+  };
+}
 export default function Users() {
   const [users, setUsers] = useState([]);
   const [page, setPageNumber] = useState(1);
@@ -28,6 +37,7 @@ export default function Users() {
   const debouncedSearch = useDebounce(searchUser, 500);
   const [showModalUser, setShowModalUser] = useState(true);
   const [chosenUser, setChosenUser] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
 
   const fetchUsersList = useCallback(async (currentPage: number, search: string) => {
     setLoading(true);
@@ -51,6 +61,34 @@ export default function Users() {
       setLoading(false);
     }
   }, []);
+
+  const deleteUser = async (id: number) => {
+    setErrorMessage("");
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    try {
+      const { data } = await axios.get(
+        process.env.NEXT_PUBLIC_API_URL + "api/deleteUser/" + id,
+        config
+      );
+      if (data.data) {
+        fetchUsersList(page, searchUser);
+      }
+      console.log(data.data);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        console.log(e.message);
+        const myError = e as MyError;
+        if (myError.response) {
+          console.log(myError.response.data?.data);
+          setErrorMessage(myError.response.data?.data ?? "");
+        }
+      }
+    } finally {
+    }
+  };
 
   const closeModal = () => {
     setChosenUser({});
@@ -175,7 +213,7 @@ export default function Users() {
                       <Tooltip content={"DELETE User: " + user.user} color="error">
                         <RiDeleteBin4Line
                           style={{ marginLeft: "20px", color: "red", fontSize: "20px" }}
-                          onClick={() => console.log(user.id)}
+                          onClick={() => deleteUser(user.id)}
                         />
                       </Tooltip>
                     </Table.Cell>
@@ -199,6 +237,7 @@ export default function Users() {
         />
       </div>
       {showModalUser === true && <UserModal user={chosenUser} closeModal={closeModal} />}
+      {errorMessage && <Notification message={errorMessage} />}
     </div>
   );
 }

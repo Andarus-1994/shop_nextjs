@@ -1,0 +1,28 @@
+.notification {
+  background: #f70029ee;
+  color: white;
+  font-family: "Inter";
+  font-size: 15px;
+  width: fit-content;
+  position: fixed;
+  padding: 15px 50px;
+  border-radius: 10px;
+  top: 120px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  animation: fade-in 1s;
+}
+
+@keyframes fade-in {
+  0% {
+    transform: translateY(-40px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
