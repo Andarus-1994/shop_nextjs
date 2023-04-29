@@ -61,7 +61,7 @@ export default function UserModal({ user, closeModal }: UserProps) {
           </select>
         </div>
         <div className={styles.inputBox}>
-          <button>Cancel</button>
+          <button onClick={() => closeModal()}>Cancel</button>
           <button>Apply</button>
         </div>
       </div>
