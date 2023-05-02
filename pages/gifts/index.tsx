@@ -1,4 +1,4 @@
-import styles from "../../styles/Home.module.scss";
+import styles from "../../styles/Gifts.module.scss";
 export default function Gifts() {
   return (
     <div className={styles.container}>
