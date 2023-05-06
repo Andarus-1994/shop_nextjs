@@ -5,7 +5,7 @@
   position: relative;
   background: url("../public/contact.jpg");
   background-size: cover;
-  background-position: center;
+  background-position: bottom;
   min-height: 100vh;
   padding: 100px 10%;
   color: white;
@@ -17,7 +17,7 @@
     top: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.7;
+    opacity: 0.6;
   }
   h2 {
     position: relative;
@@ -135,7 +135,7 @@
     }
     .info {
       position: absolute;
-      opacity: 0.7;
+      opacity: 0.9;
       right: -400px;
       top: 0;
       background: #ffffff4d;
