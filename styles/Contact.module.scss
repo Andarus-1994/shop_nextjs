@@ -3,50 +3,38 @@
 
 .container {
   position: relative;
-  background: url("../public/contactBg.jpg");
+  background: url("../public/contact.jpg");
   background-size: cover;
-  background-position: top;
+  background-position: center;
   min-height: 100vh;
   padding: 100px 10%;
   color: white;
   text-align: center;
   .overlay {
-    background: rgb(56, 58, 61);
+    background: rgb(0, 0, 0);
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.6;
+    opacity: 0.7;
   }
   h2 {
     position: relative;
     margin: 80px auto 0;
     text-align: center;
     font-size: 55px;
-    font-weight: 600;
-    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-family: "Poppins", sans-serif;
+    animation: fade-in-up 1s;
   }
-  p {
-    position: relative;
-    font-family: "Roboto", sans-serif;
-    font-size: 14px;
-    margin: 5px 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    svg {
-      font-size: 17px;
-    }
-  }
+
   button {
     position: relative;
     background: transparent;
-    color: white;
+    color: rgb(0, 0, 0);
     z-index: 15;
-    border: 1px solid white;
+    border: 1px solid rgb(0, 0, 0);
     border-radius: 5px;
     padding: 10px 50px;
     letter-spacing: 1px;
@@ -55,7 +43,7 @@
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     transition: 0.8s;
-    animation: fade-in-up 1s;
+    animation: fade-in 1s;
     overflow: hidden;
     span {
       position: relative;
@@ -71,13 +59,13 @@
       margin: auto;
       width: 0;
       height: 0;
-      background: white;
+      background: rgb(0, 0, 0);
       border-radius: 5px;
       transition: 0.6s;
       z-index: 5;
     }
     &:hover {
-      color: black;
+      color: rgb(255, 255, 255);
       letter-spacing: 2.5px;
       &::after {
         width: 100%;
@@ -87,12 +75,16 @@
     }
   }
   .containerInputs {
-    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    padding: 20px 20px;
+    width: 450px;
     position: relative;
-    margin: 40px 0;
+    margin: 40px auto;
     display: flex;
-    gap: 40px;
-    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+    animation: fade-in 1s;
     textarea:focus,
     input:focus {
       outline: none;
@@ -100,22 +92,22 @@
     & > div:nth-of-type(1) {
       display: flex;
       flex-direction: column;
-      gap: 40px;
+      gap: 10px;
       width: 100%;
       input {
-        background: transparent;
+        background: #f3f3f3;
         border: none;
-        border-bottom: 1px solid rgb(214, 214, 214);
+        border-radius: 10px;
         padding: 15px 10px;
         font-family: "Roboto";
-        color: white;
+        color: rgb(3, 3, 3);
         transition: 0.6s;
         &:focus {
-          border-bottom: 1px solid white;
-          color: white;
+          color: rgb(0, 0, 0);
+          background: #e7e7e7;
         }
         &::placeholder {
-          color: white !important;
+          color: rgb(0, 0, 0) !important;
         }
       }
     }
@@ -124,16 +116,77 @@
       textarea {
         width: 100%;
         height: 100%;
-        background: rgba(255, 255, 255, 0.514);
+        background: #f3f3f3;
         border: none;
-        border-radius: 5px;
+        border-radius: 10px;
         padding: 15px 10px;
         font-family: "Roboto";
         transition: 0.6s;
         &:focus {
-          background: white;
+          background: #e7e7e7;
         }
       }
     }
+    .bottomText {
+      color: #979797;
+      font-size: 14px;
+      line-height: 15px;
+      padding: 5px 20px;
+    }
+    .info {
+      position: absolute;
+      opacity: 0.7;
+      right: -400px;
+      top: 0;
+      background: #ffffff4d;
+      border-radius: 15px;
+      color: black;
+      width: 350px !important;
+      padding: 10px;
+      transition: 0.6s;
+      &:hover {
+        background: white;
+        opacity: 1;
+      }
+
+      p {
+        position: relative;
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        margin: 10px 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-items: center;
+        gap: 15px;
+        svg {
+          cursor: pointer;
+          border-radius: 50%;
+          border: 1px solid black;
+          padding: 10px;
+          font-size: 47px;
+        }
+      }
+    }
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    translate: 0 30px;
+  }
+  100% {
+    opacity: 1;
+    translate: 0;
   }
 }
