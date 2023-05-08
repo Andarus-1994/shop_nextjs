@@ -70,8 +70,8 @@ export default function Items() {
               return (
                 <div key={index} className={styles.soldItem}>
                   <div className={styles.imageBox}>
-                    {index === 0 && <Image src={JacketImage} alt="Jacket" />}
-                    {index === 1 && <Image src={Jeans} alt="Jacket" />}
+                    {index % 2 === 0 && <Image src={JacketImage} alt="Jacket" />}
+                    {index % 2 === 1 && <Image src={Jeans} alt="Jacket" />}
                     <h4>More sizes</h4>
                   </div>
                   <div className={styles.detailsBox}>
