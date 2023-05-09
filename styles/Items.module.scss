@@ -1,17 +1,53 @@
 @import "variables";
 .container {
-  padding: 100px 10%;
-  min-height: 80vh;
+  min-height: 100vh;
   background: rgb(236, 239, 240);
-  h2 {
-    margin: 80px auto;
-    text-align: center;
-    font-size: 55px;
-    font-weight: 600;
-    font-family: "Inter", sans-serif;
+  padding: 150px 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 50px;
+  .filterSection {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    & > div {
+      padding: 5px;
+      border-bottom: 1px solid rgb(201, 201, 201);
+      font-weight: 900;
+      font-family: "Inter";
+      font-size: 15px;
+      ul {
+        list-style-type: none;
+        font-weight: 500;
+        li {
+          cursor: pointer;
+          width: fit-content;
+          transition: 0.4s;
+          &:hover {
+            color: $green-color;
+          }
+        }
+      }
+      & > div {
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+      svg {
+        font-size: 20px;
+        color: gray;
+      }
+    }
+  }
+  .containerItems {
+    width: 100%;
   }
   .filter {
-    margin: 40px 0;
+    margin: 0 0 40px;
     label {
       display: flex;
       align-items: center;

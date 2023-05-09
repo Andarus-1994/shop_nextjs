@@ -6,6 +6,7 @@ import JacketImage from "../../public/jacket.jpg";
 import Jeans from "../../public/jeans.jpg";
 import { AiOutlineSearch, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaBoxes } from "react-icons/fa";
+import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import stylesUtils from "../../styles/utils/Loading.module.scss";
 
 interface Item {
@@ -17,6 +18,24 @@ interface Item {
 export default function Items() {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [categoryList, setCategoryList] = useState([
+    {
+      id: 1,
+      name: "Clothing",
+    },
+    {
+      id: 2,
+      name: "Bags",
+    },
+    {
+      id: 3,
+      name: "Beauty",
+    },
+    {
+      id: 4,
+      name: "Accessories",
+    },
+  ]);
   const fetchItems = async () => {
     const token = localStorage.getItem("token");
     const config = {
@@ -40,8 +59,25 @@ export default function Items() {
 
   return (
     <div className={styles.container}>
-      <>
-        <h2>Items List</h2>
+      <div className={styles.filterSection}>
+        {categoryList.length > 0 &&
+          categoryList.map((category) => (
+            <div key={category.id}>
+              <div>
+                {" "}
+                {category.name} {category.id !== 2 ? <AiOutlinePlus /> : <AiOutlineMinus />}
+              </div>
+              {category.id === 2 && (
+                <ul>
+                  <li>New bags</li>
+                  <li>Old bags</li>
+                  <li>Test bags</li>
+                </ul>
+              )}
+            </div>
+          ))}
+      </div>
+      <div className={styles.containerItems}>
         <div className={styles.filter}>
           <div>
             <label>Filters</label>
@@ -88,7 +124,7 @@ export default function Items() {
             })}
           </div>
         )}
-      </>
+      </div>
     </div>
   );
 }
