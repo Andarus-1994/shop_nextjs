@@ -7,7 +7,7 @@
   flex-direction: row;
   justify-content: flex-start;
   gap: 50px;
-  .filterSection {
+  .categoriesSection {
     width: 300px;
     display: flex;
     flex-direction: column;
@@ -43,6 +43,68 @@
       }
     }
   }
+  .filterSection {
+    margin-bottom: 50px;
+    .itemsCountSort {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 4px 10px;
+      border-bottom: 1px solid rgb(201, 201, 201);
+      margin-bottom: 10px;
+      .count,
+      .sort {
+        font-weight: 600;
+        font-size: 15px;
+        font-family: "Poppins";
+        select {
+          background: transparent;
+          border: none;
+          font-weight: 600;
+          font-size: 15px;
+          font-family: "Poppins";
+          color: $icon-color;
+          text-align: center;
+        }
+      }
+    }
+    .filters {
+      display: flex;
+      flex-direction: row;
+      & > div:nth-of-type(1) {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+      }
+      & > div:nth-of-type(2) {
+        width: 300px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        button {
+          border: 1px solid rgb(201, 201, 201);
+          border-radius: 5px;
+          background: white;
+          padding: 7px 15px;
+          font-size: 14px;
+          font-family: "Poppins";
+        }
+      }
+      .select {
+        background: transparent;
+        border: none;
+        border: 0;
+        font-weight: 400;
+        font-size: 13px;
+        font-family: "Poppins";
+        color: $icon-color;
+        width: 240px;
+      }
+    }
+  }
+
   .containerItems {
     width: 100%;
   }
