@@ -1,6 +1,6 @@
 import styles from "../../styles/Items.module.scss";
 import axios from "axios";
-import { CSSProperties, useEffect, useState } from "react";
+import { CSSProperties, useEffect, useId, useState } from "react";
 import Image from "next/image";
 import JacketImage from "../../public/jacket.jpg";
 import Jeans from "../../public/jeans.jpg";
@@ -58,6 +58,23 @@ export default function Items() {
     { value: "200", label: "Under 200 $" },
   ];
 
+  const getMainCategories = async () => {
+    try {
+      const mainCategories = await axios.get(
+        process.env.NEXT_PUBLIC_API_URL + "api/retrieveMainCategories"
+      );
+      const mainCategoriesData = mainCategories.data;
+      setCategoryList(mainCategoriesData);
+      console.log(mainCategoriesData);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        console.log(e.message, "\n api/retrieveMainCategories");
+      }
+    } finally {
+      console.log("end");
+    }
+  };
+
   const fetchItems = async () => {
     const token = localStorage.getItem("token");
     const config = {
@@ -75,7 +92,9 @@ export default function Items() {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
+    getMainCategories();
     fetchItems();
   }, []);
 
@@ -114,16 +133,36 @@ export default function Items() {
           <div className={styles.filters}>
             <div>
               <div className={styles.select}>
-                <CreatableSelect isClearable placeholder="Brand" options={optionsBrand} />
+                <CreatableSelect
+                  isClearable
+                  placeholder="Brand"
+                  options={optionsBrand}
+                  instanceId={useId()}
+                />
               </div>
               <div className={styles.select}>
-                <CreatableSelect placeholder="Color" isClearable options={optionsColor} />
+                <CreatableSelect
+                  placeholder="Color"
+                  isClearable
+                  options={optionsColor}
+                  instanceId={useId()}
+                />
               </div>
               <div className={styles.select}>
-                <CreatableSelect placeholder="Size" isClearable options={optionsSize} />
+                <CreatableSelect
+                  placeholder="Size"
+                  isClearable
+                  options={optionsSize}
+                  instanceId={useId()}
+                />
               </div>
               <div className={styles.select}>
-                <CreatableSelect placeholder="Price" isClearable options={optionsPrice} />
+                <CreatableSelect
+                  placeholder="Price"
+                  isClearable
+                  options={optionsPrice}
+                  instanceId={useId()}
+                />
               </div>
             </div>
             <div>
