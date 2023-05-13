@@ -20,6 +20,7 @@ interface Item {
 export default function Items() {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [chosenCategory, setChosenCategory] = useState(0);
   const [categoryList, setCategoryList] = useState([
     {
       id: 1,
@@ -104,11 +105,16 @@ export default function Items() {
         {categoryList.length > 0 &&
           categoryList.map((category) => (
             <div key={category.id}>
-              <div>
+              <div
+                onClick={() => {
+                  setChosenCategory(category.id);
+                }}
+              >
                 {" "}
-                {category.name} {category.id !== 2 ? <AiOutlinePlus /> : <AiOutlineMinus />}
+                {category.name}{" "}
+                {category.id !== chosenCategory ? <AiOutlinePlus /> : <AiOutlineMinus />}
               </div>
-              {category.id === 2 && (
+              {category.id === chosenCategory && (
                 <ul>
                   <li>New bags</li>
                   <li>Old bags</li>
