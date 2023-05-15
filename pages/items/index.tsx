@@ -10,54 +10,31 @@ import { MdOutlineFilterAlt } from "react-icons/md";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import stylesUtils from "../../styles/utils/Loading.module.scss";
 import CreatableSelect from "react-select/creatable";
+import {
+  itemsData as itemsDataMock,
+  categoryListData,
+  optionsBrand,
+  optionsColor,
+  optionsSize,
+  optionsPrice,
+} from "../../Components/Data/items";
 
-interface Item {
+type Item = {
   id: number;
   name: string;
-  price: number;
-}
+  price: string;
+};
+type categoryList = {
+  id: number;
+  name: string;
+  open: boolean;
+};
 
 export default function Items() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [chosenCategory, setChosenCategory] = useState(0);
-  const [categoryList, setCategoryList] = useState([
-    {
-      id: 1,
-      name: "Clothing",
-    },
-    {
-      id: 2,
-      name: "Bags",
-    },
-    {
-      id: 3,
-      name: "Beauty",
-    },
-    {
-      id: 4,
-      name: "Accessories",
-    },
-  ]);
-  const optionsBrand = [
-    { value: "Adidas", label: "Adidas" },
-    { value: "Puma", label: "Puma" },
-    { value: "Crocs", label: "Crocs" },
-  ];
-  const optionsColor = [
-    { value: "Red", label: "Red" },
-    { value: "Green", label: "Green" },
-    { value: "Black", label: "Black" },
-  ];
-  const optionsSize = [
-    { value: "S", label: "S" },
-    { value: "M", label: "M" },
-  ];
-  const optionsPrice = [
-    { value: "50", label: "Under 50 $" },
-    { value: "100", label: "Under 100 $" },
-    { value: "200", label: "Under 200 $" },
-  ];
+  const [categoryList, setCategoryList] = useState<categoryList[]>([]);
 
   const getMainCategories = async () => {
     try {
@@ -70,6 +47,7 @@ export default function Items() {
     } catch (e: unknown) {
       if (e instanceof Error) {
         console.log(e.message, "\n api/retrieveMainCategories");
+        setCategoryList(categoryListData);
       }
     } finally {
       console.log("end");
@@ -88,6 +66,7 @@ export default function Items() {
     } catch (e: unknown) {
       if (e instanceof Error) {
         console.log(e.message);
+        setItems(itemsDataMock);
       }
     } finally {
       setIsLoading(false);
@@ -103,18 +82,24 @@ export default function Items() {
     <div className={styles.container}>
       <div className={styles.categoriesSection}>
         {categoryList.length > 0 &&
-          categoryList.map((category) => (
+          categoryList.map((category, i) => (
             <div key={category.id}>
               <div
                 onClick={() => {
-                  setChosenCategory(category.id);
+                  setCategoryList((prev) => {
+                    let updatedArray = [...prev];
+                    if (updatedArray.length > 1) {
+                      const updatedObject = { ...updatedArray[i], open: !updatedArray[i].open };
+                      updatedArray[i] = updatedObject;
+                    }
+                    return updatedArray;
+                  });
                 }}
               >
                 {" "}
-                {category.name}{" "}
-                {category.id !== chosenCategory ? <AiOutlinePlus /> : <AiOutlineMinus />}
+                {category.name} {category.open === false ? <AiOutlinePlus /> : <AiOutlineMinus />}
               </div>
-              {category.id === chosenCategory && (
+              {category.open === true && (
                 <ul>
                   <li>New bags</li>
                   <li>Old bags</li>
