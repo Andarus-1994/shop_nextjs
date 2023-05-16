@@ -130,7 +130,7 @@ export default function Profile() {
             </div>
             <div className={styles.profileBox}>
               <div className={styles.profileImage}>
-                {typeof profile.profile_image === "string" ? (
+                {typeof profile.profile_image === "string" || !!!profile.profile_image ? (
                   <Image
                     src={profile.profile_image ? profile.profile_image : CostumeImage}
                     alt="Profile Image"

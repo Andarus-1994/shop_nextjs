@@ -157,6 +157,15 @@ export default function Items() {
           />
         </div>
         <div>
+          <label>Main Category</label>
+          <select>
+            <option>test</option>
+          </select>
+        </div>
+        <div>
+          <button>Create Main Category</button>
+        </div>
+        <div>
           <label>Category</label>
           <select
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -168,8 +177,9 @@ export default function Items() {
             })}
           </select>
         </div>
+
         <div>
-          <button>Add Category +</button>
+          <button>Create Category</button>
         </div>
       </div>
       <div>
