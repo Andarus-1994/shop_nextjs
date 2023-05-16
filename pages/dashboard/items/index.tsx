@@ -2,148 +2,40 @@ import { useState, useEffect } from "react";
 import { IndexLayout } from "../../../Components/LayoutDashboard";
 import styles from "../../../styles/Dashboard/Items.module.scss";
 import Item from "./item";
+import { itemsDashboard, itemsDashboard2 } from "../../../Components/Data/items";
+import NewCategory from "./newCategoryModal";
 
 export default function Items() {
   const [categories, setCategories] = useState([
     { id: "2", name: "Shirts" },
     { id: "3", name: "Backpacks" },
   ]);
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
   const editItem = (i: number) => {
     console.log(i);
   };
   const deleteItem = (i: number) => {
     console.log(i);
   };
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      name: "BackPack",
-      image: "",
-      price: 23,
-      stock: 3,
-      sold: 10,
-      action1: editItem,
-      action2: deleteItem,
-    },
-    {
-      id: 22,
-      name: "Double BackPack",
-      image: "",
-      price: 43,
-      stock: 6,
-      sold: 5,
-      action1: editItem,
-      action2: deleteItem,
-    },
-    {
-      id: 41,
-      name: "Small BackPack",
-      image: "",
-      price: 33,
-      stock: 2,
-      sold: 1,
-      action1: editItem,
-      action2: deleteItem,
-    },
-    ,
-  ]);
+  const [items, setItems] = useState(itemsDashboard);
   const [category, setCategory] = useState(categories[0].name);
   const [filterItem, setFilterItem] = useState("");
 
   useEffect(() => {
     if (category === "Backpacks") {
-      setItems([
-        {
-          id: 1,
-          name: "BackPack",
-          image: "",
-          price: 23,
-          stock: 3,
-          sold: 10,
-          action1: editItem,
-          action2: deleteItem,
-        },
-        {
-          id: 22,
-          name: "Double BackPack",
-          image: "",
-          price: 43,
-          stock: 6,
-          sold: 5,
-          action1: editItem,
-          action2: deleteItem,
-        },
-        {
-          id: 41,
-          name: "Small BackPack",
-          image: "",
-          price: 33,
-          stock: 2,
-          sold: 1,
-          action1: editItem,
-          action2: deleteItem,
-        },
-        {
-          id: 46,
-          name: "Small BackPack TWO",
-          image: "",
-          price: 33,
-          stock: 2,
-          sold: 3,
-          action1: editItem,
-          action2: deleteItem,
-        },
-        {
-          id: 49,
-          name: "One Pack",
-          image: "",
-          price: 50,
-          stock: 2,
-          sold: 1,
-          action1: editItem,
-          action2: deleteItem,
-        },
-        ,
-      ]);
+      setItems(itemsDashboard);
     } else {
-      setItems([
-        {
-          id: 38,
-          name: "Shirt",
-          image: "",
-          price: 23,
-          stock: 5,
-          sold: 4,
-          action1: editItem,
-          action2: deleteItem,
-        },
-        {
-          id: 4,
-          name: "Tag Shirt",
-          image: "",
-          price: 5,
-          stock: 2,
-          sold: 5,
-          action1: editItem,
-          action2: deleteItem,
-        },
-        {
-          id: 15,
-          name: "T Shirt 22",
-          image: "",
-          price: 13,
-          stock: 6,
-          sold: 19,
-          action1: editItem,
-          action2: deleteItem,
-        },
-        ,
-      ]);
+      setItems(itemsDashboard2);
     }
   }, [category]);
 
+  const closeModalCategory = () => {
+    setShowCategoryModal(false);
+  };
+
   return (
     <div className={styles.items}>
+      {showCategoryModal && <NewCategory closeModal={closeModalCategory} />}
       <section>
         <h3>Items control</h3>
         <h4>Add new items or modify the existing ones</h4>
@@ -179,7 +71,7 @@ export default function Items() {
         </div>
 
         <div>
-          <button>Create Category</button>
+          <button onClick={() => setShowCategoryModal(true)}>Create Category</button>
         </div>
       </div>
       <div>

@@ -3,7 +3,68 @@ export const itemsData = [
   { id: 2, name: "T-Shirt 2", price: "31", category_id: 1 },
   { id: 3, name: "T-Shirt 4", price: "41", category_id: 1 },
 ];
+export const itemsDashboard = [
+  {
+    id: 1,
+    name: "BackPack",
+    image: "",
+    price: 23,
+    stock: 3,
+    sold: 10,
+  },
+  {
+    id: 22,
+    name: "Double BackPack",
+    image: "",
+    price: 43,
+    stock: 6,
+    sold: 5,
+  },
+  {
+    id: 41,
+    name: "Small BackPack",
+    image: "",
+    price: 33,
+    stock: 2,
+    sold: 1,
+  },
+  ,
+];
 
+export const itemsDashboard2 = [
+  {
+    id: 38,
+    name: "Shirt",
+    image: "",
+    price: 23,
+    stock: 5,
+    sold: 4,
+  },
+  {
+    id: 4,
+    name: "Tag Shirt",
+    image: "",
+    price: 5,
+    stock: 2,
+    sold: 5,
+  },
+  {
+    id: 15,
+    name: "T Shirt 22",
+    image: "",
+    price: 13,
+    stock: 6,
+    sold: 19,
+  },
+  {
+    id: 157,
+    name: "T Shirt 2244",
+    image: "",
+    price: 13,
+    stock: 6,
+    sold: 19,
+  },
+];
 export const categoryListData = [
   {
     id: 1,
