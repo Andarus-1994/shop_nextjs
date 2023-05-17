@@ -1,11 +1,13 @@
 import "../styles/globals.scss";
 import type { AppProps } from "next/app";
+import { useState, useEffect } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import Layout from "../Components/Layout";
 import { store } from "../store/store";
 import { Provider } from "react-redux";
 import Nav from "../Components/Navbar";
 import Footer from "../Components/Footer";
+import LoadingPage from "./Loading";
 
 type ComponentWithPageLayout = AppProps & {
   Component: AppProps["Component"] & {
@@ -14,7 +16,21 @@ type ComponentWithPageLayout = AppProps & {
 };
 
 export default function App({ Component, pageProps }: ComponentWithPageLayout) {
-  return (
+  const [loadingPage, setLoadingPage] = useState(true);
+
+  useEffect(() => {
+    if (Component.name === "Home") {
+      setTimeout(() => {
+        setLoadingPage(false);
+      }, 700);
+    } else {
+      setLoadingPage(false);
+    }
+  }, []);
+
+  return loadingPage ? (
+    <LoadingPage />
+  ) : (
     <Provider store={store}>
       <Layout>
         <Nav />
@@ -29,6 +45,7 @@ export default function App({ Component, pageProps }: ComponentWithPageLayout) {
           </>
         )}
       </Layout>
+
       <Analytics />
     </Provider>
   );
