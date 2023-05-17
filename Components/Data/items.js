@@ -1,7 +1,10 @@
 export const itemsData = [
-  { id: 1, name: "T-Shirt", price: "31", category_id: 1 },
+  { id: 1, name: "Jacket 1", price: "10", category_id: 1 },
   { id: 2, name: "T-Shirt 2", price: "31", category_id: 1 },
-  { id: 3, name: "T-Shirt 4", price: "41", category_id: 1 },
+  { id: 3, name: "T-Shirt 4", price: "77", category_id: 1 },
+  { id: 4, name: "T-Shirt 4", price: "41", category_id: 2 },
+  { id: 5, name: "Jeans 77", price: "150", category_id: 2 },
+  { id: 6, name: "Jeans 91", price: "550", category_id: 2 },
 ];
 export const itemsDashboard = [
   {
