@@ -1,10 +1,10 @@
 import styles from "../../styles/Items.module.scss";
 import axios from "axios";
-import { CSSProperties, useEffect, useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import Image from "next/image";
-import JacketImage from "../../public/jacket.jpg";
+import JacketImage from "../../public/jacket1.jpg";
 import Jeans from "../../public/jeans.jpg";
-import { AiOutlineSearch, AiOutlineLoading3Quarters } from "react-icons/ai";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaBoxes } from "react-icons/fa";
 import { MdOutlineFilterAlt } from "react-icons/md";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
@@ -33,7 +33,6 @@ type categoryList = {
 export default function Items() {
   const [items, setItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [chosenCategory, setChosenCategory] = useState(0);
   const [categoryList, setCategoryList] = useState<categoryList[]>([]);
 
   const getMainCategories = async () => {
@@ -179,7 +178,7 @@ export default function Items() {
                 <div key={index} className={styles.soldItem}>
                   <div className={styles.imageBox}>
                     {index % 2 === 0 && <Image src={JacketImage} alt="Jacket" />}
-                    {index % 2 === 1 && <Image src={Jeans} alt="Jacket" />}
+                    {index % 4 === 1 && <Image src={Jeans} alt="Jacket" />}
                     <h4>More sizes</h4>
                   </div>
                   <div className={styles.detailsBox}>

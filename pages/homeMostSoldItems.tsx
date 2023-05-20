@@ -1,5 +1,5 @@
 import styles from "../styles/Home.module.scss";
-import JacketImage from "../public/jacket.jpg";
+import JacketImage from "../public/jacket1.jpg";
 import CostumeImage from "../public/costume.jpg";
 import Image from "next/image";
 export default function homeMostSoldItems() {
