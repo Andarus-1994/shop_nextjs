@@ -115,8 +115,12 @@
     border-radius: 15px;
     font-family: "Poppins";
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+    .error {
+      color: red;
+      font-weight: 600;
+    }
     h4 {
-      font-size: 20px;
+      font-size: 22px;
     }
     .inputBox {
       width: 100%;
@@ -125,7 +129,6 @@
       justify-content: flex-end;
       flex-direction: row;
       gap: 5px;
-
       label {
         width: 90px;
         text-align: right;

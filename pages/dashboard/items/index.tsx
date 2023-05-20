@@ -4,12 +4,14 @@ import styles from "../../../styles/Dashboard/Items.module.scss";
 import Item from "./item";
 import { itemsDashboard, itemsDashboard2 } from "../../../Components/Data/items";
 import NewCategory from "./newCategoryModal";
+import NewMainCategory from "./newMainCategoryModal";
 
 export default function Items() {
   const [categories, setCategories] = useState([
     { id: "2", name: "Shirts" },
     { id: "3", name: "Backpacks" },
   ]);
+  const [showMainCategoryModal, setShowMainCategoryModal] = useState(false);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const editItem = (i: number) => {
     console.log(i);
@@ -33,8 +35,13 @@ export default function Items() {
     setShowCategoryModal(false);
   };
 
+  const closeModalMainCategory = () => {
+    setShowMainCategoryModal(false);
+  };
+
   return (
     <div className={styles.items}>
+      {showMainCategoryModal && <NewMainCategory closeModal={closeModalMainCategory} />}
       {showCategoryModal && <NewCategory closeModal={closeModalCategory} />}
       <section>
         <h3>Items control</h3>
@@ -55,7 +62,7 @@ export default function Items() {
           </select>
         </div>
         <div>
-          <button>Create Main Category</button>
+          <button onClick={() => setShowMainCategoryModal(true)}>Create Main Category</button>
         </div>
         <div>
           <label>Category</label>

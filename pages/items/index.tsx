@@ -34,8 +34,9 @@ export default function Items() {
   const [items, setItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [categoryList, setCategoryList] = useState<categoryList[]>([]);
-
+  const [categoryLoading, setCategoryLoading] = useState(true);
   const getMainCategories = async () => {
+    setCategoryLoading(true);
     try {
       const mainCategories = await axios.get(
         process.env.NEXT_PUBLIC_API_URL + "api/retrieveMainCategories"
@@ -50,6 +51,7 @@ export default function Items() {
       }
     } finally {
       console.log("end");
+      setCategoryLoading(false);
     }
   };
 
@@ -80,7 +82,11 @@ export default function Items() {
   return (
     <div className={styles.container}>
       <div className={styles.categoriesSection}>
-        {categoryList.length > 0 &&
+        {categoryLoading ? (
+          <div className={stylesUtils.simpleLoading}>
+            <AiOutlineLoading3Quarters />
+          </div>
+        ) : categoryList.length > 0 ? (
           categoryList.map((category, i) => (
             <div key={category.id}>
               <div
@@ -106,7 +112,10 @@ export default function Items() {
                 </ul>
               )}
             </div>
-          ))}
+          ))
+        ) : (
+          <div>No categories configured</div>
+        )}
       </div>
       <div className={styles.containerItems}>
         <div className={styles.filterSection}>

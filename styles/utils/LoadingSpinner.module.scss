@@ -1,0 +1,17 @@
+.loadingGlobal {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  animation: rotateGlobal 1.5s linear infinite;
+  svg {
+    font-size: 20px;
+  }
+}
+
+@keyframes rotateGlobal {
+  to {
+    transform: rotate(360deg);
+  }
+}

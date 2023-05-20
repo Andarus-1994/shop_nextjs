@@ -2,6 +2,8 @@ import axios from "axios";
 import styles from "../../../styles/Dashboard/Users.module.scss";
 import { useState } from "react";
 import LoadingSpinner from "../../../Components/Loading";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 
 type User = {
   id: number;
@@ -18,9 +20,11 @@ interface ModalProps {
   closeModal: Function;
 }
 
-export default function NewCategory({ closeModal }: ModalProps) {
+export default function NewMainCategory({ closeModal }: ModalProps) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const animatedComponents = makeAnimated();
+
   const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       closeModal();
@@ -28,8 +32,8 @@ export default function NewCategory({ closeModal }: ModalProps) {
   };
 
   const createCategory = async () => {
-    let errorMessage = "";
     setLoading(true);
+    let errorMessage = "";
     const token = localStorage.getItem("token");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -57,16 +61,35 @@ export default function NewCategory({ closeModal }: ModalProps) {
       }}
     >
       <div className={styles.userModal}>
-        <h4>New Category</h4>
+        <h4>New Main Category</h4>
         <div className={styles.inputBox}>
           <label>Name</label>
-          <input placeholder="Category" />
+          <input placeholder="Main category" />
         </div>
         <div className={styles.inputBox}>
-          <div>Main Category:</div>
-          <select>
-            <option>Blousons</option>
-          </select>
+          <Select
+            className="multi-select"
+            backspaceRemovesValue={true}
+            captureMenuScroll={true}
+            isLoading={true}
+            loadingMessage={() => "Loading"}
+            styles={{
+              control: (baseStyles, state) => ({
+                ...baseStyles,
+                width: "370px",
+                margin: "5px 0 0 0",
+                padding: "0px 10px",
+                border: "none",
+                borderRadius: "15px",
+                boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.3)",
+              }),
+            }}
+            placeholder="Sub - Categories"
+            closeMenuOnSelect={false}
+            components={animatedComponents}
+            isMulti
+            options={[]}
+          />
         </div>
         <div className={styles.error}>{error}</div>
         <div className={styles.inputBox}>
