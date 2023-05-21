@@ -132,6 +132,9 @@
       label {
         width: 90px;
         text-align: right;
+        span {
+          color: $red;
+        }
       }
 
       input {

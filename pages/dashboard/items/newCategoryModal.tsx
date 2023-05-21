@@ -3,20 +3,9 @@ import styles from "../../../styles/Dashboard/Users.module.scss";
 import { useState } from "react";
 import LoadingSpinner from "../../../Components/Loading";
 
-type User = {
-  id: number;
-  user: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-  address: string;
-  profile_image: string;
-  roles: Array<string> | string;
-};
-
-interface ModalProps {
+type ModalProps = {
   closeModal: Function;
-}
+};
 
 export default function NewCategory({ closeModal }: ModalProps) {
   const [error, setError] = useState("");
