@@ -2,6 +2,8 @@ import axios from "axios";
 import styles from "../../../styles/Dashboard/Users.module.scss";
 import { useState } from "react";
 import LoadingSpinner from "../../../Components/Loading";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 
 type ModalProps = {
   closeModal: Function;
@@ -10,6 +12,8 @@ type ModalProps = {
 export default function NewCategory({ closeModal }: ModalProps) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const animatedComponents = makeAnimated();
+
   const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       closeModal();
@@ -53,9 +57,32 @@ export default function NewCategory({ closeModal }: ModalProps) {
         </div>
         <div className={styles.inputBox}>
           <div>Main Category:</div>
-          <select>
-            <option>Blousons</option>
-          </select>
+          <Select
+            className="multi-select"
+            backspaceRemovesValue={true}
+            captureMenuScroll={true}
+            isLoading={true}
+            loadingMessage={() => "Loading"}
+            onChange={(e) => {
+              const selectedOption = e as { value: string; label: string };
+              console.log(selectedOption);
+            }}
+            styles={{
+              control: (baseStyles, state) => ({
+                ...baseStyles,
+                width: "220px",
+                margin: "5px 0 0 10px",
+                padding: "0px 10px",
+                border: "none",
+                borderRadius: "15px",
+                boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.3)",
+              }),
+            }}
+            placeholder="Categories"
+            closeMenuOnSelect={false}
+            components={animatedComponents}
+            options={[]}
+          />
         </div>
         <div className={styles.error}>{error}</div>
         <div className={styles.inputBox}>

@@ -10,6 +10,8 @@ export const itemsDashboard = [
   {
     id: 1,
     name: "BackPack",
+    label: "Backpack",
+    value: 1,
     image: "",
     price: 23,
     stock: 3,
@@ -18,6 +20,8 @@ export const itemsDashboard = [
   {
     id: 22,
     name: "Double BackPack",
+    label: "Double Backpack",
+    value: 22,
     image: "",
     price: 43,
     stock: 6,
@@ -26,6 +30,8 @@ export const itemsDashboard = [
   {
     id: 41,
     name: "Small BackPack",
+    label: "Small Backpack",
+    value: 41,
     image: "",
     price: 33,
     stock: 2,
@@ -37,7 +43,9 @@ export const itemsDashboard = [
 export const itemsDashboard2 = [
   {
     id: 38,
-    name: "Shirt",
+    name: "Test",
+    label: "Test",
+    value: 38,
     image: "",
     price: 23,
     stock: 5,
@@ -45,7 +53,9 @@ export const itemsDashboard2 = [
   },
   {
     id: 4,
-    name: "Tag Shirt",
+    name: "Test",
+    label: "Test",
+    value: 4,
     image: "",
     price: 5,
     stock: 2,
@@ -53,7 +63,9 @@ export const itemsDashboard2 = [
   },
   {
     id: 15,
-    name: "T Shirt 22",
+    name: "Shirt Green",
+    label: "Shirt Green",
+    value: 15,
     image: "",
     price: 13,
     stock: 6,
@@ -62,6 +74,8 @@ export const itemsDashboard2 = [
   {
     id: 157,
     name: "T Shirt 2244",
+    label: "T Shirt 2244",
+    value: 157,
     image: "",
     price: 13,
     stock: 6,

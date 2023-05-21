@@ -18,6 +18,9 @@
     flex-direction: row;
     align-items: center;
     gap: 10px;
+    &:nth-of-type(1) {
+      margin-right: auto;
+    }
     & > input {
       margin-right: 40px;
       border-radius: 20px;

@@ -11,8 +11,8 @@ import axios from "axios";
 
 export default function Items() {
   const [categories, setCategories] = useState([
-    { id: "2", name: "Shirts" },
-    { id: "3", name: "Backpacks" },
+    { id: "2", name: "Shirts", value: 2, label: "Shirts" },
+    { id: "3", name: "Backpacks", value: 3, label: "Backpacks" },
   ]);
   const [mainCategories, setMainCategories] = useState([]);
   const [showMainCategoryModal, setShowMainCategoryModal] = useState(false);
@@ -122,15 +122,30 @@ export default function Items() {
         </div>
         <div>
           <label>Category</label>
-          <select
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-              setCategory(e.target.value);
+          <Select
+            backspaceRemovesValue={true}
+            captureMenuScroll={true}
+            isLoading={loadingMainCategories}
+            loadingMessage={() => "Loading"}
+            onChange={(e) => {
+              const selectedOption = e as { value: string; label: string };
+              setCategory(selectedOption.label);
             }}
-          >
-            {categories.map((categ) => {
-              return <option key={categ.id}>{categ.name}</option>;
-            })}
-          </select>
+            styles={{
+              control: (baseStyles, state) => ({
+                ...baseStyles,
+                width: "250px",
+                margin: "5px 0 0 0",
+                padding: "0px 10px",
+                border: "none",
+                borderRadius: "15px",
+                boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.3)",
+              }),
+            }}
+            placeholder="Main Categories"
+            components={animatedComponents}
+            options={categories}
+          />
         </div>
 
         <div>
