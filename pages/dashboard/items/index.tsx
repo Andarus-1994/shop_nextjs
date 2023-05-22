@@ -17,7 +17,13 @@ export default function Items() {
   const [mainCategories, setMainCategories] = useState([]);
   const [showMainCategoryModal, setShowMainCategoryModal] = useState(false);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
-  const [loadingMainCategories, setLoadingMainCategories] = useState(false);
+  const [loadingMainCategories, setLoadingMainCategories] = useState(true);
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [savedCategories, setSavedCategories] = useState({
+    mainCategory: 0,
+    category: 0 as number,
+  });
+
   const editItem = (i: number) => {
     console.log(i);
   };
@@ -30,6 +36,7 @@ export default function Items() {
   const animatedComponents = makeAnimated();
 
   const getMainCategories = useCallback(async () => {
+    console.log("test1234");
     setLoadingMainCategories(true);
     let errorMessage = "";
     const token = localStorage.getItem("token");
@@ -59,6 +66,39 @@ export default function Items() {
     getMainCategories();
   }, [getMainCategories]);
 
+  const getCategories = useCallback(async () => {
+    setLoadingCategories(true);
+    let errorMessage = "";
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    console.log("retrieve categ");
+    try {
+      const items = await axios.get(
+        process.env.NEXT_PUBLIC_API_URL + "api/dashboard/getCategories",
+        config
+      );
+      const itemsData = items.data;
+      setCategories(itemsData);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        errorMessage = e.message;
+        console.log(errorMessage);
+        setCategories([
+          { id: "2", name: "Shirts", value: 2, label: "Shirts" },
+          { id: "3", name: "Backpacks", value: 3, label: "Backpacks" },
+        ]);
+      }
+    } finally {
+      setLoadingCategories(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    getCategories();
+  }, [savedCategories.mainCategory, getCategories]);
+
   useEffect(() => {
     if (category === "Backpacks") {
       setItems(itemsDashboard);
@@ -77,7 +117,12 @@ export default function Items() {
 
   return (
     <div className={styles.items}>
-      {showMainCategoryModal && <NewMainCategory closeModal={closeModalMainCategory} />}
+      {showMainCategoryModal && (
+        <NewMainCategory
+          closeModal={closeModalMainCategory}
+          refreshMainCategories={getMainCategories}
+        />
+      )}
       {showCategoryModal && <NewCategory closeModal={closeModalCategory} />}
       <section>
         <h3>Items control</h3>
@@ -99,7 +144,8 @@ export default function Items() {
             isLoading={loadingMainCategories}
             loadingMessage={() => "Loading"}
             onChange={(e) => {
-              console.log(e);
+              const selectedOption = e as { value: number; label: string };
+              setSavedCategories({ ...savedCategories, mainCategory: selectedOption.value });
             }}
             styles={{
               control: (baseStyles, state) => ({
@@ -125,7 +171,7 @@ export default function Items() {
           <Select
             backspaceRemovesValue={true}
             captureMenuScroll={true}
-            isLoading={loadingMainCategories}
+            isLoading={loadingCategories}
             loadingMessage={() => "Loading"}
             onChange={(e) => {
               const selectedOption = e as { value: string; label: string };
@@ -142,7 +188,7 @@ export default function Items() {
                 boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.3)",
               }),
             }}
-            placeholder="Main Categories"
+            placeholder="Categories"
             components={animatedComponents}
             options={categories}
           />

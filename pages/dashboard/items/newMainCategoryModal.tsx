@@ -7,6 +7,7 @@ import makeAnimated from "react-select/animated";
 
 type ModalProps = {
   closeModal: Function;
+  refreshMainCategories: Function;
 };
 type Category = {
   id: number;
@@ -22,7 +23,7 @@ type CustomError = Error & {
   };
 };
 
-export default function NewMainCategory({ closeModal }: ModalProps) {
+export default function NewMainCategory({ closeModal, refreshMainCategories }: ModalProps) {
   const [error, setError] = useState("");
   const [mainCategory, setMainCategory] = useState({
     name: "",
@@ -53,7 +54,6 @@ export default function NewMainCategory({ closeModal }: ModalProps) {
       );
       const itemsData = items.data;
       setCategories(itemsData);
-      console.log(itemsData);
     } catch (e: unknown) {
       if (e instanceof Error) {
         errorMessage = e.message;
@@ -79,10 +79,11 @@ export default function NewMainCategory({ closeModal }: ModalProps) {
         config
       );
       const itemsData = items.data;
-      console.log(itemsData);
+      if (itemsData.message) {
+        refreshMainCategories();
+      }
     } catch (e: unknown) {
       if (e instanceof Error) {
-        console.log(e.message);
         errorMessage = e.message;
         setError(errorMessage);
 
