@@ -24,16 +24,23 @@ type Item = {
   name: string;
   price: string;
 };
-type categoryList = {
+type MainCategoryList = {
   id: number;
   name: string;
   open: boolean;
+  categories: Array<Category>;
+};
+
+type Category = {
+  id: number;
+  name: string;
+  main_category_id: number;
 };
 
 export default function Items() {
   const [items, setItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [categoryList, setCategoryList] = useState<categoryList[]>([]);
+  const [mainCategoryList, setMainCategoryList] = useState<MainCategoryList[]>([]);
   const [categoryLoading, setCategoryLoading] = useState(true);
   const getMainCategories = async () => {
     setCategoryLoading(true);
@@ -42,12 +49,12 @@ export default function Items() {
         process.env.NEXT_PUBLIC_API_URL + "api/retrieveMainCategories"
       );
       const mainCategoriesData = mainCategories.data;
-      setCategoryList(mainCategoriesData);
+      setMainCategoryList(mainCategoriesData);
       console.log(mainCategoriesData);
     } catch (e: unknown) {
       if (e instanceof Error) {
         console.log(e.message, "\n api/retrieveMainCategories");
-        setCategoryList(categoryListData);
+        setMainCategoryList(categoryListData);
       }
     } finally {
       console.log("end");
@@ -86,33 +93,37 @@ export default function Items() {
           <div className={stylesUtils.simpleLoading}>
             <AiOutlineLoading3Quarters />
           </div>
-        ) : categoryList.length > 0 ? (
-          categoryList.map((category, i) => (
-            <div key={category.id}>
-              <div
-                onClick={() => {
-                  setCategoryList((prev) => {
-                    let updatedArray = [...prev];
-                    if (updatedArray.length > 1) {
-                      const updatedObject = { ...updatedArray[i], open: !updatedArray[i].open };
-                      updatedArray[i] = updatedObject;
-                    }
-                    return updatedArray;
-                  });
-                }}
-              >
-                {" "}
-                {category.name} {category.open === false ? <AiOutlinePlus /> : <AiOutlineMinus />}
-              </div>
-              {category.open === true && (
-                <ul>
-                  <li>New bags</li>
-                  <li>Old bags</li>
-                  <li>Test bags</li>
-                </ul>
-              )}
-            </div>
-          ))
+        ) : mainCategoryList.length > 0 ? (
+          mainCategoryList.map(
+            (mainCategory, i) =>
+              mainCategory.categories.length > 0 && (
+                <div key={mainCategory.id}>
+                  <div
+                    onClick={() => {
+                      setMainCategoryList((prev) => {
+                        let updatedArray = [...prev];
+                        if (updatedArray.length > 1) {
+                          const updatedObject = { ...updatedArray[i], open: !updatedArray[i].open };
+                          updatedArray[i] = updatedObject;
+                        }
+                        return updatedArray;
+                      });
+                    }}
+                  >
+                    {" "}
+                    {mainCategory.name}{" "}
+                    {mainCategory.open === false ? <AiOutlinePlus /> : <AiOutlineMinus />}
+                  </div>
+                  {mainCategory.open === true && (
+                    <ul>
+                      {mainCategory.categories.map((categ) => (
+                        <li key={categ.id}>{categ.name}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )
+          )
         ) : (
           <div>No categories configured</div>
         )}

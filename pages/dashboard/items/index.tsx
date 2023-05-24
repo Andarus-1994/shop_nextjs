@@ -8,6 +8,7 @@ import NewMainCategory from "./newMainCategoryModal";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import axios from "axios";
+import NewOrEditItem from "./newItemModal";
 
 export default function Items() {
   const [categories, setCategories] = useState([
@@ -17,6 +18,7 @@ export default function Items() {
   const [mainCategories, setMainCategories] = useState([]);
   const [showMainCategoryModal, setShowMainCategoryModal] = useState(false);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [showItemModal, setShowItemModal] = useState(false);
   const [loadingMainCategories, setLoadingMainCategories] = useState(true);
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [savedCategories, setSavedCategories] = useState({
@@ -36,7 +38,6 @@ export default function Items() {
   const animatedComponents = makeAnimated();
 
   const getMainCategories = useCallback(async () => {
-    console.log("test1234");
     setLoadingMainCategories(true);
     let errorMessage = "";
     const token = localStorage.getItem("token");
@@ -50,7 +51,6 @@ export default function Items() {
       );
       const itemsData = items.data;
       setMainCategories(itemsData);
-      console.log(itemsData);
     } catch (e: unknown) {
       if (e instanceof Error) {
         errorMessage = e.message;
@@ -73,7 +73,6 @@ export default function Items() {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    console.log("retrieve categ");
     try {
       const items = await axios.get(
         process.env.NEXT_PUBLIC_API_URL + "api/dashboard/getCategories",
@@ -115,6 +114,10 @@ export default function Items() {
     setShowMainCategoryModal(false);
   };
 
+  const closeModalItem = () => {
+    setShowItemModal(false);
+  };
+
   return (
     <div className={styles.items}>
       {showMainCategoryModal && (
@@ -124,6 +127,7 @@ export default function Items() {
         />
       )}
       {showCategoryModal && <NewCategory closeModal={closeModalCategory} />}
+      {showItemModal && <NewOrEditItem closeModal={closeModalItem} />}
       <section>
         <h3>Items control</h3>
         <h4>Add new items or modify the existing ones</h4>
@@ -199,7 +203,8 @@ export default function Items() {
         </div>
       </div>
       <div>
-        <h4>Products for {category}</h4>
+        <h4>Products for {category}</h4>{" "}
+        <button onClick={() => setShowItemModal(true)}>New Item</button>
         <table className={styles.itemList}>
           <thead>
             <tr className={styles.itemListRow}>

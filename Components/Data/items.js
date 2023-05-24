@@ -87,21 +87,69 @@ export const categoryListData = [
     id: 1,
     name: "Clothing",
     open: false,
+    categories: [],
   },
   {
     id: 2,
     name: "Bags",
     open: false,
+    categories: [
+      {
+        id: 44,
+        name: "BAG !",
+        created_at: null,
+        updated_at: "2023-05-22T16:13:30.000000Z",
+        main_category_id: 12,
+      },
+      {
+        id: 22,
+        name: "Semi-bag",
+        created_at: "2023-05-22T15:54:15.000000Z",
+        updated_at: "2023-05-22T16:13:30.000000Z",
+        main_category_id: 12,
+      },
+      {
+        id: 9,
+        name: "Cool Bag",
+        created_at: "2023-05-22T16:03:28.000000Z",
+        updated_at: "2023-05-22T16:13:30.000000Z",
+        main_category_id: 12,
+      },
+    ],
   },
   {
     id: 3,
     name: "Beauty",
     open: false,
+    categories: [],
   },
   {
     id: 4,
     name: "Accessories",
     open: false,
+    categories: [
+      {
+        id: 2,
+        name: "Something",
+        created_at: null,
+        updated_at: "2023-05-22T16:13:30.000000Z",
+        main_category_id: 14,
+      },
+      {
+        id: 3,
+        name: "Jewelery",
+        created_at: "2023-05-22T15:54:15.000000Z",
+        updated_at: "2023-05-22T16:13:30.000000Z",
+        main_category_id: 14,
+      },
+      {
+        id: 4,
+        name: "Watches",
+        created_at: "2023-05-22T16:03:28.000000Z",
+        updated_at: "2023-05-22T16:13:30.000000Z",
+        main_category_id: 14,
+      },
+    ],
   },
 ];
 
