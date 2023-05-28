@@ -63,7 +63,7 @@ export default function UserDeletionModal({ id, closeModal, refreshUsers }: Dele
         handleClose(e);
       }}
     >
-      <div className={styles.userModal}>
+      <div className={styles.dashboardModal}>
         <h4>You gonna delete the user with id: {id}</h4>
         <div className={styles.inputBox}>
           <button onClick={() => closeModal()}>Cancel</button>

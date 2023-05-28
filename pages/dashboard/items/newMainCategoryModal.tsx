@@ -109,7 +109,7 @@ export default function NewMainCategory({ closeModal, refreshMainCategories }: M
         handleClose(e);
       }}
     >
-      <div className={styles.userModal}>
+      <div className={styles.dashboardModal}>
         <h4>New Main Category</h4>
         <div className={styles.inputBox}>
           <label>
@@ -134,7 +134,7 @@ export default function NewMainCategory({ closeModal, refreshMainCategories }: M
             styles={{
               control: (baseStyles, state) => ({
                 ...baseStyles,
-                width: "380px",
+                width: "360px",
                 margin: "5px 0 0 0",
                 padding: "0px 10px",
                 border: "none",

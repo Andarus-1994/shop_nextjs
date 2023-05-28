@@ -62,7 +62,7 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
         handleClose(e);
       }}
     >
-      <div className={styles.userModal}>
+      <div className={styles.dashboardModal}>
         <h4>New Item</h4>
         <div className={styles.inputBox}>
           <label>
@@ -89,7 +89,6 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
           />
         </div>
         <div className={styles.inputBox}>
-          <div>Main Category:</div>
           <Select
             className="multi-select"
             backspaceRemovesValue={true}
@@ -104,7 +103,7 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
             styles={{
               control: (baseStyles, state) => ({
                 ...baseStyles,
-                width: "220px",
+                width: "360px",
                 margin: "5px 0 0 10px",
                 padding: "0px 10px",
                 border: "none",

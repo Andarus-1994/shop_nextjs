@@ -9,6 +9,8 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import axios from "axios";
 import NewOrEditItem from "./newItemModal";
+import { Pagination } from "@nextui-org/react";
+import { AiOutlineAppstoreAdd } from "react-icons/ai";
 
 export default function Items() {
   const [categories, setCategories] = useState([
@@ -203,18 +205,21 @@ export default function Items() {
         </div>
       </div>
       <div>
-        <h4>Products for {category}</h4>{" "}
-        <button onClick={() => setShowItemModal(true)}>New Item</button>
+        <div className={styles.newItemSide}>
+          <button onClick={() => setShowItemModal(true)}>
+            <AiOutlineAppstoreAdd /> New Item
+          </button>
+        </div>
         <table className={styles.itemList}>
           <thead>
-            <tr className={styles.itemListRow}>
-              <th className={styles.itemId}>Id</th>
-              <th className={styles.itemName}>Name</th>
-              <th className={styles.itemImage}>Image</th>
-              <th className={styles.itemPrice}>Price</th>
-              <th className={styles.itemStock}>Stock</th>
-              <th className={styles.itemSold}>Sold</th>
-              <th className={styles.itemAction}>Action</th>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Image</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Sold</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -237,6 +242,27 @@ export default function Items() {
               })}
           </tbody>
         </table>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            marginTop: "40px",
+          }}
+          className={styles.fadeIn}
+        >
+          <Pagination
+            bordered
+            size={"lg"}
+            total={1}
+            color={"secondary"}
+            onChange={(e) => {
+              console.log(e);
+            }}
+            page={1}
+            initialPage={1}
+          />
+        </div>
       </div>
     </div>
   );

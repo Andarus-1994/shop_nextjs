@@ -101,7 +101,7 @@ export default function NewCategory({ closeModal }: ModalProps) {
         handleClose(e);
       }}
     >
-      <div className={styles.userModal}>
+      <div className={styles.dashboardModal}>
         <h4>New Category</h4>
         <div className={styles.inputBox}>
           <label>

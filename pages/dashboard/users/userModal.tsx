@@ -30,7 +30,7 @@ export default function UserModal({ user, closeModal }: UserProps) {
         handleClose(e);
       }}
     >
-      <div className={styles.userModal}>
+      <div className={styles.dashboardModal}>
         <h4>Edit User Profile</h4>
         <div className={styles.inputBox}>
           <label>User</label>
