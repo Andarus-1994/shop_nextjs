@@ -161,21 +161,26 @@ export const categoryListData = [
   },
 ];
 
-export const optionsBrand = [
+type Option = {
+  value: string | number;
+  label: string | number;
+};
+
+export const optionsBrand: Option[] = [
   { value: "Adidas", label: "Adidas" },
   { value: "Puma", label: "Puma" },
   { value: "Crocs", label: "Crocs" },
 ];
-export const optionsColor = [
+export const optionsColor: Option[] = [
   { value: "Red", label: "Red" },
   { value: "Green", label: "Green" },
   { value: "Black", label: "Black" },
 ];
-export const optionsSize = [
+export const optionsSize: Option[] = [
   { value: "S", label: "S" },
   { value: "M", label: "M" },
 ];
-export const optionsPrice = [
+export const optionsPrice: Option[] = [
   { value: "50", label: "Under 50 $" },
   { value: "100", label: "Under 100 $" },
   { value: "200", label: "Under 200 $" },

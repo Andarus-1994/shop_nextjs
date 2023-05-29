@@ -18,6 +18,7 @@ import {
   optionsSize,
   optionsPrice,
 } from "../../Components/Data/items";
+import SelectCustom from "../../Components/UI/select";
 
 type Item = {
   id: number;
@@ -42,6 +43,12 @@ export default function Items() {
   const [isLoading, setIsLoading] = useState(true);
   const [mainCategoryList, setMainCategoryList] = useState<MainCategoryList[]>([]);
   const [categoryLoading, setCategoryLoading] = useState(true);
+  const [filter, setFilter] = useState({
+    brand: null,
+    color: null,
+    size: null,
+    price: null,
+  });
   const getMainCategories = async () => {
     setCategoryLoading(true);
     try {
@@ -85,6 +92,13 @@ export default function Items() {
     getMainCategories();
     fetchItems();
   }, []);
+
+  const handleFilter = (
+    selectedOption: { value: string | number; label: string | number },
+    filterName: string
+  ) => {
+    setFilter({ ...filter, [filterName]: selectedOption });
+  };
 
   return (
     <div className={styles.container}>
@@ -144,40 +158,54 @@ export default function Items() {
           <div className={styles.filters}>
             <div>
               <div className={styles.select}>
-                <CreatableSelect
-                  isClearable
-                  placeholder="Brand"
+                <SelectCustom
                   options={optionsBrand}
-                  instanceId={useId()}
+                  handleSelect={handleFilter}
+                  placeholder="Brand"
+                  filterName="brand"
+                  chosenValue={filter.brand}
                 />
               </div>
               <div className={styles.select}>
-                <CreatableSelect
-                  placeholder="Color"
-                  isClearable
+                <SelectCustom
                   options={optionsColor}
-                  instanceId={useId()}
+                  handleSelect={handleFilter}
+                  placeholder="Color"
+                  filterName="color"
+                  chosenValue={filter.color}
                 />
               </div>
               <div className={styles.select}>
-                <CreatableSelect
-                  placeholder="Size"
-                  isClearable
+                <SelectCustom
                   options={optionsSize}
-                  instanceId={useId()}
+                  handleSelect={handleFilter}
+                  placeholder="Size"
+                  filterName="size"
+                  chosenValue={filter.size}
                 />
               </div>
               <div className={styles.select}>
-                <CreatableSelect
-                  placeholder="Price"
-                  isClearable
+                <SelectCustom
                   options={optionsPrice}
-                  instanceId={useId()}
+                  handleSelect={handleFilter}
+                  placeholder="Price"
+                  filterName="price"
+                  chosenValue={filter.price}
                 />
               </div>
             </div>
             <div>
-              <button>
+              <button
+                onClick={() =>
+                  setFilter({
+                    ...filter,
+                    brand: null,
+                    color: null,
+                    size: null,
+                    price: null,
+                  })
+                }
+              >
                 Reset Filters <MdOutlineFilterAlt />
               </button>
             </div>
