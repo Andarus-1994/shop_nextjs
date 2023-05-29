@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userTrigger } from "../../store/reducers/userReducer";
 
 export default function Profile() {
-  interface userProfile {
+  type userProfile = {
     id: number;
     user: string;
     email: string;
@@ -19,7 +19,7 @@ export default function Profile() {
     address: string;
     profile_image: string | File;
     role: Array<string>;
-  }
+  };
 
   const [profile, setProfile] = useState<userProfile>({
     id: 0,

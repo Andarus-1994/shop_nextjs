@@ -141,6 +141,20 @@
       font-size: 22px;
     }
 
+    .labelImage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      img {
+        object-fit: cover;
+        background: rgb(235, 235, 235);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
     .inputBox {
       width: 100%;
       display: flex;

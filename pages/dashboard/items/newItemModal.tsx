@@ -5,6 +5,7 @@ import LoadingSpinner from "../../../Components/Loading";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { AiOutlineUpload } from "react-icons/ai";
+import Image from "next/image";
 
 type ModalProps = {
   closeModal: Function;
@@ -23,16 +24,24 @@ type CustomError = Error & {
     };
   };
 };
+type item = {
+  name: string;
+  price: number;
+  stock: number;
+  image: string | File;
+  categories: Category[];
+};
 
 export default function NewOrEditItem({ closeModal }: ModalProps) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [categories, setCategories] = useState([]);
-  const [item, setItem] = useState({
+  const [item, setItem] = useState<item>({
     name: "",
     price: 0,
     stock: 0,
+    image: "",
     categories: [] as Category[],
   });
   const imageInput = useRef<HTMLInputElement>(null);
@@ -50,8 +59,7 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
       if (!selectedFile.type.startsWith("image/")) {
         return;
       }
-
-      console.log(selectedFile);
+      setItem({ ...item, image: selectedFile });
     }
   };
 
@@ -125,7 +133,7 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
           style={{ display: "none" }}
         />
         <label>Upload Image</label>
-        <label htmlFor="select-image">
+        <label htmlFor="select-image" className={styles.labelImage}>
           <button
             className={styles.itemImage}
             onClick={() => {
@@ -134,7 +142,15 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
           >
             <AiOutlineUpload />
           </button>
+          {typeof item.image === "string" && !!item.image ? (
+            <Image src={item.image} alt="Img" width={60} height={60} />
+          ) : typeof item.image === "object" ? (
+            <Image src={URL.createObjectURL(item.image)} alt="Img" width={60} height={60} />
+          ) : (
+            <Image src="" alt="Img" width={60} height={60} />
+          )}
         </label>
+
         <div className={styles.error}>{error}</div>
         <div className={styles.inputBox}>
           <button onClick={() => closeModal()}>Cancel</button>

@@ -72,15 +72,13 @@ export default function NewCategory({ closeModal }: ModalProps) {
       headers: { Authorization: `Bearer ${token}` },
     };
     try {
-      const items = await axios.post(
+      await axios.post(
         process.env.NEXT_PUBLIC_API_URL + "api/dashboard/newCategory",
         category,
         config
       );
-      const itemsData = items.data;
     } catch (e: unknown) {
       if (e instanceof Error) {
-        console.log(e.message);
         errorMessage = e.message;
         setError(errorMessage);
 
