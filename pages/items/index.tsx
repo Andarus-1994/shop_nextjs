@@ -89,6 +89,7 @@ export default function Items() {
   return (
     <div className={styles.container}>
       <div className={styles.categoriesSection}>
+        <h3>Categories</h3>
         {categoryLoading ? (
           <div className={stylesUtils.simpleLoading}>
             <AiOutlineLoading3Quarters />
@@ -192,7 +193,7 @@ export default function Items() {
             <h3 style={{ fontSize: "44px" }}> Empty Stocks</h3>
           </div>
         ) : (
-          <div className={styles.containerHomeMostSold}>
+          <div className={styles.containerItem}>
             {items.map((item: Item, index: number) => {
               return (
                 <div key={index} className={styles.soldItem}>

@@ -86,31 +86,39 @@ export const categoryListData = [
   {
     id: 1,
     name: "Clothing",
-    open: false,
-    categories: [],
+    open: true,
+    categories: [
+      {
+        id: 654,
+        name: "Male Jeans",
+        created_at: null,
+        updated_at: "2023-05-22T16:13:30.000000Z",
+        main_category_id: 122,
+      },
+    ],
   },
   {
     id: 2,
     name: "Bags",
-    open: false,
+    open: true,
     categories: [
       {
         id: 44,
-        name: "BAG !",
+        name: "Winter Bags",
         created_at: null,
         updated_at: "2023-05-22T16:13:30.000000Z",
         main_category_id: 12,
       },
       {
         id: 22,
-        name: "Semi-bag",
+        name: "Fall Bags",
         created_at: "2023-05-22T15:54:15.000000Z",
         updated_at: "2023-05-22T16:13:30.000000Z",
         main_category_id: 12,
       },
       {
         id: 9,
-        name: "Cool Bag",
+        name: "Vacation Bags",
         created_at: "2023-05-22T16:03:28.000000Z",
         updated_at: "2023-05-22T16:13:30.000000Z",
         main_category_id: 12,
