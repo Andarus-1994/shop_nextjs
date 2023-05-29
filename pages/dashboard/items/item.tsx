@@ -43,7 +43,7 @@ export default function Item({
         <Image src={BackpackImage} alt="item" />
       </td>
       <td style={getAnimationDelay()}>
-        <span>{price}</span> $
+        <span>{price.toFixed(2)}</span> $
       </td>
       <td style={getAnimationDelay()}>{stock}</td>
       <td style={getAnimationDelay()}>{sold}</td>

@@ -17,6 +17,14 @@
   justify-content: center;
   align-items: center;
   padding-left: 10px;
+  @include mobile() {
+    width: 100%;
+    height: fit-content;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding-left: 0;
+  }
   .cover {
     position: absolute;
     background-image: url("../../public/sidenav.jpg");
@@ -72,6 +80,12 @@
       &:hover {
         color: $red !important;
       }
+    }
+    @include mobile() {
+      flex-direction: row;
+      height: fit-content;
+      padding: 5px 0;
+      border-radius: 0;
     }
   }
 }

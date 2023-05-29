@@ -67,10 +67,23 @@
     font-size: 14px;
     font-family: "Figtree", sans-serif;
     box-shadow: 0px 0px 3px 0px rgba(255, 255, 255, 0.3);
+    z-index: 10;
     transition: 0.8s;
     &:hover {
       background: $dark-green;
       transition: 0.4s;
+    }
+    &::after {
+      content: "";
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      background: transparent;
+      animation: buttonAnimation 2s alternate-reverse infinite;
+      z-index: -1;
     }
   }
 }
@@ -100,12 +113,31 @@
     font-weight: 300;
     font-size: 15px;
     font-family: "Figtree", sans-serif;
-    box-shadow: 0px 0px 3px 0px rgba(255, 255, 255, 0.3);
+    box-shadow: 0px 0px 3px 0px rgb(255, 255, 255);
     width: fit-content;
+    overflow: hidden;
+    z-index: 10;
     transition: 0.8s;
+    &::after {
+      content: "";
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      background: transparent;
+      animation: buttonAnimation 2s alternate-reverse infinite;
+      z-index: -1;
+    }
     &:hover {
       background: $dark-green;
+      animation-duration: 0.2s;
       transition: 0.4s;
+    }
+    &:focus {
+      animation: none;
+      box-shadow: inset 15px 15px 35px rgb(0, 0, 0);
     }
     svg {
       font-size: 20px;
@@ -117,7 +149,7 @@
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 10px; /* 10px gap between rows */
-  font-family: "Inter";
+  font-family: "Roboto";
   & th,
   td {
     padding: 15px 20px;
@@ -131,7 +163,7 @@
 .item {
   & > td {
     background: white;
-    font-family: "Poppins";
+    font-family: "Roboto";
     animation-name: fade-in;
     animation-duration: 1s;
     border-top: 1px solid rgb(230, 230, 230);
@@ -158,16 +190,16 @@
   & td:nth-of-type(4) {
     span {
       color: $green-color;
-      font-family: "Poppins";
+      font-family: "Roboto";
+      font-size: 16px;
       font-weight: 600;
     }
   }
   h3 {
-    font-family: "Poppins";
-    color: rgb(80, 80, 80);
-    font-size: 15px;
-    font-weight: 600;
-    max-width: 85px;
+    color: $dark;
+    font-size: 16px;
+    font-weight: 900;
+    max-width: 95px;
   }
   img {
     width: 40px;
@@ -215,6 +247,15 @@
 .fadeIn {
   opacity: 0;
   animation: fade-in-pag 2.6s forwards;
+}
+
+@keyframes buttonAnimation {
+  0% {
+    box-shadow: inset 1px -1px 5px rgb(65, 78, 60);
+  }
+  100% {
+    box-shadow: inset 0px 0px 0px rgb(42, 80, 28);
+  }
 }
 
 @keyframes fade-in {

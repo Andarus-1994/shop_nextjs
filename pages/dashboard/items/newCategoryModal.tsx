@@ -52,6 +52,7 @@ export default function NewCategory({ closeModal }: ModalProps) {
       if (e instanceof Error) {
         errorMessage = e.message;
         console.log(errorMessage);
+        setError(errorMessage);
         setMainCategories([]);
       }
     } finally {
