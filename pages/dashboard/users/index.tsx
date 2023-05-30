@@ -145,12 +145,16 @@ export default function Users() {
                     <Table.Cell css={{ width: "90px" }}>
                       {typeof user.profile_image === "string" ? (
                         <Image
-                          src={user.profile_image ? user.profile_image : CostumeImage}
+                          src={
+                            user.profile_image && user.profile_image !== ""
+                              ? user.profile_image
+                              : CostumeImage
+                          }
                           alt="Profile Image"
                           width={100}
                           height={100}
                         />
-                      ) : typeof user.profile_image === "object" ? (
+                      ) : user.profile_image && typeof user.profile_image === "object" ? (
                         <Image
                           src={URL.createObjectURL(user.profile_image)}
                           alt="Profile Image"

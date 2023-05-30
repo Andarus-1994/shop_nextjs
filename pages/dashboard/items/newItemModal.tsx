@@ -6,6 +6,7 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { AiOutlineUpload } from "react-icons/ai";
 import Image from "next/image";
+import Placeholder from "../../../public/phImage.png";
 
 type ModalProps = {
   closeModal: Function;
@@ -28,6 +29,9 @@ type item = {
   name: string;
   price: number;
   stock: number;
+  brand: string;
+  color: string;
+  size: string[];
   image: string | File;
   categories: Category[];
 };
@@ -42,6 +46,9 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
     price: 0,
     stock: 0,
     image: "",
+    brand: "",
+    color: "",
+    size: [],
     categories: [] as Category[],
   });
   const imageInput = useRef<HTMLInputElement>(null);
@@ -97,6 +104,53 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
           />
         </div>
         <div className={styles.inputBox}>
+          <label>Brand</label>
+          <input
+            placeholder="Brand"
+            onChange={(e) => setItem({ ...item, stock: Number(e.target.value) })}
+          />
+        </div>
+        <div className={styles.inputBox}>
+          <label>Color</label>
+          <input
+            placeholder="Color"
+            onChange={(e) => setItem({ ...item, stock: Number(e.target.value) })}
+          />
+        </div>
+        <div className={styles.inputBox}>
+          <Select
+            className="multi-select"
+            backspaceRemovesValue={true}
+            captureMenuScroll={true}
+            onChange={(e) => {
+              const selectedValues = e.map((option: any) => option.value);
+              setItem({ ...item, size: selectedValues });
+              console.log(selectedValues);
+            }}
+            styles={{
+              control: (baseStyles, state) => ({
+                ...baseStyles,
+                width: "360px",
+                margin: "5px 0 0 10px",
+                padding: "0px 10px",
+                border: "none",
+                borderRadius: "15px",
+                boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.3)",
+              }),
+            }}
+            placeholder="Sizes"
+            isMulti
+            closeMenuOnSelect={false}
+            components={animatedComponents}
+            options={[
+              { value: "S", label: "S" },
+              { value: "M", label: "M" },
+              { value: "L", label: "L" },
+              { value: "XL", label: "XL" },
+            ]}
+          />
+        </div>
+        <div className={styles.inputBox}>
           <Select
             className="multi-select"
             backspaceRemovesValue={true}
@@ -134,20 +188,36 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
         />
         <label>Upload Image</label>
         <label htmlFor="select-image" className={styles.labelImage}>
-          <button
-            className={styles.itemImage}
-            onClick={() => {
-              imageInput.current?.click();
-            }}
-          >
-            <AiOutlineUpload />
-          </button>
           {typeof item.image === "string" && !!item.image ? (
-            <Image src={item.image} alt="Img" width={60} height={60} />
+            <Image
+              src={item.image}
+              alt="Img"
+              width={60}
+              height={60}
+              onClick={() => {
+                imageInput.current?.click();
+              }}
+            />
           ) : typeof item.image === "object" ? (
-            <Image src={URL.createObjectURL(item.image)} alt="Img" width={60} height={60} />
+            <Image
+              src={URL.createObjectURL(item.image)}
+              alt="Img"
+              width={60}
+              height={60}
+              onClick={() => {
+                imageInput.current?.click();
+              }}
+            />
           ) : (
-            <Image src="" alt="Img" width={60} height={60} />
+            <Image
+              src={Placeholder}
+              alt="Img2"
+              width={60}
+              height={60}
+              onClick={() => {
+                imageInput.current?.click();
+              }}
+            />
           )}
         </label>
 

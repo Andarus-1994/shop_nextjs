@@ -35,7 +35,7 @@ export default function Items() {
     console.log(i);
   };
   const [items, setItems] = useState(itemsDashboard);
-  const [category, setCategory] = useState(categories[0].name);
+  const [category, setCategory] = useState("");
   const [filterItem, setFilterItem] = useState("");
   const animatedComponents = makeAnimated();
 
@@ -99,6 +99,10 @@ export default function Items() {
   useEffect(() => {
     getCategories();
   }, [savedCategories.mainCategory, getCategories]);
+
+  useEffect(() => {
+    if (categories.length) setCategory(categories[0].name);
+  }, [categories]);
 
   useEffect(() => {
     if (category === "Backpacks") {
