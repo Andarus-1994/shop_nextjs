@@ -59,6 +59,10 @@ export default function NewMainCategory({ closeModal, refreshMainCategories }: M
         errorMessage = e.message;
         setError(errorMessage);
         setCategories([]);
+        const customError = e as CustomError;
+        if (customError.response && customError.response.data.errors) {
+          setError(Object.values(customError.response.data.errors)[0] as string);
+        }
       }
     } finally {
       setLoadingCategories(false);

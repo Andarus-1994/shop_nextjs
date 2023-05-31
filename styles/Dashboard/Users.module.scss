@@ -185,10 +185,16 @@
           background: rgba(240, 250, 237, 0.411);
         }
         &:focus {
-          background: rgb(184, 235, 184);
+          background: rgb(235, 245, 235);
           outline: none;
           color: green;
         }
+      }
+      .inputNumber {
+        border: 1px solid rgb(238, 238, 238);
+        border-radius: 5px;
+        width: 60px;
+        margin-right: 240px;
       }
 
       select {

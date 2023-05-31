@@ -54,6 +54,71 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
   const imageInput = useRef<HTMLInputElement>(null);
   const animatedComponents = makeAnimated();
 
+  const getCategories = useCallback(async () => {
+    setLoadingCategories(true);
+    let errorMessage = "";
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    try {
+      const items = await axios.get(
+        process.env.NEXT_PUBLIC_API_URL + "api/dashboard/getCategories",
+        config
+      );
+      const itemsData = items.data;
+      setCategories(itemsData);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        errorMessage = e.message;
+        setError(errorMessage);
+        setCategories([]);
+      }
+    } finally {
+      setLoadingCategories(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    getCategories();
+  }, [getCategories]);
+
+  const createItem = async () => {
+    setLoading(true);
+    let errorMessage = "";
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const formData = new FormData();
+    formData.append("item", JSON.stringify(item));
+    formData.append("image", item.image);
+    try {
+      const items = await axios.post(
+        process.env.NEXT_PUBLIC_API_URL + "api/dashboard/newItem",
+        formData,
+        config
+      );
+      const itemsData = items.data;
+      setCategories(itemsData);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        errorMessage = e.message;
+        setError(errorMessage);
+        setCategories([]);
+        const customError = e as CustomError;
+        if (customError.response && customError.response.data.errors) {
+          setError(Object.values(customError.response.data.errors)[0] as string);
+        }
+      }
+    } finally {
+      setLoading(false);
+      if (!errorMessage) {
+        closeModal();
+      }
+    }
+  };
+
   const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       closeModal();
@@ -90,8 +155,25 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
             Price<span>*</span>
           </label>
           <input
-            placeholder="Price"
-            onChange={(e) => setItem({ ...item, price: parseFloat(e.target.value) })}
+            className={styles.inputNumber}
+            placeholder="$"
+            defaultValue={0}
+            onChange={(e) => {
+              setItem({ ...item, price: parseFloat(e.target.value) });
+            }}
+            onKeyDown={(e) => {
+              const charCode = e.key;
+              const inputValue = (e.target as HTMLInputElement).value;
+              if (
+                ((charCode < "0" || charCode > "9") &&
+                  charCode !== "Backspace" && // Allow backspace key
+                  charCode !== "Delete" &&
+                  (charCode !== "." || inputValue.includes("."))) ||
+                (charCode === "." && inputValue.length === 0)
+              ) {
+                e.preventDefault();
+              }
+            }}
           />
         </div>
         <div className={styles.inputBox}>
@@ -99,22 +181,34 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
             Stock<span>*</span>
           </label>
           <input
-            placeholder="Stock"
+            className={styles.inputNumber}
+            placeholder="0"
+            defaultValue={0}
             onChange={(e) => setItem({ ...item, stock: Number(e.target.value) })}
+            onKeyDown={(e) => {
+              const charCode = e.key;
+              if (
+                (charCode < "0" || charCode > "9") &&
+                charCode !== "Backspace" && // Allow backspace key
+                charCode !== "Delete"
+              ) {
+                e.preventDefault();
+              }
+            }}
           />
         </div>
         <div className={styles.inputBox}>
           <label>Brand</label>
           <input
             placeholder="Brand"
-            onChange={(e) => setItem({ ...item, stock: Number(e.target.value) })}
+            onChange={(e) => setItem({ ...item, brand: e.target.value })}
           />
         </div>
         <div className={styles.inputBox}>
           <label>Color</label>
           <input
             placeholder="Color"
-            onChange={(e) => setItem({ ...item, stock: Number(e.target.value) })}
+            onChange={(e) => setItem({ ...item, color: e.target.value })}
           />
         </div>
         <div className={styles.inputBox}>
@@ -224,7 +318,9 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
         <div className={styles.error}>{error}</div>
         <div className={styles.inputBox}>
           <button onClick={() => closeModal()}>Cancel</button>
-          <button disabled={loading}>{loading ? <LoadingSpinner /> : "Create"}</button>
+          <button onClick={createItem} disabled={loading}>
+            {loading ? <LoadingSpinner /> : "Create"}
+          </button>
         </div>
       </div>
     </div>
