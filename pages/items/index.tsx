@@ -51,6 +51,7 @@ export default function Items() {
     size: null,
     price: null,
   });
+  const [error, setError] = useState("");
   const getMainCategories = async () => {
     setCategoryLoading(true);
     try {
@@ -63,6 +64,7 @@ export default function Items() {
     } catch (e: unknown) {
       if (e instanceof Error) {
         console.log(e.message, "\n api/retrieveMainCategories");
+        setError(e.message);
         setMainCategoryList(categoryListData);
       }
     } finally {
@@ -109,6 +111,19 @@ export default function Items() {
 
   return (
     <div className={styles.container}>
+      {error && (
+        <div
+          style={{
+            position: "absolute",
+            textAlign: "center",
+            width: "100%",
+            top: " 105px",
+            color: "red",
+          }}
+        >
+          {error}. Using mocked data for testing...
+        </div>
+      )}
       <div className={styles.categoriesSection}>
         <h3>Categories</h3>
         {categoryLoading ? (
