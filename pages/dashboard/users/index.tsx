@@ -29,7 +29,7 @@ export default function Users() {
   const [loading, setLoading] = useState(true);
   const [searchUser, setSearchUser] = useState("");
   const debouncedSearch = useDebounce(searchUser, 500);
-  const [showModalUser, setShowModalUser] = useState(true);
+  const [showModalUser, setShowModalUser] = useState(false);
   const [chosenUser, setChosenUser] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [userDeletionModal, setUserDeletionModal] = useState({

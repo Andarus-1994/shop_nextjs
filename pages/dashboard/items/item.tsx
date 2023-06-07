@@ -1,20 +1,21 @@
-import { useState } from "react";
 import styles from "../../../styles/Dashboard/Items.module.scss";
 import Image from "next/image";
 import BackpackImage from "../../../public/backpack.png";
 import { MdEditNote } from "react-icons/md";
 import { BsTrash } from "react-icons/bs";
+import LoadingSpinner from "../../../Components/Loading";
 
 interface ItemProps {
-  id: number;
+  id?: number;
   name: string;
-  image: string | File;
-  price: number;
-  stock: number;
-  sold: number;
-  action1: Function;
-  action2: Function;
-  index: number;
+  image?: string | File;
+  price?: number;
+  stock?: number;
+  sold?: number;
+  action1?: Function;
+  action2?: Function;
+  index?: number;
+  loading?: boolean;
 }
 
 export default function Item({
@@ -27,13 +28,20 @@ export default function Item({
   action1,
   action2,
   index,
+  loading,
 }: ItemProps) {
   const getAnimationDelay = () => {
     return {
-      animationDelay: index * 0.15 + "s",
+      animationDelay: (index ? index : 0.2) * 0.15 + "s",
     };
   };
-  return (
+
+  return name !== undefined &&
+    id !== undefined &&
+    action1 !== undefined &&
+    action2 !== undefined &&
+    index !== undefined &&
+    price !== undefined ? (
     <tr className={styles.item}>
       <td style={getAnimationDelay()}>{id}</td>
       <td style={getAnimationDelay()}>
@@ -65,6 +73,18 @@ export default function Item({
           Delete
         </button>
       </td>
+    </tr>
+  ) : (
+    <tr className={styles.item}>
+      <td style={getAnimationDelay()}>{loading === true && <LoadingSpinner />}</td>
+      <td style={getAnimationDelay()}>
+        <h3>{name}</h3>
+      </td>
+      <td style={getAnimationDelay()}></td>
+      <td style={getAnimationDelay()}></td>
+      <td style={getAnimationDelay()}></td>
+      <td style={getAnimationDelay()}></td>
+      <td style={getAnimationDelay()}></td>
     </tr>
   );
 }

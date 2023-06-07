@@ -27,8 +27,8 @@ type CustomError = Error & {
 };
 type item = {
   name: string;
-  price: number;
-  stock: number;
+  price: number | null;
+  stock: number | null;
   brand: string;
   color: string;
   size: string[];
@@ -43,8 +43,8 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
   const [categories, setCategories] = useState([]);
   const [item, setItem] = useState<item>({
     name: "",
-    price: 0,
-    stock: 0,
+    price: null,
+    stock: null,
     image: "",
     brand: "",
     color: "",
@@ -152,12 +152,11 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
         </div>
         <div className={styles.inputBox}>
           <label>
-            Price<span>*</span>
+            Price <span>*</span>
           </label>
           <input
             className={styles.inputNumber}
             placeholder="$"
-            defaultValue={0}
             onChange={(e) => {
               setItem({ ...item, price: parseFloat(e.target.value) });
             }}
@@ -183,7 +182,6 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
           <input
             className={styles.inputNumber}
             placeholder="0"
-            defaultValue={0}
             onChange={(e) => setItem({ ...item, stock: Number(e.target.value) })}
             onKeyDown={(e) => {
               const charCode = e.key;

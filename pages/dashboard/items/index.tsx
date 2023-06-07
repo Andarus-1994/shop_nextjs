@@ -23,6 +23,7 @@ export default function Items() {
   const [showItemModal, setShowItemModal] = useState(false);
   const [loadingMainCategories, setLoadingMainCategories] = useState(true);
   const [loadingCategories, setLoadingCategories] = useState(true);
+  const [loadingItems, setLoadingItems] = useState(true);
   const [savedCategories, setSavedCategories] = useState({
     mainCategory: 0,
     category: 0 as number,
@@ -35,7 +36,7 @@ export default function Items() {
     console.log(i);
   };
   const [items, setItems] = useState(itemsDashboard);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState({ label: "", value: 0 });
   const [filterItem, setFilterItem] = useState("");
   const animatedComponents = makeAnimated();
 
@@ -47,12 +48,12 @@ export default function Items() {
       headers: { Authorization: `Bearer ${token}` },
     };
     try {
-      const items = await axios.get(
+      const mainCategories = await axios.get(
         process.env.NEXT_PUBLIC_API_URL + "api/dashboard/getMainCategories",
         config
       );
-      const itemsData = items.data;
-      setMainCategories(itemsData);
+      const mainCategoriesData = mainCategories.data;
+      setMainCategories(mainCategoriesData);
     } catch (e: unknown) {
       if (e instanceof Error) {
         errorMessage = e.message;
@@ -101,16 +102,38 @@ export default function Items() {
   }, [savedCategories.mainCategory, getCategories]);
 
   useEffect(() => {
-    if (categories.length) setCategory(categories[0].name);
+    if (categories.length) setCategory(categories[0]);
   }, [categories]);
 
-  useEffect(() => {
-    if (category === "Backpacks") {
-      setItems(itemsDashboard);
-    } else {
-      setItems(itemsDashboard2);
+  const getItems = useCallback(async () => {
+    let errorMessage = "";
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    try {
+      const items = await axios.get(
+        process.env.NEXT_PUBLIC_API_URL + "api/dashboard/getItems",
+        config
+      );
+      const itemsData = items.data;
+      setItems(itemsData);
+      console.log(itemsData);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        errorMessage = e.message;
+        console.log(errorMessage);
+        setItems(itemsDashboard);
+      }
+    } finally {
+      setLoadingItems(false);
     }
-  }, [category]);
+  }, []);
+
+  useEffect(() => {
+    getItems();
+    console.log(category);
+  }, [category, getItems]);
 
   const closeModalCategory = () => {
     setShowCategoryModal(false);
@@ -184,9 +207,10 @@ export default function Items() {
             isLoading={loadingCategories}
             loadingMessage={() => "Loading"}
             onChange={(e) => {
-              const selectedOption = e as { value: string; label: string };
-              setCategory(selectedOption.label);
+              const selectedOption = e as { value: number; label: string };
+              setCategory(selectedOption);
             }}
+            value={category}
             styles={{
               control: (baseStyles, state) => ({
                 ...baseStyles,
@@ -227,7 +251,9 @@ export default function Items() {
             </tr>
           </thead>
           <tbody>
-            {items.length &&
+            {loadingItems ? (
+              <Item name={"Loading..."} loading={true} />
+            ) : items.length ? (
               items.map((item, index) => {
                 return (
                   <Item
@@ -243,7 +269,10 @@ export default function Items() {
                     index={index}
                   />
                 );
-              })}
+              })
+            ) : (
+              <Item name={"Empty..."} loading={false} />
+            )}
           </tbody>
         </table>
         <div

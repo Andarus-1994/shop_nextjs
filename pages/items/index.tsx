@@ -139,7 +139,7 @@ export default function Items() {
                     onClick={() => {
                       setMainCategoryList((prev) => {
                         let updatedArray = [...prev];
-                        if (updatedArray.length > 1) {
+                        if (updatedArray.length > 0) {
                           const updatedObject = { ...updatedArray[i], open: !updatedArray[i].open };
                           updatedArray[i] = updatedObject;
                         }
