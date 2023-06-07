@@ -26,6 +26,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
+    "react-paginate": "^8.2.0",
     "react-redux": "^8.0.5",
     "react-select": "^5.7.3",
     "redux": "^4.2.0",

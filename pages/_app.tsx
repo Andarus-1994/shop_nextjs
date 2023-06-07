@@ -22,11 +22,11 @@ export default function App({ Component, pageProps }: ComponentWithPageLayout) {
     if (Component.name === "Home") {
       setTimeout(() => {
         setLoadingPage(false);
-      }, 700);
+      }, 1000);
     } else {
       setLoadingPage(false);
     }
-  }, []);
+  }, [Component.name]);
 
   return loadingPage ? (
     <LoadingPage />

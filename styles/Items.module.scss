@@ -210,6 +210,7 @@
     grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
     grid-column-gap: 30px;
     grid-row-gap: 30px;
+    min-height: 50vh;
     .soldItem {
       flex: 1 0 calc(25% - 50px);
       box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
@@ -292,6 +293,46 @@
           &:hover {
             background: $dark-green;
           }
+        }
+      }
+    }
+  }
+}
+
+.paginationRow {
+  width: 100%;
+  margin: 70px 0 0 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  label {
+    font-family: "Roboto";
+    color: black;
+    font-size: 17px;
+  }
+  ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    list-style-type: none;
+    gap: 10px;
+    & > .selected a {
+      background: black;
+      color: white;
+    }
+    li {
+      a {
+        text-decoration: none;
+        color: black;
+        font-size: 15px;
+        font-family: "Roboto";
+        border: 1px solid gray;
+        padding: 8px 15px;
+        font-weight: bold;
+        transition: 0.5s;
+        &:hover {
+          background: black;
+          color: white !important;
         }
       }
     }

@@ -7,16 +7,11 @@ import HomeSolutionsBoxes from "./homeSolutionsBoxes";
 import HomeImageBox from "./homeMostSoldItems";
 import Link from "next/link";
 export default function Home() {
-  const [trigger, setTrigger] = useState(false);
   const [arrayBgs] = useState([Background, Background2, Background3]);
   const [iteration, setIteration] = useState(1);
   const [chosenBg, setChosenBg] = useState(Background);
   useEffect(() => {
     const interval = setInterval(() => {
-      setTrigger((trigger) => (trigger = false));
-      setTimeout(() => {
-        setTrigger((trigger) => (trigger = true));
-      }, 2000);
       setChosenBg(arrayBgs[iteration]);
       if (iteration === arrayBgs.length - 1) {
         setIteration(0);
@@ -38,20 +33,15 @@ export default function Home() {
     };
     return background;
   }, [chosenBg]);
-  const triggerAnimation = (trigger: Boolean) => {
-    if (trigger) {
-      return "";
-    }
-    return styles.fadein;
-  };
-  const animationValue = useMemo(() => {
-    return triggerAnimation(trigger);
-  }, [trigger]);
 
   return (
     <div>
       <div className={styles.containerHome}>
-        <div className={styles.overlay + " " + animationValue} style={homeStyles}></div>
+        <div
+          key={homeStyles.backgroundImage}
+          className={styles.overlay + " " + styles.fadein}
+          style={homeStyles}
+        ></div>
         <h1>
           <span>Absolutely. Positively. Perfect</span>
           Shopius

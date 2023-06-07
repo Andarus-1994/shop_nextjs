@@ -9,7 +9,8 @@ import { FaBoxes } from "react-icons/fa";
 import { MdOutlineFilterAlt } from "react-icons/md";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import stylesUtils from "../../styles/utils/Loading.module.scss";
-import CreatableSelect from "react-select/creatable";
+import ReactPaginate from "react-paginate";
+
 import {
   itemsData as itemsDataMock,
   categoryListData,
@@ -39,6 +40,7 @@ type Category = {
 };
 
 export default function Items() {
+  const [page, setPage] = useState(0);
   const [items, setItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [mainCategoryList, setMainCategoryList] = useState<MainCategoryList[]>([]);
@@ -98,6 +100,11 @@ export default function Items() {
     filterName: string
   ) => {
     setFilter({ ...filter, [filterName]: selectedOption });
+  };
+
+  const handlePageChange = (e: { selected: number }) => {
+    const selected = e.selected + 1;
+    setPage(selected);
   };
 
   return (
@@ -212,7 +219,7 @@ export default function Items() {
           </div>
         </div>
         {isLoading ? (
-          <div className={stylesUtils.simpleLoading}>
+          <div className={stylesUtils.simpleLoading} style={{ minHeight: "60vh" }}>
             <AiOutlineLoading3Quarters />
           </div>
         ) : items.length === 0 ? (
@@ -244,6 +251,19 @@ export default function Items() {
             })}
           </div>
         )}
+        <div className={styles.paginationRow}>
+          <label>Page {page} of 10</label>
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel="NEXT >"
+            pageRangeDisplayed={5}
+            pageCount={10}
+            onPageChange={handlePageChange}
+            previousLabel="< PREVIOUS"
+            renderOnZeroPageCount={null}
+            activeClassName={styles.selected}
+          />
+        </div>
       </div>
     </div>
   );

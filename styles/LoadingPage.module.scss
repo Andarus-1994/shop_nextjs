@@ -18,13 +18,13 @@
     &::after {
       content: "";
       position: absolute;
-      top: -220px;
-      left: -97px;
-      width: 400px;
-      height: 400px;
-      border: 1px solid #353535;
-      border-radius: 50%;
-      box-shadow: 0px 0px 2px 1px rgb(224, 224, 224);
+      top: -320px;
+      left: -155px;
+      width: 600px;
+      height: 600px;
+      border: 0px;
+      border-radius: 10%;
+      animation: fade-in-animation 2s forwards;
     }
   }
 }
@@ -82,4 +82,28 @@
   background-color: #cc2c2c;
   transform-origin: top left;
   animation-delay: 1s;
+}
+
+@keyframes fade-in-animation {
+  0% {
+    opacity: 0;
+    border: 0px solid white;
+  }
+  20% {
+    border-top: 1px solid white;
+  }
+  40% {
+    border-right: 1px solid white;
+  }
+  80% {
+    border-bottom: 1px solid white;
+  }
+  100% {
+    opacity: 1;
+    width: 400px;
+    height: 400px;
+    top: -220px;
+    left: -97px;
+    border: 3px solid white;
+  }
 }
