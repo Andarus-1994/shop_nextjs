@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import styles from "./../styles/Dashboard/Sidebar.module.scss";
 import stylesContent from "./../styles/Dashboard/Dashboard.module.scss";
@@ -8,7 +9,7 @@ import { navTrigger } from "../store/reducers/navReducer";
 export function IndexLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const dispatch = useDispatch();
-
+  const dashboardContentRef = useRef<HTMLDivElement>(null);
   const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
     if (event.currentTarget.scrollTop > 0) {
       dispatch(navTrigger(true));
@@ -16,6 +17,11 @@ export function IndexLayout({ children }: { children: React.ReactNode }) {
       dispatch(navTrigger(false));
     }
   };
+
+  useEffect(() => {
+    if (dashboardContentRef.current)
+      dashboardContentRef.current.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, [children]);
 
   return (
     <>
@@ -53,7 +59,7 @@ export function IndexLayout({ children }: { children: React.ReactNode }) {
             </Link>
           </nav>
         </div>
-        <div className={stylesContent.content} onScroll={handleScroll}>
+        <div className={stylesContent.content} onScroll={handleScroll} ref={dashboardContentRef}>
           {children}
         </div>
       </div>

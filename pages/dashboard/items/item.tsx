@@ -8,7 +8,7 @@ import LoadingSpinner from "../../../Components/Loading";
 interface ItemProps {
   id?: number;
   name: string;
-  image?: string | File;
+  image?: string;
   price?: number;
   stock?: number;
   sold?: number;
@@ -48,7 +48,12 @@ export default function Item({
         <h3>{name}</h3>
       </td>
       <td style={getAnimationDelay()}>
-        <Image src={BackpackImage} alt="item" />
+        <Image
+          src={image && image !== "" ? image : BackpackImage}
+          width={50}
+          height={50}
+          alt="item"
+        />
       </td>
       <td style={getAnimationDelay()}>
         <span>{price.toFixed(2)}</span> $
