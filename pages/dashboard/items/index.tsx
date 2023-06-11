@@ -203,6 +203,8 @@ export default function Items() {
               <th>Id</th>
               <th>Name</th>
               <th>Image</th>
+              <th>Brand</th>
+              <th>Size</th>
               <th>Price</th>
               <th>Stock</th>
               <th>Sold</th>

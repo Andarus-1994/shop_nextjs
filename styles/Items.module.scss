@@ -320,6 +320,12 @@
       background: black;
       color: white;
     }
+    & > li.disabled a {
+      background: #d4d4d4;
+      border: 1px solid #f1e8e8;
+      color: #a3a3a3;
+      pointer-events: none;
+    }
     li {
       a {
         text-decoration: none;

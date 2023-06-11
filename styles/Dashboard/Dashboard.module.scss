@@ -7,7 +7,7 @@
   padding-left: 150px;
   background: rgb(247, 247, 247);
   overflow: auto;
-  & > div {
+  & > div > div {
     opacity: 0;
     animation: fade-in 0.8s forwards;
     animation-delay: 0.2s;

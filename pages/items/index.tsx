@@ -40,7 +40,7 @@ type Category = {
 };
 
 export default function Items() {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [items, setItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [mainCategoryList, setMainCategoryList] = useState<MainCategoryList[]>([]);
@@ -267,16 +267,17 @@ export default function Items() {
           </div>
         )}
         <div className={styles.paginationRow}>
-          <label>Page {page} of 10</label>
+          <label>Page {page} of 1</label>
           <ReactPaginate
             breakLabel="..."
             nextLabel="NEXT >"
             pageRangeDisplayed={5}
-            pageCount={10}
+            pageCount={1}
             onPageChange={handlePageChange}
             previousLabel="< PREVIOUS"
             renderOnZeroPageCount={null}
             activeClassName={styles.selected}
+            disabledClassName={styles.disabled}
           />
         </div>
       </div>

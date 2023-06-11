@@ -55,6 +55,8 @@ export default function Item({
           alt="item"
         />
       </td>
+      <td style={getAnimationDelay()}>None</td>
+      <td style={getAnimationDelay()}>S</td>
       <td style={getAnimationDelay()}>
         <span>{price.toFixed(2)}</span> $
       </td>
@@ -85,6 +87,8 @@ export default function Item({
       <td style={getAnimationDelay()}>
         <h3>{name}</h3>
       </td>
+      <td style={getAnimationDelay()}></td>
+      <td style={getAnimationDelay()}></td>
       <td style={getAnimationDelay()}></td>
       <td style={getAnimationDelay()}></td>
       <td style={getAnimationDelay()}></td>
