@@ -2,6 +2,7 @@
 @import "../mixins/mobile";
 
 .users {
+  min-height: 80vh;
   .grid {
     width: 100%;
     background: rgb(255, 255, 255);
