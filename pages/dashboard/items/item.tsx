@@ -4,6 +4,7 @@ import BackpackImage from "../../../public/backpack.png";
 import { MdEditNote } from "react-icons/md";
 import { BsTrash } from "react-icons/bs";
 import LoadingSpinner from "../../../Components/Loading";
+import { useMemo } from "react";
 
 interface ItemProps {
   id?: number;
@@ -30,11 +31,11 @@ export default function Item({
   index,
   loading,
 }: ItemProps) {
-  const getAnimationDelay = () => {
+  const getAnimationDelay = useMemo(() => {
     return {
       animationDelay: (index ? index : 0.2) * 0.15 + "s",
     };
-  };
+  }, [index]);
 
   return name !== undefined &&
     id !== undefined &&
@@ -43,11 +44,11 @@ export default function Item({
     index !== undefined &&
     price !== undefined ? (
     <tr className={styles.item}>
-      <td style={getAnimationDelay()}>{id}</td>
-      <td style={getAnimationDelay()}>
+      <td style={getAnimationDelay}>{id}</td>
+      <td style={getAnimationDelay}>
         <h3>{name}</h3>
       </td>
-      <td style={getAnimationDelay()}>
+      <td style={getAnimationDelay}>
         <Image
           src={image && image !== "" ? image : BackpackImage}
           width={50}
@@ -55,14 +56,14 @@ export default function Item({
           alt="item"
         />
       </td>
-      <td style={getAnimationDelay()}>None</td>
-      <td style={getAnimationDelay()}>S</td>
-      <td style={getAnimationDelay()}>
+      <td style={getAnimationDelay}>None</td>
+      <td style={getAnimationDelay}>S</td>
+      <td style={getAnimationDelay}>
         <span>{price.toFixed(2)}</span> $
       </td>
-      <td style={getAnimationDelay()}>{stock}</td>
-      <td style={getAnimationDelay()}>{sold}</td>
-      <td style={getAnimationDelay()}>
+      <td style={getAnimationDelay}>{stock}</td>
+      <td style={getAnimationDelay}>{sold}</td>
+      <td style={getAnimationDelay}>
         <button
           onClick={() => {
             action1(id);
@@ -83,17 +84,17 @@ export default function Item({
     </tr>
   ) : (
     <tr className={styles.item}>
-      <td style={getAnimationDelay()}>{loading === true && <LoadingSpinner />}</td>
-      <td style={getAnimationDelay()}>
+      <td style={getAnimationDelay}>{loading === true && <LoadingSpinner />}</td>
+      <td style={getAnimationDelay}>
         <h3>{name}</h3>
       </td>
-      <td style={getAnimationDelay()}></td>
-      <td style={getAnimationDelay()}></td>
-      <td style={getAnimationDelay()}></td>
-      <td style={getAnimationDelay()}></td>
-      <td style={getAnimationDelay()}></td>
-      <td style={getAnimationDelay()}></td>
-      <td style={getAnimationDelay()}></td>
+      <td style={getAnimationDelay}></td>
+      <td style={getAnimationDelay}></td>
+      <td style={getAnimationDelay}></td>
+      <td style={getAnimationDelay}></td>
+      <td style={getAnimationDelay}></td>
+      <td style={getAnimationDelay}></td>
+      <td style={getAnimationDelay}></td>
     </tr>
   );
 }

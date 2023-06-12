@@ -5,68 +5,73 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
 interface SelectMainCategoryProps {
-  showMainCategoryModal: () => void;
-  changeMainCategory: (option: { value: number; label: string }) => void;
-  mainCategory: { value: number; label: string } | string;
+  showCategoryModal: () => void;
+  changeCategory: (option: CategoryOption) => void;
+  category: CategoryOption | string;
   triggerRefresh: boolean;
 }
 
-export default function SelectMainCategory({
-  changeMainCategory,
-  mainCategory,
+type CategoryOption = { value: number; label: string };
+
+export default function SelectCategory({
+  showCategoryModal,
+  changeCategory,
+  category,
   triggerRefresh,
-  showMainCategoryModal,
 }: SelectMainCategoryProps) {
-  const [loadingMainCategories, setLoadingMainCategories] = useState(true);
-  const [mainCategories, setMainCategories] = useState([]);
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [categories, setCategories] = useState<CategoryOption[]>([]);
   const animatedComponents = makeAnimated();
 
-  const getMainCategories = useCallback(async () => {
-    setLoadingMainCategories(true);
+  const getCategories = useCallback(async () => {
+    setLoadingCategories(true);
     let errorMessage = "";
     const token = localStorage.getItem("token");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
     try {
-      const mainCategories = await axios.get(
-        process.env.NEXT_PUBLIC_API_URL + "api/dashboard/getMainCategories",
+      const items = await axios.get(
+        process.env.NEXT_PUBLIC_API_URL + "api/dashboard/getCategories",
         config
       );
-      const mainCategoriesData = mainCategories.data;
-      setMainCategories(mainCategoriesData);
-      if (mainCategoriesData.length) {
-        changeMainCategory(mainCategoriesData[0]);
+      const itemsData = items.data;
+      setCategories(itemsData);
+      if (itemsData.length) {
+        changeCategory(itemsData[0]);
       }
     } catch (e: unknown) {
       if (e instanceof Error) {
         errorMessage = e.message;
         console.log(errorMessage);
-        setMainCategories([]);
+        setCategories([
+          { value: 2, label: "Shirts" },
+          { value: 3, label: "Backpacks" },
+        ]);
       }
     } finally {
-      setLoadingMainCategories(false);
+      setLoadingCategories(false);
     }
-  }, [changeMainCategory]);
+  }, [changeCategory]);
 
   useEffect(() => {
-    getMainCategories();
-  }, [getMainCategories, triggerRefresh]);
+    getCategories();
+  }, [triggerRefresh, getCategories]);
 
   return (
     <Fragment>
       <div>
-        <label>Main Category</label>
+        <label>Category</label>
         <Select
           backspaceRemovesValue={true}
           captureMenuScroll={true}
-          isLoading={loadingMainCategories}
+          isLoading={loadingCategories}
           loadingMessage={() => "Loading"}
           onChange={(e) => {
             const selectedOption = e as { value: number; label: string };
-            changeMainCategory(selectedOption);
+            changeCategory(selectedOption);
           }}
-          value={mainCategory}
+          value={category}
           styles={{
             control: (baseStyles, state) => ({
               ...baseStyles,
@@ -77,19 +82,15 @@ export default function SelectMainCategory({
               borderRadius: "15px",
               boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.3)",
             }),
-            menuPortal: (base) => ({
-              ...base,
-              zIndex: 9999,
-              position: "absolute",
-            }),
           }}
-          placeholder="Main Categories"
+          placeholder="Categories"
           components={animatedComponents}
-          options={mainCategories}
+          options={categories}
         />
       </div>
+
       <div>
-        <button onClick={showMainCategoryModal}>Create Main Category</button>
+        <button onClick={() => showCategoryModal()}>Create Category</button>
       </div>
     </Fragment>
   );

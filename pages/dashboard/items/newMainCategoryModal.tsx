@@ -77,13 +77,13 @@ export default function NewMainCategory({ closeModal, refreshMainCategories }: M
       headers: { Authorization: `Bearer ${token}` },
     };
     try {
-      const items = await axios.post(
+      const mainCategories = await axios.post(
         process.env.NEXT_PUBLIC_API_URL + "api/dashboard/newMainCategory",
         mainCategory,
         config
       );
-      const itemsData = items.data;
-      if (itemsData.message) {
+      const mainCategoriesData = mainCategories.data;
+      if (mainCategoriesData.message) {
         refreshMainCategories();
       }
     } catch (e: unknown) {

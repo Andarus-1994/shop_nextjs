@@ -7,6 +7,7 @@ import makeAnimated from "react-select/animated";
 
 type ModalProps = {
   closeModal: Function;
+  refreshCategories: Function;
 };
 
 type CustomError = Error & {
@@ -17,7 +18,7 @@ type CustomError = Error & {
   };
 };
 
-export default function NewCategory({ closeModal }: ModalProps) {
+export default function NewCategory({ closeModal, refreshCategories }: ModalProps) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState({
@@ -72,11 +73,15 @@ export default function NewCategory({ closeModal }: ModalProps) {
       headers: { Authorization: `Bearer ${token}` },
     };
     try {
-      await axios.post(
+      const categories = await axios.post(
         process.env.NEXT_PUBLIC_API_URL + "api/dashboard/newCategory",
         category,
         config
       );
+      const categoriesData = categories.data;
+      if (categoriesData.message) {
+        refreshCategories();
+      }
     } catch (e: unknown) {
       if (e instanceof Error) {
         errorMessage = e.message;
