@@ -21,10 +21,40 @@ type CategoryGeneralType = {
   label: string;
   value: number;
 };
+interface CategoryType extends CategoryGeneralType {
+  id: number;
+  name: string;
+  main_category_id: number;
+}
+type ItemType = {
+  id: number;
+  name: string;
+  price: number;
+  stock: number;
+  brand: string;
+  color: string;
+  size: OptionSelectSize[];
+  sold: number;
+  image: string;
+  categories: CategoryType[];
+};
+
+type OptionSelectSize = { label: string; value: string };
 
 export default function Items() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [showItemModal, setShowItemModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState({
+    id: 0,
+    name: "",
+    price: 0,
+    stock: 0,
+    brand: "",
+    color: "",
+    size: [] as OptionSelectSize[],
+    image: "",
+    categories: [] as CategoryType[],
+  });
   const [showMainCategoryModal, setShowMainCategoryModal] = useState(false);
   const [refreshMainCateg, setRefreshMainCateg] = useState(false);
   const [refreshCateg, setRefreshCateg] = useState(false);
@@ -42,13 +72,15 @@ export default function Items() {
     setSavedCategories((prev) => ({ ...prev, category: categoryOption }));
   }, []);
 
-  const editItem = (i: number) => {
-    console.log(i);
+  const editItem = (Item: ItemType) => {
+    console.log(Item);
+    setSelectedItem(Item);
+    setShowItemModal(true);
   };
   const deleteItem = (i: number) => {
     console.log(i);
   };
-  const [items, setItems] = useState(itemsDashboard);
+  const [items, setItems] = useState<ItemType[]>([]);
   const [filterItem, setFilterItem] = useState("");
 
   const getItems = useCallback(async () => {
@@ -85,6 +117,17 @@ export default function Items() {
 
   const closeModalItem = () => {
     setShowItemModal(false);
+    setSelectedItem({
+      id: 0,
+      name: "",
+      price: 0,
+      stock: 0,
+      brand: "",
+      color: "",
+      size: [] as OptionSelectSize[],
+      image: "",
+      categories: [] as CategoryType[],
+    });
   };
 
   const closeModalMainCategory = () => {
@@ -105,7 +148,12 @@ export default function Items() {
           refreshCategories={() => setRefreshCateg(!refreshCateg)}
         />
       )}
-      {showItemModal && <NewOrEditItem closeModal={closeModalItem} />}
+      {showItemModal &&
+        (selectedItem.name ? (
+          <NewOrEditItem closeModal={closeModalItem} itemObjectProp={selectedItem} />
+        ) : (
+          <NewOrEditItem closeModal={closeModalItem} />
+        ))}
       <section>
         <h3>Items control</h3>
         <h4>Add new items or modify the existing ones</h4>
@@ -155,16 +203,11 @@ export default function Items() {
             {loadingItems ? (
               <Item name={"Loading..."} loading={true} />
             ) : items.length ? (
-              items.map((item, index) => {
+              items.map((item: ItemType, index: number) => {
                 return (
                   <Item
                     key={item?.id}
-                    id={item?.id ?? 0}
-                    name={item?.name ?? ""}
-                    image={item?.image ?? ""}
-                    price={item?.price ?? 0}
-                    stock={item?.stock ?? 0}
-                    sold={item?.sold ?? 0}
+                    itemObject={item}
                     action1={editItem}
                     action2={deleteItem}
                     index={index}

@@ -10,12 +10,15 @@ import Placeholder from "../../../public/phImage.png";
 
 type ModalProps = {
   closeModal: Function;
+  itemObjectProp?: Item;
 };
 
 type Category = {
   id: number;
   name: string;
   main_category_id: number;
+  value: number;
+  label: string;
 };
 
 type CustomError = Error & {
@@ -25,34 +28,41 @@ type CustomError = Error & {
     };
   };
 };
-type item = {
+type Item = {
   name: string;
   price: number | null;
   stock: number | null;
   brand: string;
   color: string;
-  size: string[];
+  size: OptionSelectSize[];
   image: string | File;
   categories: Category[];
 };
 
-export default function NewOrEditItem({ closeModal }: ModalProps) {
+type OptionSelectSize = { label: string; value: string };
+
+export default function NewOrEditItem({ closeModal, itemObjectProp }: ModalProps) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [categories, setCategories] = useState([]);
-  const [item, setItem] = useState<item>({
+  const [item, setItem] = useState<Item>({
     name: "",
     price: null,
     stock: null,
     image: "",
     brand: "",
     color: "",
-    size: [],
+    size: [] as OptionSelectSize[],
     categories: [] as Category[],
   });
   const imageInput = useRef<HTMLInputElement>(null);
   const animatedComponents = makeAnimated();
+
+  useEffect(() => {
+    console.log(itemObjectProp);
+    if (itemObjectProp) setItem(itemObjectProp);
+  }, [itemObjectProp]);
 
   const getCategories = useCallback(async () => {
     setLoadingCategories(true);
@@ -148,7 +158,11 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
           <label>
             Name<span>*</span>
           </label>
-          <input placeholder="Item" onChange={(e) => setItem({ ...item, name: e.target.value })} />
+          <input
+            placeholder="Item"
+            defaultValue={item.name}
+            onChange={(e) => setItem({ ...item, name: e.target.value })}
+          />
         </div>
         <div className={styles.inputBox}>
           <label>
@@ -157,6 +171,7 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
           <input
             className={styles.inputNumber}
             placeholder="$"
+            defaultValue={item.price && item.price !== null ? item.price : ""}
             onChange={(e) => {
               setItem({ ...item, price: parseFloat(e.target.value) });
             }}
@@ -182,6 +197,7 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
           <input
             className={styles.inputNumber}
             placeholder="0"
+            defaultValue={item.stock ?? ""}
             onChange={(e) => setItem({ ...item, stock: Number(e.target.value) })}
             onKeyDown={(e) => {
               const charCode = e.key;
@@ -198,6 +214,7 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
         <div className={styles.inputBox}>
           <label>Brand</label>
           <input
+            defaultValue={item.brand}
             placeholder="Brand"
             onChange={(e) => setItem({ ...item, brand: e.target.value })}
           />
@@ -205,6 +222,7 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
         <div className={styles.inputBox}>
           <label>Color</label>
           <input
+            defaultValue={item.color}
             placeholder="Color"
             onChange={(e) => setItem({ ...item, color: e.target.value })}
           />
@@ -214,8 +232,9 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
             className="multi-select"
             backspaceRemovesValue={true}
             captureMenuScroll={true}
+            value={item.size}
             onChange={(e) => {
-              const selectedValues = e.map((option: any) => option.value);
+              const selectedValues = e.map((option: any) => option);
               setItem({ ...item, size: selectedValues });
               console.log(selectedValues);
             }}
@@ -254,6 +273,7 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
               setItem({ ...item, categories: selectedValues });
               console.log(selectedValues);
             }}
+            value={item.categories}
             styles={{
               control: (baseStyles, state) => ({
                 ...baseStyles,
@@ -317,7 +337,7 @@ export default function NewOrEditItem({ closeModal }: ModalProps) {
         <div className={styles.inputBox}>
           <button onClick={() => closeModal()}>Cancel</button>
           <button onClick={createItem} disabled={loading}>
-            {loading ? <LoadingSpinner /> : "Create"}
+            {loading ? <LoadingSpinner /> : itemObjectProp === undefined ? "Create" : "Save"}
           </button>
         </div>
       </div>
