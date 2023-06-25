@@ -3,11 +3,12 @@ import { Fragment } from "react";
 import { useState, useEffect, useCallback } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import { OptionSelect } from "../../../Components/Types/ItemsTypes";
 
 interface SelectMainCategoryProps {
   showMainCategoryModal: () => void;
-  changeMainCategory: (option: { value: number; label: string }) => void;
-  mainCategory: { value: number; label: string } | string;
+  changeMainCategory: (option: OptionSelect) => void;
+  mainCategory: OptionSelect | string;
   triggerRefresh: boolean;
 }
 

@@ -11,47 +11,25 @@ import { Pagination } from "@nextui-org/react";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import SelectMainCategory from "./selectMainCategory";
 import SelectCategory from "./selectCategory";
+import TableItems from "./tableItems";
+import { CategoryType, ItemType, OptionSelect } from "../../../Components/Types/ItemsTypes";
 
 interface Category {
-  mainCategory: CategoryGeneralType | string;
-  category: CategoryGeneralType | string;
+  mainCategory: OptionSelect | string;
+  category: OptionSelect | string;
 }
-
-type CategoryGeneralType = {
-  label: string;
-  value: number;
-};
-interface CategoryType extends CategoryGeneralType {
-  id: number;
-  name: string;
-  main_category_id: number;
-}
-type ItemType = {
-  id: number;
-  name: string;
-  price: number;
-  stock: number;
-  brand: string;
-  color: string;
-  size: OptionSelectSize[];
-  sold: number;
-  image: string;
-  categories: CategoryType[];
-};
-
-type OptionSelectSize = { label: string; value: string };
 
 export default function Items() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [showItemModal, setShowItemModal] = useState(false);
-  const [selectedItem, setSelectedItem] = useState({
+  const [selectedItem, setSelectedItem] = useState<ItemType>({
     id: 0,
     name: "",
     price: 0,
     stock: 0,
     brand: "",
     color: "",
-    size: [] as OptionSelectSize[],
+    size: [] as OptionSelect[],
     image: "",
     categories: [] as CategoryType[],
   });
@@ -64,11 +42,11 @@ export default function Items() {
     category: "",
   });
 
-  const changeMainCategory = useCallback((categoryOption: CategoryGeneralType) => {
+  const changeMainCategory = useCallback((categoryOption: OptionSelect) => {
     setSavedCategories((prev) => ({ ...prev, mainCategory: categoryOption }));
   }, []);
 
-  const changeCategory = useCallback((categoryOption: CategoryGeneralType) => {
+  const changeCategory = useCallback((categoryOption: OptionSelect) => {
     setSavedCategories((prev) => ({ ...prev, category: categoryOption }));
   }, []);
 
@@ -124,7 +102,7 @@ export default function Items() {
       stock: 0,
       brand: "",
       color: "",
-      size: [] as OptionSelectSize[],
+      size: [] as OptionSelect[],
       image: "",
       categories: [] as CategoryType[],
     });
@@ -185,40 +163,14 @@ export default function Items() {
             <AiOutlineAppstoreAdd /> New Item
           </button>
         </div>
-        <table className={styles.itemList}>
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Image</th>
-              <th>Brand</th>
-              <th>Size</th>
-              <th>Price</th>
-              <th>Stock</th>
-              <th>Sold</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loadingItems ? (
-              <Item name={"Loading..."} loading={true} />
-            ) : items.length ? (
-              items.map((item: ItemType, index: number) => {
-                return (
-                  <Item
-                    key={item?.id}
-                    itemObject={item}
-                    action1={editItem}
-                    action2={deleteItem}
-                    index={index}
-                  />
-                );
-              })
-            ) : (
-              <Item name={"No Items"} loading={false} />
-            )}
-          </tbody>
-        </table>
+
+        <TableItems
+          items={items}
+          loading={loadingItems}
+          editItem={editItem}
+          deleteItem={deleteItem}
+        />
+
         {loadingItems === false && (
           <div
             style={{

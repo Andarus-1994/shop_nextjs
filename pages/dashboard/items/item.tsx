@@ -5,6 +5,7 @@ import { MdEditNote } from "react-icons/md";
 import { BsTrash } from "react-icons/bs";
 import LoadingSpinner from "../../../Components/Loading";
 import { useEffect, useMemo, useState } from "react";
+import { CategoryType, ItemType, OptionSelect } from "../../../Components/Types/ItemsTypes";
 
 interface ItemProps {
   name?: string;
@@ -15,37 +16,17 @@ interface ItemProps {
   loading?: boolean;
 }
 
-type ItemType = {
-  id: number;
-  name: string;
-  price: number;
-  stock: number;
-  brand: string;
-  color: string;
-  size: OptionSelectSize[];
-  image: string;
-  sold: number;
-  categories: Category[];
-};
-
-type Category = {
-  label: string;
-  value: number;
-};
-
-type OptionSelectSize = { label: string; value: string };
-
 export default function Item({ name, itemObject, action1, action2, index, loading }: ItemProps) {
-  const [item, setItem] = useState({
+  const [item, setItem] = useState<ItemType>({
     id: 0,
     name: "",
     price: 0,
     stock: 0,
     brand: "",
     color: "",
-    size: [] as OptionSelectSize[],
+    size: [] as OptionSelect[],
     image: "",
-    categories: [] as Category[],
+    categories: [] as CategoryType[],
   });
 
   useEffect(() => {
@@ -68,7 +49,11 @@ export default function Item({ name, itemObject, action1, action2, index, loadin
       </td>
       <td style={getAnimationDelay}>
         <Image
-          src={itemObject.image && itemObject.image !== "" ? itemObject.image : BackpackImage}
+          src={
+            typeof itemObject.image === "string" && itemObject.image !== ""
+              ? itemObject.image
+              : BackpackImage
+          }
           width={50}
           height={50}
           alt="item"
@@ -77,7 +62,7 @@ export default function Item({ name, itemObject, action1, action2, index, loadin
       <td style={getAnimationDelay}>None</td>
       <td style={getAnimationDelay}>S</td>
       <td style={getAnimationDelay}>
-        <span>{itemObject.price.toFixed(2)}</span> $
+        <span>{itemObject.price && itemObject.price.toFixed(2)}</span> $
       </td>
       <td style={getAnimationDelay}>{itemObject.stock ?? 0}</td>
       <td style={getAnimationDelay}>{itemObject.sold ?? 0}</td>

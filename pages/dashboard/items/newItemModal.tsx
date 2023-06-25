@@ -1,24 +1,16 @@
 import axios from "axios";
 import styles from "../../../styles/Dashboard/Users.module.scss";
-import { ChangeEvent, useCallback, useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import LoadingSpinner from "../../../Components/Loading";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import { AiOutlineUpload } from "react-icons/ai";
 import Image from "next/image";
 import Placeholder from "../../../public/phImage.png";
+import { CategoryType, ItemType, OptionSelect } from "../../../Components/Types/ItemsTypes";
 
 type ModalProps = {
   closeModal: Function;
-  itemObjectProp?: Item;
-};
-
-type Category = {
-  id: number;
-  name: string;
-  main_category_id: number;
-  value: number;
-  label: string;
+  itemObjectProp?: ItemType;
 };
 
 type CustomError = Error & {
@@ -28,33 +20,21 @@ type CustomError = Error & {
     };
   };
 };
-type Item = {
-  name: string;
-  price: number | null;
-  stock: number | null;
-  brand: string;
-  color: string;
-  size: OptionSelectSize[];
-  image: string | File;
-  categories: Category[];
-};
-
-type OptionSelectSize = { label: string; value: string };
 
 export default function NewOrEditItem({ closeModal, itemObjectProp }: ModalProps) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [categories, setCategories] = useState([]);
-  const [item, setItem] = useState<Item>({
+  const [item, setItem] = useState<ItemType>({
     name: "",
     price: null,
     stock: null,
     image: "",
     brand: "",
     color: "",
-    size: [] as OptionSelectSize[],
-    categories: [] as Category[],
+    size: [] as OptionSelect[],
+    categories: [] as CategoryType[],
   });
   const imageInput = useRef<HTMLInputElement>(null);
   const animatedComponents = makeAnimated();

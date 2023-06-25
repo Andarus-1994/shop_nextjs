@@ -3,15 +3,14 @@ import { Fragment } from "react";
 import { useState, useEffect, useCallback } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import { OptionSelect } from "../../../Components/Types/ItemsTypes";
 
 interface SelectMainCategoryProps {
   showCategoryModal: () => void;
-  changeCategory: (option: CategoryOption) => void;
-  category: CategoryOption | string;
+  changeCategory: (option: OptionSelect) => void;
+  category: OptionSelect | string;
   triggerRefresh: boolean;
 }
-
-type CategoryOption = { value: number; label: string };
 
 export default function SelectCategory({
   showCategoryModal,
@@ -20,7 +19,7 @@ export default function SelectCategory({
   triggerRefresh,
 }: SelectMainCategoryProps) {
   const [loadingCategories, setLoadingCategories] = useState(true);
-  const [categories, setCategories] = useState<CategoryOption[]>([]);
+  const [categories, setCategories] = useState<OptionSelect[]>([]);
   const animatedComponents = makeAnimated();
 
   const getCategories = useCallback(async () => {

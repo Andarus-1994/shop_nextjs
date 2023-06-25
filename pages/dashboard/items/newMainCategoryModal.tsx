@@ -4,15 +4,11 @@ import { useCallback, useEffect, useState } from "react";
 import LoadingSpinner from "../../../Components/Loading";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import { CategoryType } from "../../../Components/Types/ItemsTypes";
 
 type ModalProps = {
   closeModal: Function;
   refreshMainCategories: Function;
-};
-type Category = {
-  id: number;
-  name: string;
-  main_category_id: number;
 };
 
 type CustomError = Error & {
@@ -27,11 +23,11 @@ export default function NewMainCategory({ closeModal, refreshMainCategories }: M
   const [error, setError] = useState("");
   const [mainCategory, setMainCategory] = useState({
     name: "",
-    categories: [] as Category[],
+    categories: [] as CategoryType[],
   });
   const [loading, setLoading] = useState(false);
   const [loadingCategories, setLoadingCategories] = useState(false);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<CategoryType[]>([]);
   const animatedComponents = makeAnimated();
 
   const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
