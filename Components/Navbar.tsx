@@ -80,15 +80,14 @@ export default function Nav() {
         return route;
       });
 
+      routes = routes.filter(function (route) {
+        return route.route !== "Dashboard" && route.route !== "Profile";
+      });
       // only for testing env
       if (process.env.NEXT_PUBLIC_API_URL === undefined) {
         routes[routes.length] = routes[routes.length - 1];
         routes[routes.length - 2] = { route: "Dashboard", icon: <BsShieldCheck />, special: true };
       }
-
-      routes = routes.filter(function (route) {
-        return route.route !== "Dashboard" && route.route !== "Profile";
-      });
     }
     return routes;
   };
