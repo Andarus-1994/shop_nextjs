@@ -71,18 +71,20 @@ export default function Nav() {
         routes[routes.length] = routes[routes.length - 1];
         routes[routes.length - 2] = { route: "Dashboard", icon: <BsShieldCheck />, special: true };
       }
-      // only for testing env
-      if (process.env.NEXT_PUBLIC_API_URL === undefined) {
-        routes[routes.length] = routes[routes.length - 1];
-        routes[routes.length - 2] = { route: "Dashboard", icon: <BsShieldCheck />, special: true };
-      }
     } else {
       routes = navigationRoutes.map((route) => {
         if (route.route === "Logout") {
           return { ...route, route: "Login" };
         }
+
         return route;
       });
+
+      // only for testing env
+      if (process.env.NEXT_PUBLIC_API_URL === undefined) {
+        routes[routes.length] = routes[routes.length - 1];
+        routes[routes.length - 2] = { route: "Dashboard", icon: <BsShieldCheck />, special: true };
+      }
 
       routes = routes.filter(function (route) {
         return route.route !== "Dashboard" && route.route !== "Profile";
@@ -92,11 +94,6 @@ export default function Nav() {
   };
 
   useEffect(() => {
-    //for test purpose we add a token in order to see the profile page
-    if (process.env.NEXT_PUBLIC_API_URL === undefined) {
-      localStorage.setItem("token", "1|vQXRfJFJVDJarWqrYP4MAKTsUd00BYOKkiT5TkRD");
-    }
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     if (localStorage.getItem("token")) {
       dispatch(loginTrigger(true));
