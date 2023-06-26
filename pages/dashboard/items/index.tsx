@@ -46,7 +46,7 @@ export default function Items() {
     setSavedCategories((prev) => ({ ...prev, mainCategory: categoryOption }));
   }, []);
 
-  const changeCategory = useCallback((categoryOption: OptionSelect) => {
+  const changeCategory = useCallback((categoryOption: OptionSelect | string) => {
     setSavedCategories((prev) => ({ ...prev, category: categoryOption }));
   }, []);
 
@@ -62,14 +62,20 @@ export default function Items() {
   const [filterItem, setFilterItem] = useState("");
 
   const getItems = useCallback(async () => {
+    const categoryId = savedCategories.category;
+    if (categoryId === "") return setItems([]);
+
+    setLoadingItems(true);
     let errorMessage = "";
     const token = localStorage.getItem("token");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
+
     try {
-      const items = await axios.get(
+      const items = await axios.post(
         process.env.NEXT_PUBLIC_API_URL + "api/dashboard/getItems",
+        { categoryId: categoryId },
         config
       );
       const itemsData = items.data;
@@ -83,11 +89,12 @@ export default function Items() {
     } finally {
       setLoadingItems(false);
     }
-  }, []);
+  }, [savedCategories.category]);
 
   useEffect(() => {
     getItems();
-  }, [savedCategories.category, getItems]);
+    console.log("get items");
+  }, [getItems]);
 
   const closeModalCategory = () => {
     setShowCategoryModal(false);
@@ -155,6 +162,7 @@ export default function Items() {
           category={savedCategories.category}
           triggerRefresh={refreshCateg}
           showCategoryModal={() => setShowCategoryModal(true)}
+          mainCategory={savedCategories.mainCategory}
         />
       </div>
       <div>

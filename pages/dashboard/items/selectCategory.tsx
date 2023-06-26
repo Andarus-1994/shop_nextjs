@@ -7,9 +7,10 @@ import { OptionSelect } from "../../../Components/Types/ItemsTypes";
 
 interface SelectMainCategoryProps {
   showCategoryModal: () => void;
-  changeCategory: (option: OptionSelect) => void;
+  changeCategory: (option: OptionSelect | string) => void;
   category: OptionSelect | string;
   triggerRefresh: boolean;
+  mainCategory: OptionSelect | string;
 }
 
 export default function SelectCategory({
@@ -17,6 +18,7 @@ export default function SelectCategory({
   changeCategory,
   category,
   triggerRefresh,
+  mainCategory,
 }: SelectMainCategoryProps) {
   const [loadingCategories, setLoadingCategories] = useState(true);
   const [categories, setCategories] = useState<OptionSelect[]>([]);
@@ -25,19 +27,24 @@ export default function SelectCategory({
   const getCategories = useCallback(async () => {
     setLoadingCategories(true);
     let errorMessage = "";
+    const mainCategoryId = typeof mainCategory === "object" ? mainCategory.value : mainCategory;
     const token = localStorage.getItem("token");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
+
     try {
-      const items = await axios.get(
+      const items = await axios.post(
         process.env.NEXT_PUBLIC_API_URL + "api/dashboard/getCategories",
+        { categoryId: mainCategoryId },
         config
       );
       const itemsData = items.data;
       setCategories(itemsData);
       if (itemsData.length) {
         changeCategory(itemsData[0]);
+      } else {
+        changeCategory("");
       }
     } catch (e: unknown) {
       if (e instanceof Error) {
@@ -51,7 +58,7 @@ export default function SelectCategory({
     } finally {
       setLoadingCategories(false);
     }
-  }, [changeCategory]);
+  }, [changeCategory, mainCategory]);
 
   useEffect(() => {
     getCategories();

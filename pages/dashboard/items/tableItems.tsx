@@ -37,7 +37,7 @@ export default function TableItems({ loading, items, editItem, deleteItem }: Ite
           items.map((item: ItemType, index: number) => {
             return (
               <Item
-                key={item?.id}
+                key={item?.id + " " + index}
                 itemObject={item}
                 action1={editItem}
                 action2={deleteItem}

@@ -40,7 +40,6 @@ export default function NewOrEditItem({ closeModal, itemObjectProp }: ModalProps
   const animatedComponents = makeAnimated();
 
   useEffect(() => {
-    console.log(itemObjectProp);
     if (itemObjectProp) setItem(itemObjectProp);
   }, [itemObjectProp]);
 
@@ -52,8 +51,9 @@ export default function NewOrEditItem({ closeModal, itemObjectProp }: ModalProps
       headers: { Authorization: `Bearer ${token}` },
     };
     try {
-      const items = await axios.get(
+      const items = await axios.post(
         process.env.NEXT_PUBLIC_API_URL + "api/dashboard/getCategories",
+        { categoryId: "all" },
         config
       );
       const itemsData = items.data;
@@ -216,7 +216,6 @@ export default function NewOrEditItem({ closeModal, itemObjectProp }: ModalProps
             onChange={(e) => {
               const selectedValues = e.map((option: any) => option);
               setItem({ ...item, size: selectedValues });
-              console.log(selectedValues);
             }}
             styles={{
               control: (baseStyles, state) => ({
@@ -249,9 +248,8 @@ export default function NewOrEditItem({ closeModal, itemObjectProp }: ModalProps
             isLoading={loadingCategories}
             loadingMessage={() => "Retrieving categories"}
             onChange={(e) => {
-              const selectedValues = e.map((option: any) => option.value);
+              const selectedValues = e.map((option: any) => option);
               setItem({ ...item, categories: selectedValues });
-              console.log(selectedValues);
             }}
             value={item.categories}
             styles={{
@@ -265,6 +263,7 @@ export default function NewOrEditItem({ closeModal, itemObjectProp }: ModalProps
                 boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.3)",
               }),
             }}
+            closeMenuOnSelect={false}
             placeholder="Categories"
             isMulti
             components={animatedComponents}
