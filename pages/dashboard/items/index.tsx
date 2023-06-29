@@ -63,8 +63,10 @@ export default function Items() {
 
   const getItems = useCallback(async () => {
     const categoryId = savedCategories.category;
-    if (categoryId === "") return setItems([]);
-
+    if (categoryId === "") {
+      setLoadingItems(false);
+      return setItems([]);
+    }
     setLoadingItems(true);
     let errorMessage = "";
     const token = localStorage.getItem("token");

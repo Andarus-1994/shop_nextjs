@@ -86,18 +86,18 @@ export default function Item({ name, itemObject, action1, action2, index, loadin
       </td>
     </tr>
   ) : (
-    <tr className={styles.item}>
-      <td style={getAnimationDelay}>{loading === true && <LoadingSpinner />}</td>
-      <td style={getAnimationDelay}>
+    <tr className={loading === true ? styles.itemLoading : styles.item}>
+      <td>{loading === true && <LoadingSpinner />}</td>
+      <td>
         <h3>{name}</h3>
       </td>
-      <td style={getAnimationDelay}></td>
-      <td style={getAnimationDelay}></td>
-      <td style={getAnimationDelay}></td>
-      <td style={getAnimationDelay}></td>
-      <td style={getAnimationDelay}></td>
-      <td style={getAnimationDelay}></td>
-      <td style={getAnimationDelay}></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
   );
 }
