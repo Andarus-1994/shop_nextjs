@@ -64,8 +64,10 @@ export default function Items() {
   const getItems = useCallback(async () => {
     const categoryId = savedCategories.category;
     if (categoryId === "") {
+      const dummyData = process.env.NEXT_PUBLIC_API_URL === undefined ? itemsDashboard : [];
       setLoadingItems(false);
-      return setItems([]);
+      setItems(dummyData);
+      return;
     }
     setLoadingItems(true);
     let errorMessage = "";
