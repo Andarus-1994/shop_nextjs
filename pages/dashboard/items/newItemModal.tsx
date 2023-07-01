@@ -109,6 +109,42 @@ export default function NewOrEditItem({ closeModal, itemObjectProp }: ModalProps
     }
   };
 
+  const editItem = async () => {
+    setLoading(true);
+    let errorMessage = "";
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const formData = new FormData();
+    formData.append("item", JSON.stringify(item));
+    formData.append("image", item.image);
+    try {
+      const items = await axios.post(
+        process.env.NEXT_PUBLIC_API_URL + "api/dashboard/editItem",
+        formData,
+        config
+      );
+      const itemsData = items.data;
+      setCategories(itemsData);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        errorMessage = e.message;
+        setError(errorMessage);
+        setCategories([]);
+        const customError = e as CustomError;
+        if (customError.response && customError.response.data.errors) {
+          setError(Object.values(customError.response.data.errors)[0] as string);
+        }
+      }
+    } finally {
+      setLoading(false);
+      if (!errorMessage) {
+        closeModal();
+      }
+    }
+  };
+
   const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       closeModal();
@@ -158,6 +194,7 @@ export default function NewOrEditItem({ closeModal, itemObjectProp }: ModalProps
             onKeyDown={(e) => {
               const charCode = e.key;
               const inputValue = (e.target as HTMLInputElement).value;
+
               if (
                 ((charCode < "0" || charCode > "9") &&
                   charCode !== "Backspace" && // Allow backspace key
@@ -315,7 +352,7 @@ export default function NewOrEditItem({ closeModal, itemObjectProp }: ModalProps
         <div className={styles.error}>{error}</div>
         <div className={styles.inputBox}>
           <button onClick={() => closeModal()}>Cancel</button>
-          <button onClick={createItem} disabled={loading}>
+          <button onClick={itemObjectProp === undefined ? createItem : editItem} disabled={loading}>
             {loading ? <LoadingSpinner /> : itemObjectProp === undefined ? "Create" : "Save"}
           </button>
         </div>

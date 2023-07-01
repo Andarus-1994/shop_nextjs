@@ -43,6 +43,24 @@ export const itemsDashboard = [
       { label: "BackPacks categ 2", value: 3, name: "test4", id: 342, main_category_id: 32 },
     ],
   },
+  {
+    id: 4,
+    name: "BackPack new3",
+    price: 5.99,
+    stock: 25,
+    brand: "Brand B",
+    color: "Blue",
+    size: [
+      { label: "S", value: "S" },
+      { label: "L", value: "L" },
+    ],
+    image: "",
+    sold: 4,
+    categories: [
+      { label: "Cat1", value: 2, name: "test2332", id: 347, main_category_id: 2 },
+      { label: "Cat2", value: 3, name: "test4", id: 342, main_category_id: 32 },
+    ],
+  },
 ];
 
 export const itemsDashboard2 = [

@@ -4,8 +4,8 @@ import BackpackImage from "../../../public/backpack.png";
 import { MdEditNote } from "react-icons/md";
 import { BsTrash } from "react-icons/bs";
 import LoadingSpinner from "../../../Components/Loading";
-import { useEffect, useMemo, useState } from "react";
-import { CategoryType, ItemType, OptionSelect } from "../../../Components/Types/ItemsTypes";
+import { useMemo } from "react";
+import { ItemType } from "../../../Components/Types/ItemsTypes";
 
 interface ItemProps {
   name?: string;
@@ -17,29 +17,20 @@ interface ItemProps {
 }
 
 export default function Item({ name, itemObject, action1, action2, index, loading }: ItemProps) {
-  const [item, setItem] = useState<ItemType>({
-    id: 0,
-    name: "",
-    price: 0,
-    stock: 0,
-    brand: "",
-    color: "",
-    size: [] as OptionSelect[],
-    image: "",
-    categories: [] as CategoryType[],
-  });
-
-  useEffect(() => {
-    if (itemObject) {
-      setItem(itemObject);
-    }
-  }, [itemObject]);
-
   const getAnimationDelay = useMemo(() => {
     return {
       animationDelay: (index ? index : 0.2) * 0.15 + "s",
     };
   }, [index]);
+
+  const arrayToStringSizes = () => {
+    if (itemObject === undefined || (itemObject !== undefined && itemObject.size.length === 0))
+      return "";
+    const labels = itemObject.size.map((size) => {
+      if (size) return size.label;
+    });
+    return labels.join(", ");
+  };
 
   return itemObject !== undefined && action1 !== undefined && action2 !== undefined ? (
     <tr className={styles.item}>
@@ -59,8 +50,8 @@ export default function Item({ name, itemObject, action1, action2, index, loadin
           alt="item"
         />
       </td>
-      <td style={getAnimationDelay}>None</td>
-      <td style={getAnimationDelay}>S</td>
+      <td style={getAnimationDelay}>{itemObject.brand || "None"}</td>
+      <td style={getAnimationDelay}>{arrayToStringSizes() || "No size set"}</td>
       <td style={getAnimationDelay}>
         <span>{itemObject.price && itemObject.price.toFixed(2)}</span> $
       </td>

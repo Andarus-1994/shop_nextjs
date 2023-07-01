@@ -147,6 +147,28 @@
   }
 }
 
+.containerTable {
+  position: relative;
+  padding-top: 10px;
+  .loadingOverlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: #7c7c7c90;
+    z-index: 15;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    & > div {
+      width: fit-content;
+    }
+    & > div > svg {
+      font-size: 40px;
+      color: $green-color;
+    }
+  }
+}
 .itemList {
   width: 100%;
   border-collapse: separate;
