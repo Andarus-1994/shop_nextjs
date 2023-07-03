@@ -8,6 +8,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaBoxes } from "react-icons/fa";
 import { MdOutlineFilterAlt } from "react-icons/md";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import { BiRightArrow } from "react-icons/bi";
 import stylesUtils from "../../styles/utils/Loading.module.scss";
 import ReactPaginate from "react-paginate";
 
@@ -125,7 +126,7 @@ export default function Items() {
         </div>
       )}
       <div className={styles.categoriesSection}>
-        <h3>Categories</h3>
+        <h3>Choose Category</h3>
         {categoryLoading ? (
           <div className={stylesUtils.simpleLoading}>
             <AiOutlineLoading3Quarters />
@@ -154,7 +155,9 @@ export default function Items() {
                   {mainCategory.open === true && (
                     <ul>
                       {mainCategory.categories.map((categ) => (
-                        <li key={categ.id}>{categ.name}</li>
+                        <li key={categ.id}>
+                          <BiRightArrow /> {categ.name}
+                        </li>
                       ))}
                     </ul>
                   )}

@@ -2,24 +2,26 @@
 .container {
   min-height: 100vh;
   background: #f0f0f0;
-  padding: 150px 40px;
+  padding: 150px 30px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   gap: 50px;
   .categoriesSection {
     h3 {
-      font-size: 25px;
+      font-size: 24px;
       font-weight: 600;
       font-family: "Inter";
-      color: $dark-green;
+      color: black;
     }
     min-width: 300px;
     display: flex;
     flex-direction: column;
     gap: 15px;
     & > div {
-      padding: 5px;
+      background: white;
+      border-radius: 5px;
+      padding: 10px;
       border-bottom: 1px solid rgb(201, 201, 201);
       font-weight: 600;
       font-family: "Inter";
@@ -41,9 +43,19 @@
         li {
           cursor: pointer;
           width: fit-content;
+          font-size: 14px;
           transition: 0.4s;
           &:hover {
             color: $green-color;
+            svg {
+              color: $green-color;
+              font-size: 10px;
+              padding-left: 5px;
+            }
+          }
+          svg {
+            font-size: 7px;
+            transition: 0.5s;
           }
         }
       }
