@@ -1,7 +1,7 @@
 export type ItemType = {
   id?: number;
   name: string;
-  price: number | null;
+  price: number | string | null;
   stock: number | null;
   brand: string;
   color: string;

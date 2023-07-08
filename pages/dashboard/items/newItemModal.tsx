@@ -11,6 +11,7 @@ import { CategoryType, ItemType, OptionSelect } from "../../../Components/Types/
 type ModalProps = {
   closeModal: Function;
   itemObjectProp?: ItemType;
+  refreshItems: Function;
 };
 
 type CustomError = Error & {
@@ -21,7 +22,7 @@ type CustomError = Error & {
   };
 };
 
-export default function NewOrEditItem({ closeModal, itemObjectProp }: ModalProps) {
+export default function NewOrEditItem({ closeModal, itemObjectProp, refreshItems }: ModalProps) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [loadingCategories, setLoadingCategories] = useState(true);
@@ -104,6 +105,7 @@ export default function NewOrEditItem({ closeModal, itemObjectProp }: ModalProps
     } finally {
       setLoading(false);
       if (!errorMessage) {
+        refreshItems();
         closeModal();
       }
     }
@@ -140,6 +142,7 @@ export default function NewOrEditItem({ closeModal, itemObjectProp }: ModalProps
     } finally {
       setLoading(false);
       if (!errorMessage) {
+        refreshItems();
         closeModal();
       }
     }
@@ -187,9 +190,14 @@ export default function NewOrEditItem({ closeModal, itemObjectProp }: ModalProps
           <input
             className={styles.inputNumber}
             placeholder="$"
-            defaultValue={item.price && item.price !== null ? item.price : ""}
+            value={item.price && item.price !== null ? item.price : ""}
             onChange={(e) => {
-              setItem({ ...item, price: parseFloat(e.target.value) });
+              let value = e.target.value;
+              const decimalDigits = value.split(".")[1];
+              if (decimalDigits && decimalDigits.length > 2) {
+                value = parseFloat(value).toFixed(2);
+              }
+              setItem({ ...item, price: value });
             }}
             onKeyDown={(e) => {
               const charCode = e.key;
@@ -214,7 +222,7 @@ export default function NewOrEditItem({ closeModal, itemObjectProp }: ModalProps
           <input
             className={styles.inputNumber}
             placeholder="0"
-            defaultValue={item.stock ?? ""}
+            value={item.stock ?? ""}
             onChange={(e) => setItem({ ...item, stock: Number(e.target.value) })}
             onKeyDown={(e) => {
               const charCode = e.key;

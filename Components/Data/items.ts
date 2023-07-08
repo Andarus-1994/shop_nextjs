@@ -33,14 +33,14 @@ export const itemsDashboard = [
     brand: "Brand B",
     color: "Blue",
     size: [
-      { label: "S", value: "S" },
+      { label: "M", value: "M" },
       { label: "L", value: "L" },
     ],
     image: "",
     sold: 4,
     categories: [
-      { label: "BackPacks categ", value: 2, name: "test2332", id: 347, main_category_id: 2 },
-      { label: "BackPacks categ 2", value: 3, name: "test4", id: 342, main_category_id: 32 },
+      { label: "BPs categ 1", value: 2, name: "test2332", id: 347, main_category_id: 2 },
+      { label: "BPs categ 2", value: 3, name: "test4", id: 342, main_category_id: 32 },
     ],
   },
   {
@@ -151,8 +151,16 @@ export const categoryListData = [
   {
     id: 3,
     name: "Beauty",
-    open: false,
-    categories: [],
+    open: true,
+    categories: [
+      {
+        id: 102,
+        name: "Something B",
+        created_at: null,
+        updated_at: "2023-05-22T16:13:30.000000Z",
+        main_category_id: 24,
+      },
+    ],
   },
   {
     id: 4,

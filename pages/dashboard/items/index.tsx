@@ -62,6 +62,7 @@ export default function Items() {
   const [filterItem, setFilterItem] = useState("");
 
   const getItems = useCallback(async () => {
+    console.log("get items");
     const categoryId = savedCategories.category;
     if (categoryId === "") {
       const dummyData = process.env.NEXT_PUBLIC_API_URL === undefined ? itemsDashboard : [];
@@ -97,7 +98,6 @@ export default function Items() {
 
   useEffect(() => {
     getItems();
-    console.log("get items");
   }, [getItems]);
 
   const closeModalCategory = () => {
@@ -139,9 +139,13 @@ export default function Items() {
       )}
       {showItemModal &&
         (selectedItem.name ? (
-          <NewOrEditItem closeModal={closeModalItem} itemObjectProp={selectedItem} />
+          <NewOrEditItem
+            closeModal={closeModalItem}
+            itemObjectProp={selectedItem}
+            refreshItems={getItems}
+          />
         ) : (
-          <NewOrEditItem closeModal={closeModalItem} />
+          <NewOrEditItem closeModal={closeModalItem} refreshItems={getItems} />
         ))}
       <section>
         <h3>Items control</h3>
