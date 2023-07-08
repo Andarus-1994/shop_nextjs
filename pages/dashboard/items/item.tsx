@@ -53,7 +53,7 @@ export default function Item({ name, itemObject, action1, action2, index, loadin
       <td style={getAnimationDelay}>{itemObject.brand || "None"}</td>
       <td style={getAnimationDelay}>{arrayToStringSizes() || "No size set"}</td>
       <td style={getAnimationDelay}>
-        <span>{itemObject.price && itemObject.price.toFixed(2)}</span> $
+        <span>{itemObject.price && Number(itemObject.price).toFixed(2)}</span> $
       </td>
       <td style={getAnimationDelay}>{itemObject.stock ?? 0}</td>
       <td style={getAnimationDelay}>{itemObject.sold ?? 0}</td>
