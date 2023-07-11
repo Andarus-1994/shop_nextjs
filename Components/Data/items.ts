@@ -155,7 +155,14 @@ export const categoryListData = [
     categories: [
       {
         id: 102,
-        name: "Something B",
+        name: "Makeup",
+        created_at: null,
+        updated_at: "2023-05-22T16:13:30.000000Z",
+        main_category_id: 24,
+      },
+      {
+        id: 102,
+        name: "Skin care",
         created_at: null,
         updated_at: "2023-05-22T16:13:30.000000Z",
         main_category_id: 24,

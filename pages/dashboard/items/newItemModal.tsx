@@ -7,6 +7,7 @@ import makeAnimated from "react-select/animated";
 import Image from "next/image";
 import Placeholder from "../../../public/phImage.png";
 import { CategoryType, ItemType, OptionSelect } from "../../../Components/Types/ItemsTypes";
+import { basename } from "path";
 
 type ModalProps = {
   closeModal: Function;
@@ -263,7 +264,7 @@ export default function NewOrEditItem({ closeModal, itemObjectProp, refreshItems
               setItem({ ...item, size: selectedValues });
             }}
             styles={{
-              control: (baseStyles, state) => ({
+              control: (baseStyles) => ({
                 ...baseStyles,
                 width: "360px",
                 margin: "5px 0 0 10px",
@@ -271,6 +272,10 @@ export default function NewOrEditItem({ closeModal, itemObjectProp, refreshItems
                 border: "none",
                 borderRadius: "15px",
                 boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.3)",
+              }),
+              multiValue: (base) => ({
+                ...base,
+                minWidth: "fit-content",
               }),
             }}
             placeholder="Sizes"
@@ -306,6 +311,11 @@ export default function NewOrEditItem({ closeModal, itemObjectProp, refreshItems
                 border: "none",
                 borderRadius: "15px",
                 boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.3)",
+              }),
+              multiValue: (base) => ({
+                ...base,
+                width: "fit-content",
+                paddingRight: "15px",
               }),
             }}
             closeMenuOnSelect={false}
