@@ -37,7 +37,7 @@
   }
   nav {
     position: relative;
-    background: white;
+    background: #f0f0f0;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -55,10 +55,11 @@
     a {
       width: 100%;
       padding: 3px 0;
-      color: rgb(0, 0, 0);
+      color: #000000;
       font-size: 15px;
-      font-weight: bold;
-      font-family: "Poppins", sans-serif;
+      font-weight: 600;
+      font-family: "Asap", sans-serif;
+      letter-spacing: 0.5px;
       text-align: center;
       z-index: 5;
       text-decoration: none;
@@ -87,6 +88,16 @@
       padding: 5px 0;
       border-radius: 0;
     }
+  }
+  .titleMenu {
+    position: absolute;
+    top: 20px;
+    color: #6e6e6e;
+    font-size: 18px;
+    font-family: "Asap", sans-serif;
+    font-weight: 600;
+    text-align: center;
+    transition: 0.5s;
   }
 }
 
@@ -123,7 +134,7 @@
   }
 
   100% {
-    opacity: 0.3;
+    opacity: 0.2;
     transform: translateY(0px);
   }
 }

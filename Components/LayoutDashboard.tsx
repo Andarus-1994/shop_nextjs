@@ -33,6 +33,7 @@ export function IndexLayout({ children }: { children: React.ReactNode }) {
         <div className={styles.sidebar}>
           <nav>
             <div className={styles.cover}></div>
+            <div className={styles.titleMenu}>Menu</div>
             <Link
               className={router.pathname == "/dashboard" ? styles.active : ""}
               href={"/dashboard"}

@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { IndexLayout } from "../../../Components/LayoutDashboard";
 import styles from "../../../styles/Dashboard/Items.module.scss";
-import Item from "./item";
 import { itemsDashboard } from "../../../Components/Data/items";
 import NewMainCategory from "./newMainCategoryModal";
 import NewCategory from "./newCategoryModal";
