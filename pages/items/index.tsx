@@ -45,7 +45,9 @@ export default function Items() {
   const [items, setItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [mainCategoryList, setMainCategoryList] = useState<MainCategoryList[]>([]);
+  const [displayedCategory, setDisplayedCategory] = useState<number | null>(null);
   const [categoryLoading, setCategoryLoading] = useState(true);
+  const [missingCategoryMessage, setMissingCategoryMessage] = useState("");
   const [filter, setFilter] = useState({
     brand: null,
     color: null,
@@ -60,8 +62,12 @@ export default function Items() {
         process.env.NEXT_PUBLIC_API_URL + "api/retrieveMainCategories"
       );
       const mainCategoriesData = mainCategories.data;
+      mainCategoriesData.map((mainCategory: MainCategoryList) => {
+        if (mainCategory.open && mainCategory.categories.length) {
+          setDisplayedCategory(mainCategory.categories[0].id);
+        }
+      });
       setMainCategoryList(mainCategoriesData);
-      console.log(mainCategoriesData);
     } catch (e: unknown) {
       if (e instanceof Error) {
         console.log(e.message, "\n api/retrieveMainCategories");
@@ -69,20 +75,28 @@ export default function Items() {
         setMainCategoryList(categoryListData);
       }
     } finally {
-      console.log("end");
       setCategoryLoading(false);
     }
   };
 
-  const fetchItems = async () => {
+  const fetchItems = async (categoryId: number) => {
+    setIsLoading(true);
+    setItems([]);
     const token = localStorage.getItem("token");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
     try {
-      const items = await axios.get(process.env.NEXT_PUBLIC_API_URL + "api/getItems", config);
+      const items = await axios.post(
+        process.env.NEXT_PUBLIC_API_URL + "api/getItems/",
+        {
+          categoryId: categoryId,
+          filters: {},
+        },
+        config
+      );
       const itemsData = items.data;
-      setItems(itemsData);
+      if (itemsData.length && Array.isArray(itemsData)) setItems(itemsData);
     } catch (e: unknown) {
       if (e instanceof Error) {
         console.log(e.message);
@@ -95,8 +109,17 @@ export default function Items() {
 
   useEffect(() => {
     getMainCategories();
-    fetchItems();
   }, []);
+
+  useEffect(() => {
+    if (displayedCategory !== null) {
+      fetchItems(displayedCategory);
+    } else {
+      setIsLoading(false);
+      setItems([]);
+      setMissingCategoryMessage("Choose a category from the left");
+    }
+  }, [displayedCategory]);
 
   const handleFilter = (
     selectedOption: { value: string | number; label: string | number },
@@ -155,7 +178,11 @@ export default function Items() {
                   {mainCategory.open === true && (
                     <ul>
                       {mainCategory.categories.map((categ) => (
-                        <li key={categ.id}>
+                        <li
+                          className={displayedCategory === categ.id ? styles.active : ""}
+                          key={categ.id}
+                          onClick={() => setDisplayedCategory(categ.id)}
+                        >
                           <BiRightArrow /> {categ.name}
                         </li>
                       ))}
@@ -241,9 +268,20 @@ export default function Items() {
             <AiOutlineLoading3Quarters />
           </div>
         ) : items.length === 0 ? (
-          <div style={{ textAlign: "center", margin: "100px 0" }}>
-            <FaBoxes size={90} />
-            <h3 style={{ fontSize: "44px" }}> Empty Stocks</h3>
+          <div style={{ textAlign: "center", margin: "300px 0" }}>
+            {missingCategoryMessage ? (
+              <p style={{ fontSize: "25px", color: "red" }}>
+                {" "}
+                <FaBoxes size={90} /> <br />
+                {missingCategoryMessage}
+              </p>
+            ) : (
+              <div>
+                <br />
+                <FaBoxes size={90} />
+                <h3 style={{ fontSize: "44px" }}> Empty Stocks</h3>
+              </div>
+            )}
           </div>
         ) : (
           <div className={styles.containerItem}>

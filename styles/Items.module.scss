@@ -45,6 +45,7 @@
           width: fit-content;
           font-size: 14px;
           transition: 0.4s;
+          &.active,
           &:hover {
             color: $green-color;
             svg {
