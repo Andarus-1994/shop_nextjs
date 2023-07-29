@@ -5,7 +5,7 @@ import Image from "next/image";
 import JacketImage from "../../public/jacket1.jpg";
 import Jeans from "../../public/jeans.jpg";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { FaBoxes } from "react-icons/fa";
+import { FaBoxes, FaCartPlus } from "react-icons/fa";
 import { MdOutlineFilterAlt } from "react-icons/md";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { BiRightArrow } from "react-icons/bi";
@@ -21,6 +21,7 @@ import {
   optionsPrice,
 } from "../../Components/Data/items";
 import SelectCustom from "../../Components/UI/select";
+import Link from "next/link";
 
 type Item = {
   id: number;
@@ -73,6 +74,7 @@ export default function Items() {
         console.log(e.message, "\n api/retrieveMainCategories");
         setError(e.message);
         setMainCategoryList(categoryListData);
+        setDisplayedCategory(categoryListData[0].id);
       }
     } finally {
       setCategoryLoading(false);
@@ -268,9 +270,9 @@ export default function Items() {
             <AiOutlineLoading3Quarters />
           </div>
         ) : items.length === 0 ? (
-          <div style={{ textAlign: "center", margin: "300px 0" }}>
+          <div style={{ textAlign: "center", margin: "250px 0" }} className="fade-in-general">
             {missingCategoryMessage ? (
-              <p style={{ fontSize: "25px", color: "red" }}>
+              <p style={{ fontSize: "25px", color: "gray" }}>
                 {" "}
                 <FaBoxes size={90} /> <br />
                 {missingCategoryMessage}
@@ -291,15 +293,17 @@ export default function Items() {
                   <div className={styles.imageBox}>
                     {index % 2 === 0 && <Image src={JacketImage} alt="Jacket" />}
                     {index % 4 === 1 && <Image src={Jeans} alt="Jacket" />}
-                    <h4>More sizes</h4>
                   </div>
                   <div className={styles.detailsBox}>
-                    <div className={styles.sale}>Sale</div>
-                    <p>{item.name}</p>
+                    <div className={styles.sale}>Sale 10%</div>
+                    <Link href={"/"}>{item.name}</Link>
                     <span>{item.price} $</span>
                     <h4>Free Shipping</h4>
                     <h5>
-                      <button>Add to Cart</button>213 sold
+                      <button>
+                        <FaCartPlus /> Add to Cart
+                      </button>
+                      213 sold
                     </h5>
                   </div>
                 </div>
