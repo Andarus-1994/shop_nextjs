@@ -28,10 +28,15 @@
       font-weight: 600;
       font-family: "Inter";
       font-size: 15px;
+      text-transform: capitalize;
+      box-shadow: 0 0 5px #72727249;
       & > div {
         transition: 0.4s;
         &:hover {
           color: $green-color;
+          svg {
+            color: $green-color;
+          }
         }
       }
       ul {
@@ -51,13 +56,13 @@
           &:hover {
             color: $green-color;
             svg {
+              font-size: 8px;
               color: $green-color;
-              font-size: 10px;
-              padding-left: 5px;
+              padding-left: 1px;
             }
           }
           svg {
-            font-size: 7px;
+            font-size: 10px;
             transition: 0.5s;
           }
         }

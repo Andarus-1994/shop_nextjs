@@ -6,6 +6,8 @@ import styles from "./../styles/Dashboard/Sidebar.module.scss";
 import stylesContent from "./../styles/Dashboard/Dashboard.module.scss";
 import { useDispatch } from "react-redux";
 import { navTrigger } from "../store/reducers/navReducer";
+import { IoIosHome, IoMdAnalytics } from "react-icons/io";
+import { FaUserCog, FaBoxes } from "react-icons/fa";
 export function IndexLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -33,30 +35,29 @@ export function IndexLayout({ children }: { children: React.ReactNode }) {
         <div className={styles.sidebar}>
           <nav>
             <div className={styles.cover}></div>
-            <div className={styles.titleMenu}>Menu</div>
             <Link
               className={router.pathname == "/dashboard" ? styles.active : ""}
               href={"/dashboard"}
             >
-              Main
+              <IoIosHome /> Main
             </Link>
             <Link
               className={router.pathname == "/dashboard/users" ? styles.active : ""}
               href={"/dashboard/users"}
             >
-              Users
+              <FaUserCog /> Users
             </Link>
             <Link
               className={router.pathname == "/dashboard/items" ? styles.active : ""}
               href={"/dashboard/items"}
             >
-              Items
+              <FaBoxes /> Items
             </Link>
             <Link
               className={router.pathname == "/dashboard/analytics" ? styles.active : ""}
               href={"/dashboard/analytics"}
             >
-              Analytics
+              <IoMdAnalytics /> Analytics
             </Link>
           </nav>
         </div>
