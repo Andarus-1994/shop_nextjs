@@ -44,6 +44,9 @@
     height: 100%;
     width: 100%;
     z-index: 10;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
   }
   h1 {
     display: flex;
