@@ -230,12 +230,19 @@
     grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
     grid-column-gap: 30px;
     grid-row-gap: 30px;
+    animation: fade-in 2s;
     .soldItem {
       flex: 1 0 calc(25% - 50px);
       box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
-      animation: fade-in 1s;
+      opacity: 0;
+      animation: fade-in-item 1s forwards;
       border-radius: 15px;
       overflow: hidden;
+      @for $i from 1 through 10 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{$i * 0.15}s;
+        }
+      }
       &:hover {
         .sale {
           opacity: 1;
@@ -386,5 +393,16 @@
   }
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes fade-in-item {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
